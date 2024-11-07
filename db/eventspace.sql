@@ -216,7 +216,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `firstName`, `lastName`, `email`, `password`, `dateOfBirth`, `profilePicture`, `accessRight`) VALUES
 (1, 'Alice', 'Dupont', 'alice.dupont@example.com', 'password123', '1992-05-14', 'profile1.jpg', 'user'),
-(2, 'Bob', 'Martin', 'bob.martin@example.com', 'password456', '1985-08-20', 'profile2.jpg', 'admin'),
+(2, 'Alex', 'Martin', 'bob.martin@example.com', 'password456', '1985-08-20', 'profile2.jpg', 'admin'),
 (3, 'Charlie', 'Renard', 'charlie.renard@example.com', 'password789', '1990-11-02', 'profile3.jpg', 'user');
 
 -- --------------------------------------------------------
