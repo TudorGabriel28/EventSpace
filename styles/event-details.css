@@ -1,0 +1,64 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.event-info {
+    grid-column: 1 / 2;
+}
+
+.event-image {
+    grid-column: 2 / 3;
+}
+
+.event-planning {
+    grid-column: 1 / -1;
+}
+
+.event-instance {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.location, .dates, .capacity-price {
+    display: flex;
+    align-items: center;
+}
+
+.location p, .dates p, .capacity-price p {
+    margin: 5px 0;
+}
+
+.event-subscription {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    grid-column: 1 / -1;
+}
+
+.subscription-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.ticket-quantity {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.ticket-quantity button {
+    margin: 0 5px;
+}
+
+#total-price {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}

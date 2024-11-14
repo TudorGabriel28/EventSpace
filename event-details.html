@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/event-details.css">
+    <script>
+        function updateTotalPrice() {
+            const pricePerTicket = 50; // Assuming a fixed price per ticket for simplicity
+            const quantity = document.getElementById('ticket-quantity').value;
+            const totalPrice = pricePerTicket * quantity;
+            document.getElementById('total-price').innerText = `Total Price: $${totalPrice.toFixed(2)}`;
+        }
+    </script>
+</head>
+<body>
+
+    <header>
+        <h1>Navigation bar...</h1>
+    </header>
+
+    <main class="grid-container">
+        <section class="event-info">
+            <p class="text-xxl">Event Name</p>
+            <div class="event-description">
+                <p class="text-lg">Descrption of the event</h5>
+                <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+                <p class="text-lg">Category</p>
+                <p class="text-sm">Party</p>
+            </div>
+        </section>
+        <section class="event-image">
+            <img src="assets/images/event-image.jpg" alt="Event 1">
+        </section>
+        <section class="event-planning">
+            <p class="text-lg">Event Planning</p>
+            <div class="event-instance">
+                <div class="location">
+                    <p class="text-md">Location: </p> 
+                    <p class="text-sm">Place Vendôme, Paris</p>
+                </div>
+                <div class="dates">
+                    <p class="text-md">Start Date and Time: <span class="text-sm">November 20, 2024, 6:00 PM</span> </p>
+                    <p class="text-md">End Date and Time: <span class="text-sm">November 20, 2024, 6:00 PM</span> </p>
+                </div>
+                <div class="capacity-price">
+                    <div class="text-md">Capacity: <span class="text-sm">500 people</span> </div>
+                    <div class="text-md">Price: <span class="text-sm">$50.00</span> </div>
+                </div>
+            </div>
+            <div class="event-instance">
+                <div class="location">
+                    <p class="text-md">Location: </p> 
+                    <p class="text-sm">Place Vendôme, Paris</p>
+                </div>
+                <div class="dates">
+                    <p class="text-md">Start Date and Time: <span class="text-sm">November 20, 2024, 6:00 PM</span> </p>
+                    <p class="text-md">End Date and Time: <span class="text-sm">November 20, 2024, 6:00 PM</span> </p>
+                </div>
+                <div class="capacity-price">
+                    <div class="text-md">Capacity: <span class="text-sm">500 people</span> </div>
+                    <div class="text-md">Price: <span class="text-sm">$50.00</span> </div>
+                </div>
+            </div>
+        </section>
+        <section class="event-subscription">
+            <div class="event-selector">
+                <p class="text-lg">Select your date and location:</p>
+                <select multiple class="text-sm">
+                    <option value="place-vendome-2024-11-20">Place Vendôme, Paris - November 20, 2024, 10:00 AM</option>
+                    <option value="champs-elysees-2024-11-21">Champs-Élysées, Paris - November 21, 2024, 10:00 AM</option>
+                </select>
+            </div>
+            <div class="subscription-details">
+                <div class="ticket-quantity">
+                    <p class="text-md">Number of tickets:</p>
+                    <button class="btn" onclick="document.getElementById('ticket-quantity').stepDown(); updateTotalPrice();">-</button>
+                    <input type="number" id="ticket-quantity" value="1" min="1" max="10" onchange="updateTotalPrice();">
+                    <button class="btn" onclick="document.getElementById('ticket-quantity').stepUp(); updateTotalPrice();">+</button>
+                </div>
+                <div id="total-price">
+                    <p class="text-sm">Total price: <span>50 €</span></p>
+                </div>
+                <button class="btn" onclick="alert('Subscribed!')">Subscribe event</button>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
