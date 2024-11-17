@@ -3,14 +3,28 @@
     grid-template-columns: 1fr 1fr;
     gap: 20px;
     padding: 20px;
+    align-items: start;
 }
 
 .event-info {
     grid-column: 1 / 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    
 }
 
 .event-image {
     grid-column: 2 / 3;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 60px;
+}
+
+.event-image img {
+    max-width: 100%;
+    height: auto;
 }
 
 .event-planning {
@@ -26,12 +40,8 @@
 }
 
 .location, .dates, .capacity-price {
-    display: flex;
+    display: inline;
     align-items: center;
-}
-
-.location p, .dates p, .capacity-price p {
-    margin: 5px 0;
 }
 
 .event-subscription {
@@ -57,8 +67,54 @@
     margin: 0 5px;
 }
 
-#total-price {
-    font-size: 1.2em;
-    font-weight: bold;
+.total-price {
+
     margin-bottom: 10px;
+}
+
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.dropdown-toggle {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown-item.selected {
+    background-color: #007bff;
+    color: white;
 }

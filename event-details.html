@@ -11,8 +11,30 @@
             const pricePerTicket = 50; // Assuming a fixed price per ticket for simplicity
             const quantity = document.getElementById('ticket-quantity').value;
             const totalPrice = pricePerTicket * quantity;
-            document.getElementById('total-price').innerText = `Total Price: $${totalPrice.toFixed(2)}`;
+            document.getElementById('total-price').innerText = `Total Price: ${totalPrice.toFixed(2)} €`;
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdown = document.querySelector('.dropdown');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+            const dropdownItems = document.querySelectorAll('.dropdown-item');
+
+            dropdown.addEventListener('click', function() {
+                dropdownMenu.classList.toggle('show');
+            });
+
+            dropdownItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    item.classList.toggle('selected');
+                });
+            });
+
+            document.addEventListener('click', function(event) {
+                if (!dropdown.contains(event.target)) {
+                    dropdownMenu.classList.remove('show');
+                }
+            });
+        });
     </script>
 </head>
 <body>
@@ -38,40 +60,45 @@
             <p class="text-lg">Event Planning</p>
             <div class="event-instance">
                 <div class="location">
-                    <p class="text-md">Location: </p> 
-                    <p class="text-sm">Place Vendôme, Paris</p>
+                    <p class="text-md">Location: <span class="text-sm">Place Vendôme, Paris</span></p> 
                 </div>
                 <div class="dates">
                     <p class="text-md">Start Date and Time: <span class="text-sm">November 20, 2024, 6:00 PM</span> </p>
                     <p class="text-md">End Date and Time: <span class="text-sm">November 20, 2024, 6:00 PM</span> </p>
                 </div>
                 <div class="capacity-price">
-                    <div class="text-md">Capacity: <span class="text-sm">500 people</span> </div>
-                    <div class="text-md">Price: <span class="text-sm">$50.00</span> </div>
+                    <p class="text-md">Capacity: <span class="text-sm">500 people</span> </p>
+                    <p class="text-md">Price: <span class="text-sm">$50.00</span> </p>
                 </div>
             </div>
             <div class="event-instance">
                 <div class="location">
-                    <p class="text-md">Location: </p> 
-                    <p class="text-sm">Place Vendôme, Paris</p>
+                    <p class="text-md">Location: <span class="text-sm">Champs-Élysées, Paris</span></p> 
                 </div>
                 <div class="dates">
-                    <p class="text-md">Start Date and Time: <span class="text-sm">November 20, 2024, 6:00 PM</span> </p>
-                    <p class="text-md">End Date and Time: <span class="text-sm">November 20, 2024, 6:00 PM</span> </p>
+                    <p class="text-md">Start Date and Time: <span class="text-sm">December 10, 2024, 5:00 PM</span></p>
+                    <p class="text-md">End Date and Time: <span class="text-sm">December 10, 2024, 9:00 PM</span></p>
                 </div>
                 <div class="capacity-price">
-                    <div class="text-md">Capacity: <span class="text-sm">500 people</span> </div>
-                    <div class="text-md">Price: <span class="text-sm">$50.00</span> </div>
+                    <p class="text-md">Capacity: <span class="text-sm">200 people</span></p>
+                    <p class="text-md">Price: <span class="text-sm">€40.00</span></p>
                 </div>
-            </div>
+            </div>            
         </section>
         <section class="event-subscription">
             <div class="event-selector">
                 <p class="text-lg">Select your date and location:</p>
-                <select multiple class="text-sm">
-                    <option value="place-vendome-2024-11-20">Place Vendôme, Paris - November 20, 2024, 10:00 AM</option>
-                    <option value="champs-elysees-2024-11-21">Champs-Élysées, Paris - November 21, 2024, 10:00 AM</option>
-                </select>
+                <div class="dropdown">
+                    <button class="dropdown-toggle">Select options</button>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item" data-value="place-vendome-2024-11-20">Place Vendôme, Paris - November 20, 2024, 10:00 AM</div>
+                        <div class="dropdown-item" data-value="champs-elysees-2024-11-21">Champs-Élysées, Paris - November 21, 2024, 10:00 AM</div>
+                        <div class="dropdown-item" data-value="place-vendome-2024-12-10">Place Vendôme, Paris - December 10, 2024, 10:00 AM</div>
+                        <div class="dropdown-item" data-value="champs-elysees-2024-12-11">Champs-Élysées, Paris - December 11, 2024, 10:00 AM</div>
+                        <div class="dropdown-item" data-value="place-vendome-2024-12-20">Place Vendôme, Paris - December 20, 2024, 10:00 AM</div>
+                        <div class="dropdown-item" data-value="champs-elysees-2024-12-21">Champs-Élysées, Paris - December 21, 2024, 10:00 AM</div>
+                    </div>
+                </div>
             </div>
             <div class="subscription-details">
                 <div class="ticket-quantity">
@@ -81,7 +108,7 @@
                     <button class="btn" onclick="document.getElementById('ticket-quantity').stepUp(); updateTotalPrice();">+</button>
                 </div>
                 <div id="total-price">
-                    <p class="text-sm">Total price: <span>50 €</span></p>
+                    <p class="text-sm">Total price: <span>50</span></p>
                 </div>
                 <button class="btn" onclick="alert('Subscribed!')">Subscribe event</button>
             </div>
