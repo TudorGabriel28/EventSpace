@@ -13,28 +13,6 @@
             const totalPrice = pricePerTicket * quantity;
             document.getElementById('total-price').innerText = `Total Price: ${totalPrice.toFixed(2)} €`;
         }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const dropdown = document.querySelector('.dropdown');
-            const dropdownMenu = document.querySelector('.dropdown-menu');
-            const dropdownItems = document.querySelectorAll('.dropdown-item');
-
-            dropdown.addEventListener('click', function() {
-                dropdownMenu.classList.toggle('show');
-            });
-
-            dropdownItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    item.classList.toggle('selected');
-                });
-            });
-
-            document.addEventListener('click', function(event) {
-                if (!dropdown.contains(event.target)) {
-                    dropdownMenu.classList.remove('show');
-                }
-            });
-        });
     </script>
 </head>
 <body>
@@ -43,76 +21,49 @@
         <h1>Navigation bar...</h1>
     </header>
 
-    <main class="grid-container">
-        <section class="event-info">
-            <p class="text-xxl">Event Name</p>
-            <div class="event-description">
-                <p class="text-lg">Descrption of the event</h5>
-                <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-                <p class="text-lg">Category</p>
-                <p class="text-sm">Party</p>
-            </div>
+    <main >
+        <section class="event-name">
+            <p class="text-xxl"><strong>Active Dog Championship</strong></p>
         </section>
-        <section class="event-image">
-            <img src="assets/images/event-image.jpg" alt="Event 1">
-        </section>
-        <section class="event-planning">
-            <p class="text-lg">Event Planning</p>
-            <div class="event-instance">
-                <div class="location">
-                    <p class="text-md">Location: <span class="text-sm">Place Vendôme, Paris</span></p> 
-                </div>
-                <div class="dates">
-                    <p class="text-md">Start Date and Time: <span class="text-sm">November 20, 2024, 6:00 PM</span> </p>
-                    <p class="text-md">End Date and Time: <span class="text-sm">November 20, 2024, 6:00 PM</span> </p>
-                </div>
-                <div class="capacity-price">
-                    <p class="text-md">Capacity: <span class="text-sm">500 people</span> </p>
-                    <p class="text-md">Price: <span class="text-sm">$50.00</span> </p>
-                </div>
-            </div>
-            <div class="event-instance">
-                <div class="location">
-                    <p class="text-md">Location: <span class="text-sm">Champs-Élysées, Paris</span></p> 
-                </div>
-                <div class="dates">
-                    <p class="text-md">Start Date and Time: <span class="text-sm">December 10, 2024, 5:00 PM</span></p>
-                    <p class="text-md">End Date and Time: <span class="text-sm">December 10, 2024, 9:00 PM</span></p>
-                </div>
-                <div class="capacity-price">
-                    <p class="text-md">Capacity: <span class="text-sm">200 people</span></p>
-                    <p class="text-md">Price: <span class="text-sm">€40.00</span></p>
-                </div>
-            </div>            
-        </section>
-        <section class="event-subscription">
-            <div class="event-selector">
-                <p class="text-lg">Select your date and location:</p>
-                <div class="dropdown">
-                    <button class="dropdown-toggle">Select options</button>
-                    <div class="dropdown-menu">
-                        <div class="dropdown-item" data-value="place-vendome-2024-11-20">Place Vendôme, Paris - November 20, 2024, 10:00 AM</div>
-                        <div class="dropdown-item" data-value="champs-elysees-2024-11-21">Champs-Élysées, Paris - November 21, 2024, 10:00 AM</div>
-                        <div class="dropdown-item" data-value="place-vendome-2024-12-10">Place Vendôme, Paris - December 10, 2024, 10:00 AM</div>
-                        <div class="dropdown-item" data-value="champs-elysees-2024-12-11">Champs-Élysées, Paris - December 11, 2024, 10:00 AM</div>
-                        <div class="dropdown-item" data-value="place-vendome-2024-12-20">Place Vendôme, Paris - December 20, 2024, 10:00 AM</div>
-                        <div class="dropdown-item" data-value="champs-elysees-2024-12-21">Champs-Élysées, Paris - December 21, 2024, 10:00 AM</div>
+        <div class="event-container">
+            <section class="event-image">
+                <img src="assets/images/event-image.jpg" alt="Event 1">
+            </section>
+            <section class="event-information">
+                <section class="event-description">
+                    <p class="text-sm">Description</p>
+                    <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc ultricies ultricies. Nullam nec purus nec nunc ultricies ultricies. Nullam nec purus nec nunc
+                </section>
+                <section class="event-capacity-category">
+                    <p class="text-sm">Category: <span>Pets and animals</span></p>
+                    <p class="text-sm">Capacity: <span>50</span></p>
+                </section>
+                <section class="event-subscription">
+                    <div class="event-selector">
+                        <p class="text-sm">Select your date and location:</p>
+                        <select>
+                            <option value disabled selected>Choose one between the options:</option>
+                            <option value="champs-elysees-2024-11-21">Champs-Élysées, Paris - November 21, 2024, 10:00 AM</option>
+                            <option value="place-vendome-2024-11-20">Place Vendôme, Paris - November 20, 2024, 6:00 PM</option>
+                        </select>
                     </div>
-                </div>
-            </div>
-            <div class="subscription-details">
-                <div class="ticket-quantity">
-                    <p class="text-md">Number of tickets:</p>
-                    <button class="btn" onclick="document.getElementById('ticket-quantity').stepDown(); updateTotalPrice();">-</button>
-                    <input type="number" id="ticket-quantity" value="1" min="1" max="10" onchange="updateTotalPrice();">
-                    <button class="btn" onclick="document.getElementById('ticket-quantity').stepUp(); updateTotalPrice();">+</button>
-                </div>
-                <div id="total-price">
-                    <p class="text-sm">Total price: <span>50</span></p>
-                </div>
-                <button class="btn" onclick="alert('Subscribed!')">Subscribe event</button>
-            </div>
-        </section>
+                    <div class="subscription-details">
+                        <div class="ticket-quantity">
+                            <p class="text-sm">Number of tickets:</p>
+                            <button class="btn" onclick="document.getElementById('ticket-quantity').stepDown(); updateTotalPrice();">-</button>
+                            <input type="number" id="ticket-quantity" value="1" min="1" max="10" onchange="updateTotalPrice();">
+                            <button class="btn" onclick="document.getElementById('ticket-quantity').stepUp(); updateTotalPrice();">+</button>
+                        </div>
+                        <div id="total-price">
+                            <p class="text-sm">Total price: <span>50</span></p>
+                        </div>
+                        <button class="btn" onclick="alert('Subscribed!')">Subscribe event</button>
+                    </div>
+                </section>
+            </section>
+        </div>
+
+        
     </main>
 
 </body>

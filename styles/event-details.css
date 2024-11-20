@@ -1,25 +1,21 @@
-.grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    padding: 20px;
-    align-items: start;
+.event-container {
+    display: flex;
+    flex-direction: row; /* Cambia a fila para que los elementos estén uno al lado del otro */
+    margin: 1rem;
+    border-radius: 0.3rem;
+    border: 0.1rem solid lightslategray;
 }
 
-.event-info {
-    grid-column: 1 / 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    
+.event-name {
+    margin: 1rem;
+    width: 100%; /* Asegura que el nombre del evento ocupe todo el ancho */
 }
 
 .event-image {
-    grid-column: 2 / 3;
+    margin: 2rem;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    margin-top: 60px;
+    justify-self: center;
+    align-items: center;
 }
 
 .event-image img {
@@ -27,21 +23,21 @@
     height: auto;
 }
 
-.event-planning {
-    grid-column: 1 / -1;
+.event-information {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-left: 1rem;
 }
 
-.event-instance {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 20px;
-    width: 100%;
+.event-information section {
+    padding: 0.25rem 0;
+    margin: 0.25rem 0;
 }
 
-.location, .dates, .capacity-price {
-    display: inline;
-    align-items: center;
+.event-description {
+    margin-top: 0.5rem;
 }
 
 .event-subscription {
@@ -57,64 +53,28 @@
     justify-content: space-between;
 }
 
+.event-selector {
+    margin-top: 0.75rem;
+}
+
 .ticket-quantity {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
 }
 
 .ticket-quantity button {
-    margin: 0 5px;
+    margin: 1rem;
 }
 
 .total-price {
-
-    margin-bottom: 10px;
+    margin: 0.5rem 0;
 }
 
-
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-    width: 100%;
+select {
+    font-size: 0.875rem;
+    text-align: center;
 }
 
-.dropdown-toggle {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #fff;
-    cursor: pointer;
-}
-
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #fff;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-}
-
-.dropdown-menu.show {
-    display: block;
-}
-
-.dropdown-item {
-    padding: 10px;
-    cursor: pointer;
-}
-
-.dropdown-item:hover {
-    background-color: #f1f1f1;
-}
-
-.dropdown-item.selected {
-    background-color: #007bff;
-    color: white;
+select:hover {
+    background-color: #c4c4c4;
 }
