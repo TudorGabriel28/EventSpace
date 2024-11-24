@@ -2,7 +2,7 @@
 include '../config.php';
 include '../db_connection.php';
 
-$eventId = 1;
+$eventId = 5;
 
 // Query for event name and descrption
 $sql = "SELECT name, description, coverPhoto FROM event WHERE id = $eventId";
