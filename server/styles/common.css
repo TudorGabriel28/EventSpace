@@ -11,6 +11,10 @@
   * {
       font-family: "Roboto", sans-serif;
   }
+
+  body {
+    margin: 4rem;
+  }
   
   .btn {
     display: inline-block;
