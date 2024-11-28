@@ -1,0 +1,143 @@
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1em 2em;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+    gap: 3em;
+}
+
+.navbar-logo img {
+    width: 200px;
+    height: auto;
+}
+
+.navbar-search {
+    display: flex;
+    align-items: center;
+    background-color: #f5f1f7;
+    border-radius: 20px;
+    padding: 0.35em 1.5em;
+    flex-grow: 1;
+}
+
+.navbar-search input {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    
+}
+
+.navbar-search .search-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    white-space: nowrap;
+    padding-left: 0;
+}
+
+.navbar-links li a {
+    text-decoration: none;
+    color: black;
+    font-size: 1rem;
+}
+
+
+.navbar-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.host-event-btn {
+    padding: 5px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+.host-event-btn:hover {
+    background-color: #f5f5f5;
+}
+
+.login-btn {
+    padding: 5px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: orange;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: darkorange;
+}
+
+
+/* @media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1em;
+    }
+
+    .navbar-logo img {
+        width: 150px;
+    }
+
+    .navbar-search {
+        width: 100%;
+        margin-bottom: 1em;
+    }
+
+    .navbar-links {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .navbar-buttons {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .host-event-btn, .login-btn {
+        width: 48%;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-logo img {
+        width: 120px;
+    }
+
+    .navbar-search input {
+        font-size: 0.8rem;
+    }
+
+    .navbar-links li a {
+        font-size: 0.9rem;
+    }
+
+    .host-event-btn, .login-btn {
+        width: 100%;
+    }
+} */
