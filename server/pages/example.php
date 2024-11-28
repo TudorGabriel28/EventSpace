@@ -13,6 +13,9 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/common.css">
+    <script src="https://kit.fontawesome.com/620a552ea1.js" crossorigin="anonymous"></script>
+    
     <title>Events List</title>
     <style>
         table {
@@ -29,6 +32,8 @@ $result = $conn->query($sql);
     </style>
 </head>
 <body>
+
+<?php include_once '../navbar.php'; ?>
 
 <h1>Upcoming Events</h1>
 
@@ -52,7 +57,10 @@ $result = $conn->query($sql);
 <?php else: ?>
     <p>No events found.</p>
 <?php endif; ?>
+<?php include_once '../footer.php'; ?>
 
 <?php $conn->close(); ?>
+
+
 </body>
 </html>
