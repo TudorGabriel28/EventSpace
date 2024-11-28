@@ -11,12 +11,12 @@
         <a href="#" class="navbar-logo">
             <img src="../assets/logo-black.png" alt="Logo">
         </a>
-        <div class="navbar-search">
-            <input type="text" placeholder="Search for an Event">
-            <button class="search-button">
+        <form class="navbar-search" action="search.php" method="GET">
+            <input type="text" name="search" placeholder="Search for an Event">
+            <button type="submit" class="search-button">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
-        </div>
+        </form>
         <ul class="navbar-links">
             <li><a href="#">About Us</a></li>
             <li><a href="#">FAQs</a></li>

@@ -1,6 +1,11 @@
 @import url('footer.css');
 @import url('navbar.css');
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 :root {
     --primary-color: #ff7f00;
     --primary-color-hover: #e67300;

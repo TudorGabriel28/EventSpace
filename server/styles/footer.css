@@ -3,6 +3,7 @@ footer {
   color: #000;
   font-family: Arial, sans-serif;
   padding: 20px 40px;
+  margin-top: 3em;
 }
 
 .footer-container {
@@ -28,7 +29,6 @@ footer {
   display: flex;
   gap: 40px;
   flex: 2;
-  min-width: 300px;
 }
 
 .footer-column {
@@ -40,7 +40,7 @@ footer {
 .footer-column a {
   color: #000;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 1rem;
 }
 
 .footer-column a:hover {
@@ -54,8 +54,8 @@ footer {
 }
 
 .footer-social a img {
-  width: 24px;
-  height: 24px;
+  width: 35px;
+  height: 35px;
 }
 
 .footer-bottom {
