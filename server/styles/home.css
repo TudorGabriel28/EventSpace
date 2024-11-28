@@ -1,5 +1,9 @@
 
 
+main {
+    margin: 0 4rem;
+}
+
 /* Hero */
 #hero-image {
     background-image: url('../assets/hero-image.png');
@@ -13,6 +17,7 @@
     font-size: 2rem;
     border-radius: 20px;
     position: relative;
+    margin-top: 1rem;
 }
 
 #hero-image::before {
