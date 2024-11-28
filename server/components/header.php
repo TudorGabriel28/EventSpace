@@ -10,6 +10,9 @@
     <script src="https://kit.fontawesome.com/620a552ea1.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../styles/common.css">
     <link rel="stylesheet" href="../styles/<?php echo $stylesheet ?? 'common.css'; ?>">
+    <?php if (!empty($script)): ?>
+        <script src="../scripts/<?php echo htmlspecialchars($script); ?>" defer></script>
+    <?php endif; ?>
 </head>
 <body>
 <?php include_once '../components/navbar.php'; ?>

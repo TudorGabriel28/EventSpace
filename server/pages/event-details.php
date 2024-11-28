@@ -2,7 +2,10 @@
 include '../config.php';
 include '../db_connection.php';
 
-$eventId = 5;
+$stylesheet = "event-details.css";
+$script = "event-details.js";
+
+$eventId = 1;
 
 // Query for event name and descrption
 $sql = "SELECT name, description, coverPhoto FROM event WHERE id = $eventId";
@@ -54,39 +57,10 @@ if ($result->num_rows > 0) {
 $conn->close();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $eventName?></title>
-    <link rel="stylesheet" href="../../styles/event-details.css">
-    <link rel="stylesheet" href="../../styles/common.css">
-    <script>
-        function updateTotalPrice() {
-            const select = document.getElementById('event-selector');
-            const pricePerTicket = parseFloat(select.options[select.selectedIndex].getAttribute('data-price'));
-            const quantity = document.getElementById('ticket-quantity').value;
-            const totalPrice = pricePerTicket * quantity;
-            document.getElementById('total-price').innerText = `Total Price: ${totalPrice.toFixed(2)} €`;
-        }
 
-        let selectedPlanningId = null;
 
-        function updateCapacity() {
-            const select = document.getElementById('event-selector');
-            const capacity = select.options[select.selectedIndex].getAttribute('data-capacity');
-            selectedPlanningId = select.options[select.selectedIndex].getAttribute('data-planning-id');
-            document.getElementById('event-capacity').innerText = capacity;
-            document.getElementById('event-capacity-container').style.display = 'block';
-        }
-    </script>
-</head>
-<body>
 
-    <header>
-        <h1>Navigation bar...</h1>
-    </header>
+<?php include_once '../components/header.php'; ?>
 
     <main >
         <div class="event-container">
@@ -95,7 +69,7 @@ $conn->close();
                     <p class="text-xl"><strong><?php echo $eventName;?></strong></p>
                 </section>
                 <section class="event-image">
-                    <img class="image-class" src="<?php echo $eventImage;?>" alt="Event 1">
+                    <img class="image-class" src="<?php echo $eventImage;?>" alt="Event Image">
                 </section>
             </section>
             <section class="event-information">
@@ -135,6 +109,6 @@ $conn->close();
             </section>
         </div>  
     </main>
-
+    <?php include_once '../components/footer.php'; ?>
 </body>
 </html>
