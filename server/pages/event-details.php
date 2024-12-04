@@ -5,7 +5,10 @@ include '../db_connection.php';
 $stylesheet = "event-details.css";
 $script = "event-details.js";
 
+
 $eventId = 1;
+$userId = 1;
+
 
 // Query for event name and descrption
 $sql = "SELECT name, description, coverPhoto FROM event WHERE id = $eventId";
@@ -53,6 +56,22 @@ if ($result->num_rows > 0) {
     }
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['subscribe'])) {
+
+    $ticketQuantity = intval($_POST['ticket-quantity']);
+    $planningId = intval($_POST['event-selector']);
+
+    $sql = "INSERT INTO usereventreservation (ticketquantity, idPlanning, idUser) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("iii", $ticketQuantity,  $userId, $planningId);
+    if ($stmt->execute()) {
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    $stmt->close();
+}
+
 
 $conn->close();
 ?>
@@ -79,32 +98,34 @@ $conn->close();
                     <p class="text-sm"><?php echo $eventDescription;?></p>
                 </section>
                 <section class="event-subscription">
-                    <div class="event-selector">
-                        <p class="text-sm">Select your date and location:</p>
-                        <select id="event-selector" onchange="updateCapacity()">
-                            <option value disabled selected>Choose one:</option>
-                            <?php foreach ($planningDetails as $planning): ?>
-                                <option value="<?php echo htmlspecialchars($planning['address']) . '-' . htmlspecialchars($planning['startDate']); ?>" data-capacity="<?php echo htmlspecialchars($planning['capacity']); ?>" data-capacity="<?php echo htmlspecialchars($planning['capacity']); ?>" data-price="<?php echo htmlspecialchars($planning['price']); ?>" data-planning-id="<?php echo htmlspecialchars($planning['planningId']); ?>">
-                                    <?php echo htmlspecialchars($planning['address']) . ' - ' . htmlspecialchars($planning['startDate']); ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <section class="event-capacity" id="event-capacity-container" style="display: none;">
-                        <p class="text-sm"><strong>Capacity: </strong><span id="event-capacity"></span></p>
-                    </section>
-                    <div class="subscription-details">
-                        <div class="ticket-quantity">
-                            <p class="text-sm">Number of tickets:</p>
-                            <button class="btn" onclick="document.getElementById('ticket-quantity').stepDown(); updateTotalPrice();">-</button>
-                            <input type="number" id="ticket-quantity" value="1" min="1" max="10" onchange="updateTotalPrice();">
-                            <button class="btn" onclick="document.getElementById('ticket-quantity').stepUp(); updateTotalPrice();">+</button>
+                    <form method="POST" action="">
+                        <div class="event-selector">
+                            <p class="text-sm">Select your date and location:</p>
+                            <select id="event-selector" name="event-selector" onchange="updateCapacity()">
+                                <option value disabled selected>Choose one:</option>
+                                <?php foreach ($planningDetails as $planning): ?>
+                                    <option value="<?php echo htmlspecialchars($planning['planningId']) ?>" data-capacity="<?php echo htmlspecialchars($planning['capacity']); ?>" data-capacity="<?php echo htmlspecialchars($planning['capacity']); ?>" data-price="<?php echo htmlspecialchars($planning['price']); ?>" data-planning-id="<?php echo htmlspecialchars($planning['planningId']); ?>">
+                                        <?php echo htmlspecialchars($planning['address']) . ' - ' . htmlspecialchars($planning['startDate']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
-                        <div id="total-price">
-                            <p class="text-sm">Total price: <span id="event-price"></span></p>
+                        <section class="event-capacity" id="event-capacity-container" style="display: none;">
+                            <p class="text-sm"><strong>Total Capacity: </strong><span id="event-capacity"></span></p>
+                        </section>
+                        <div class="subscription-details">
+                            <div class="ticket-quantity">
+                                <p class="text-sm">Number of tickets:</p>
+                                <button class="btn" type="button" onclick="document.getElementById('ticket-quantity').stepDown(); updateTotalPrice();">-</button>
+                                <input type="number" id="ticket-quantity" name="ticket-quantity" value="1" min="1" max="10" onchange="updateTotalPrice();">
+                                <button class="btn" type="button" onclick="document.getElementById('ticket-quantity').stepUp(); updateTotalPrice();">+</button>
+                            </div>
+                            <div id="total-price">
+                                <p class="text-sm">Total price: <span id="event-price"></span></p>
+                            </div>
+                            <button class="btn" type="submit" name="subscribe">Subscribe event</button>
                         </div>
-                        <button class="btn" onclick="alert('Subscribed!')">Subscribe event</button>
-                    </div>
+                    </form>
                 </section>
             </section>
         </div>  
