@@ -1,0 +1,102 @@
+.event-container {
+    display: flex;
+    flex-direction: row; 
+    margin: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.event-header {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 1rem 0 0 1rem;
+}
+
+.event-name {
+    margin-left: 5rem;
+    width: 100%;
+}
+
+.event-image {
+    margin: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-class {
+    width: 400px;
+    height: 280px;
+    object-fit: cover;
+}
+
+.event-information {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-left: 1rem;
+    padding: 1rem;
+    background-color: #ffffff;
+    border-radius: 0 1rem 1rem 0;
+}
+
+.event-information section {
+    padding: 0.25rem 0;
+    margin: 0.25rem 0;
+}
+
+.event-description {
+    margin-top: 0.5rem;
+}
+
+.event-subscription {
+    gap: 20px;
+}
+
+.subscription-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.event-selector {
+    display: flex;
+    flex-direction: column;
+}
+
+.event-selector p {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.event-selector select {
+    width: 400px;
+    padding: 10px;
+    font-size: 0.875rem;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+.event-selector select:hover {
+    background-color: #c4c4c4;
+}
+
+.ticket-quantity {
+    display: flex;
+    align-items: center;
+}
+
+.ticket-quantity button {
+    margin: 1rem;
+}
+
+.total-price {
+    margin: 0.5rem 0;
+}

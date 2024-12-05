@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/event-details.css">
+    <script>
+        function updateTotalPrice() {
+            const pricePerTicket = 50; // Assuming a fixed price per ticket for simplicity
+            const quantity = document.getElementById('ticket-quantity').value;
+            const totalPrice = pricePerTicket * quantity;
+            document.getElementById('total-price').innerText = `Total Price: ${totalPrice.toFixed(2)} €`;
+        }
+    </script>
+</head>
+<body>
+
+    <header>
+        <h1>Navigation bar...</h1>
+    </header>
+
+    <main >
+        <div class="event-container">
+            <section class="event-header">
+                <section class="event-name">
+                    <p class="text-xl"><strong>Active Dog Championship</strong></p>
+                </section>
+                <section class="event-image">
+                    <img class="image-class" src="assets/images/event-image.jpg" alt="Event 1">
+                </section>
+            </section>
+            <section class="event-information">
+                <section class="event-description">
+                    <p class="text-sm">Description</p>
+                    <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc ultricies ultricies. Nullam nec purus nec nunc ultricies ultricies. Nullam nec purus nec nunc
+                </section>
+                <section class="event-capacity-category">
+                    <p class="text-sm">Category: <span>Pets and animals</span></p>
+                    <p class="text-sm">Capacity: <span>50</span></p>
+                </section>
+                <section class="event-subscription">
+                    <div class="event-selector">
+                        <p class="text-sm">Select your date and location:</p>
+                        <select>
+                            <option value disabled selected>Choose one:</option>
+                            <option value="champs-elysees-2024-11-21">Champs-Élysées, Paris - November 21, 2024, 10:00 AM</option>
+                            <option value="place-vendome-2024-11-20">Place Vendôme, Paris - November 20, 2024, 6:00 PM</option>
+                        </select>
+                    </div>
+                    <div class="subscription-details">
+                        <div class="ticket-quantity">
+                            <p class="text-sm">Number of tickets:</p>
+                            <button class="btn" onclick="document.getElementById('ticket-quantity').stepDown(); updateTotalPrice();">-</button>
+                            <input type="number" id="ticket-quantity" value="1" min="1" max="10" onchange="updateTotalPrice();">
+                            <button class="btn" onclick="document.getElementById('ticket-quantity').stepUp(); updateTotalPrice();">+</button>
+                        </div>
+                        <div id="total-price">
+                            <p class="text-sm">Total price: <span>50</span></p>
+                        </div>
+                        <button class="btn" onclick="alert('Subscribed!')">Subscribe event</button>
+                    </div>
+                </section>
+            </section>
+        </div>  
+    </main>
+
+</body>
+</html>
