@@ -56,58 +56,70 @@ if ($result->num_rows > 0) {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['subscribe'])) {
+// Handling subscription
+$errorMessage = '';
+$showWaitlistButton = false;
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ticketQuantity = intval($_POST['ticket-quantity']);
     $planningId = intval($_POST['event-selector']);
 
     if (empty($planningId)) {
-        echo "Error: Please select a planning.";
-        exit;
-    }
-
-    // Verify if the capacity is available
-    $sql = "SELECT 
-    CASE 
-        WHEN EXISTS (
-            SELECT 1
-            FROM UserEventReservation r
-            INNER JOIN Planning p ON r.idPlanning = p.id
-            WHERE r.idPlanning = ?
-            GROUP BY r.idPlanning, p.capacity
-            HAVING SUM(r.ticketQuantity) + ? <= p.capacity
-        ) THEN TRUE
-        ELSE FALSE
-    END AS isCapacityAvailable";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $planningId, $ticketQuantity);
-    $stmt->execute();
-    $stmt->bind_result($isCapacityAvailable);
-    $stmt->fetch();
-    $stmt->close();
-    
-    if ($isCapacityAvailable) {
-        $sql = "INSERT INTO usereventreservation (ticketquantity, idPlanning, idUser) VALUES (?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("iii", $ticketQuantity,  $planningId, $userId);
-        if ($stmt->execute()) {
-        } else {
-            echo "Error: " . $stmt->error;
-        }
-
-        $stmt->close();
+        $errorMessage = "Error: Please select a planning.";
     } else {
-        echo "Error: Capacity is not available.";
+        if (isset($_POST['subscribe'])) {
+            // Verify if the capacity is available
+            $sql = "SELECT 
+                        CASE 
+                            WHEN EXISTS (
+                                SELECT 1
+                                FROM UserEventReservation r
+                                INNER JOIN Planning p ON r.idPlanning = p.id
+                                WHERE r.idPlanning = ?
+                                GROUP BY r.idPlanning, p.capacity
+                                HAVING SUM(r.ticketQuantity) + ? <= p.capacity
+                            ) THEN TRUE
+                            ELSE FALSE
+                        END AS isCapacityAvailable";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ii", $planningId, $ticketQuantity);
+            $stmt->execute();
+            $stmt->bind_result($isCapacityAvailable);
+            $stmt->fetch();
+            $stmt->close();
+
+            if ($isCapacityAvailable) {
+                // Insert reservation if capacity is available
+                $sql = "INSERT INTO usereventreservation (ticketquantity, idPlanning, idUser) VALUES (?, ?, ?)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("iii", $ticketQuantity, $planningId, $userId);
+                if ($stmt->execute()) {
+                    $errorMessage = "Reservation successful!";
+                } else {
+                    $errorMessage = "Error: " . $stmt->error;
+                }
+                $stmt->close();
+            } else {
+                $errorMessage = "The capacity is full for this event! Do you want to join the waitlist?";
+                $showWaitlistButton = true;
+            }
+        } elseif (isset($_POST['join-waitlist'])) {
+            // Insert into waitlist
+            $sql = "INSERT INTO usereventwaitlist (ticketQuantity, idUser, idPlanning) VALUES (?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("iii", $ticketQuantity, $userId, $planningId);
+            if ($stmt->execute()) {
+                $errorMessage = "You have been added to the waitlist!";
+            } else {
+                $errorMessage = "Error: " . $stmt->error;
+            }
+            $stmt->close();
+        }
     }
 }
 
-
 $conn->close();
 ?>
-
-
-
 
 <?php include_once '../components/header.php'; ?>
 
@@ -124,8 +136,7 @@ $conn->close();
             <section class="event-information">
                 <section class="event-description">
                     <p class="text-sm"><strong>Category: </strong><span><?php echo $eventCategory;?></span></p>
-                    <p class="text-sm"><strong>Description</strong></p>
-                    <p class="text-sm"><?php echo $eventDescription;?></p>
+                    <p class="text-sm"><strong>Description</strong><span><?php echo $eventDescription;?></span></p>
                 </section>
                 <section class="event-subscription">
                     <form method="POST" action="">
@@ -154,6 +165,12 @@ $conn->close();
                                 <p class="text-sm">Total price: <span id="event-price"></span></p>
                             </div>
                             <button class="btn" type="submit" name="subscribe" id="subscribe-button">Subscribe event</button>
+                            <?php if ($errorMessage): ?>
+                                <p class="error" style="color: red;"><?php echo $errorMessage; ?></p>
+                            <?php endif; ?>
+                            <?php if ($showWaitlistButton): ?>
+                                <button class="btn" type="submit" name="join-waitlist" id="waitlist-button">Join waitlist</button>
+                            <?php endif; ?>
                         </div>
                     </form>
                     <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['subscribe']) && empty($_POST['event-selector'])): ?>
