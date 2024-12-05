@@ -61,15 +61,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['subscribe'])) {
     $ticketQuantity = intval($_POST['ticket-quantity']);
     $planningId = intval($_POST['event-selector']);
 
-    $sql = "INSERT INTO usereventreservation (ticketquantity, idPlanning, idUser) VALUES (?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iii", $ticketQuantity,  $userId, $planningId);
-    if ($stmt->execute()) {
-    } else {
-        echo "Error: " . $stmt->error;
+    if (empty($planningId)) {
+        echo "Error: Please select a planning.";
+        exit;
     }
 
+    // Verify if the capacity is available
+    $sql = "SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1
+            FROM UserEventReservation r
+            INNER JOIN Planning p ON r.idPlanning = p.id
+            WHERE r.idPlanning = ?
+            GROUP BY r.idPlanning, p.capacity
+            HAVING SUM(r.ticketQuantity) + ? <= p.capacity
+        ) THEN TRUE
+        ELSE FALSE
+    END AS isCapacityAvailable";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $planningId, $ticketQuantity);
+    $stmt->execute();
+    $stmt->bind_result($isCapacityAvailable);
+    $stmt->fetch();
     $stmt->close();
+    
+    if ($isCapacityAvailable) {
+        $sql = "INSERT INTO usereventreservation (ticketquantity, idPlanning, idUser) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("iii", $ticketQuantity,  $planningId, $userId);
+        if ($stmt->execute()) {
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+
+        $stmt->close();
+    } else {
+        echo "Error: Capacity is not available.";
+    }
 }
 
 
@@ -101,7 +131,7 @@ $conn->close();
                     <form method="POST" action="">
                         <div class="event-selector">
                             <p class="text-sm">Select your date and location:</p>
-                            <select id="event-selector" name="event-selector" onchange="updateCapacity()">
+                            <select id="event-selector" name="event-selector" onchange="updateCapacity(); enableSubscribeButton();">
                                 <option value disabled selected>Choose one:</option>
                                 <?php foreach ($planningDetails as $planning): ?>
                                     <option value="<?php echo htmlspecialchars($planning['planningId']) ?>" data-capacity="<?php echo htmlspecialchars($planning['capacity']); ?>" data-capacity="<?php echo htmlspecialchars($planning['capacity']); ?>" data-price="<?php echo htmlspecialchars($planning['price']); ?>" data-planning-id="<?php echo htmlspecialchars($planning['planningId']); ?>">
@@ -123,9 +153,12 @@ $conn->close();
                             <div id="total-price">
                                 <p class="text-sm">Total price: <span id="event-price"></span></p>
                             </div>
-                            <button class="btn" type="submit" name="subscribe">Subscribe event</button>
+                            <button class="btn" type="submit" name="subscribe" id="subscribe-button">Subscribe event</button>
                         </div>
                     </form>
+                    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['subscribe']) && empty($_POST['event-selector'])): ?>
+                        <p class="error">Please select a planning before subscribing.</p>
+                    <?php endif; ?>
                 </section>
             </section>
         </div>  
