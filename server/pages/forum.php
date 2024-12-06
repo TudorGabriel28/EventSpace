@@ -5,50 +5,33 @@ include '../db_connection.php';
 $stylesheet = "forum.css";
 $script = "forum.js";
 
-$forumDiscussionId = 1;
-$userId = 1;
+// Simulation of a logged in user
+$userId = 8;
 
-// Query to obtain discussion details
-$sql = "SELECT forumdiscussion.title, CONCAT(user.firstName, ' ', user.lastName) AS 'User', user.profilePicture, forumdiscussion.question
+// Query to obtain all discussions
+$sql = "SELECT forumdiscussion.id, forumdiscussion.title, CONCAT(user.firstName, ' ', user.lastName) AS 'User'
         FROM forumdiscussion 
-        INNER JOIN user ON forumdiscussion.idUser = user.id
-        WHERE forumdiscussion.id = $forumDiscussionId";
+        INNER JOIN user ON forumdiscussion.idUser = user.id";
 $result = $conn->query($sql);
 
-if ($result->num_rows > 0) {
-    $discussion = $result->fetch_assoc();
-    $discussionTitle = $discussion['title'];
-    $discussionUser = $discussion['User'];
-    $discussionUserProfilePic = $discussion['profilePicture'];
-    $discussionContent = $discussion['question'];
-} else {
-    $discussionTitle = "Discussion Not Found";
-    $discussionUser = "";
-    $discussionUserProfilePic = "";
-    $discussionContent = "";
-}
-
-// Query to obtain comments
-$sql = "SELECT CONCAT(user.firstName, ' ', user.lastName) AS 'User', user.profilePicture, forumcomment.content
-        FROM forumcomment INNER JOIN user ON forumcomment.idUser = user.id
-        WHERE forumcomment.idDiscussion = $forumDiscussionId";
-$result = $conn->query($sql);
-
-$comments = [];
+$discussions = [];
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $comments[] = $row;
+        $discussions[] = $row;
     }
 }
 
-// Insert a new comment 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment'])) {
-    $commentContent = $_POST['comment'];
-    $sql = "INSERT INTO forumcomment (content, idDiscussion, idUser) VALUES (?, ?, ?)";
+// Insert a new discussion
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new-discussion'])) {
+    $title = $_POST['title'];
+    $question = $_POST['question'];
+    $sql = "INSERT INTO forumdiscussion (title, question, idUser) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sii", $commentContent, $forumDiscussionId, $userId);
+    $stmt->bind_param("ssi", $title, $question, $userId);
     if ($stmt->execute()) {
-        $successMessage = "Comment added successfully!";
+        $successMessage = "Discussion added successfully!";
+        header("Location: forum.php");
+        exit();
     } else {
         $errorMessage = "Error: " . $stmt->error;
     }
@@ -62,39 +45,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment'])) {
 <main >
     <div class="forum-container">
         <h1 class="text-center">Forum Page</h1>
-        <p class="text-center">Collaborate, connect and discuss about the upcoming event</p>
+        <p class="text-center">Collaborate, connect and discuss about the upcoming events. See all the discussions...</p>
 
-        <section class="discussion">
-            <h2><?php echo htmlspecialchars($discussionTitle); ?></h2>
-            <div class="discussion-user">
-                <img src="<?php echo htmlspecialchars($discussionUserProfilePic); ?>" alt="Profile Picture" class="profile-pic">
-                <p><strong><?php echo htmlspecialchars($discussionUser); ?></strong></p>
-            </div>
-            <p><?php echo htmlspecialchars($discussionContent); ?></p>
-        </section>
-
-        <section class="comments">
-            <h3>Comments</h3>
-            <?php foreach ($comments as $comment): ?>
-                <div class="comment">
-                    <div class="comment-user">
-                        <img src="<?php echo htmlspecialchars($comment['profilePicture']); ?>" alt="Profile Picture" class="profile-pic">
-                        <p><strong><?php echo htmlspecialchars($comment['User']); ?>:</strong></p>
-                    </div>    
-                    <p><?php echo htmlspecialchars($comment['content']); ?></p>
-                </div>
+        <section class="discussions">
+            <?php foreach ($discussions as $discussion): ?>
+                <a href="discussion.php?id=<?php echo htmlspecialchars($discussion['id']); ?>" class="discussion-link">
+                    <div class="discussion-item">
+                        <h3><?php echo htmlspecialchars($discussion['title']); ?></h3>
+                        <p>Started by: <?php echo htmlspecialchars($discussion['User']); ?></p>
+                    </div>
+                </a>
             <?php endforeach; ?>
         </section>
 
-        <section class="add-comment">
+        <section class="add-discussion">
+            <h2>Do you have any questions? Start your own discussion:</h2>
             <form method="POST" action="">
-                <label for="comment">Comment:</label><br>
-                <textarea id="comment" name="comment" required></textarea>
-                <button class="btn" style="align-self:flex-end" type="submit">Submit</button>
+                <label for="title">Title:</label><br>
+                <input type="text" id="title" name="title" required><br>
+                <label for="question">Question:</label><br>
+                <textarea id="question" name="question" required></textarea><br>
+                <button class="btn" type="submit" name="new-discussion">Submit</button>
             </form>
+            <?php if (isset($successMessage)): ?>
+                <p class="success" style="color: green;"><?php echo $successMessage; ?></p>
+            <?php endif; ?>
+            <?php if (isset($errorMessage)): ?>
+                <p class="error" style="color: red;"><?php echo $errorMessage; ?></p>
+            <?php endif; ?>
         </section>
+
     </div>
 </main>
-    <?php include_once '../components/footer.php'; ?>
+
+<?php include_once '../components/footer.php'; ?>
 </body>
 </html>
