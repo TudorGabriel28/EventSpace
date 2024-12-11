@@ -8,7 +8,7 @@
 </head>
 <body>
     <nav class="navbar">
-        <a href="#" class="navbar-logo">
+        <a href="home.php" class="navbar-logo">
             <img src="../assets/logo-black.png" alt="Logo">
         </a>
         <form class="navbar-search" action="search.php" method="GET">
