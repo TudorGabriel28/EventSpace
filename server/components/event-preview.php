@@ -1,3 +1,4 @@
+<a href="event.php?id=<?= htmlspecialchars($event['id']) ?>" class="event-preview-link">
 <div class="event-preview">
                 <div class="event-preview-image" style="background-image: url('<?= htmlspecialchars($event['coverPhoto']) ?>');">
                     <div class="event-preview-date">
@@ -24,3 +25,4 @@
                     </div>
                 </div>
             </div>
+        </a>
