@@ -48,6 +48,19 @@
     border-radius: 30px;
 }
 
+.image-section img {
+    top: 50px;
+    left: 50px;
+    position: absolute;
+}
+
+#passwordError {
+    color: red;
+    font-size: 12px;
+    margin-top: -10px;  
+    margin-bottom: 20px;
+}
+
 
 @media (max-width: 768px) {
     .container {

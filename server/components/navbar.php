@@ -1,10 +1,16 @@
+<?php
+session_start();
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EventSpace Navbar</title>
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <nav class="navbar">
@@ -18,14 +24,20 @@
             </button>
         </form>
         <ul class="navbar-links">
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">FAQs</a></li>
-            <li><a href="#">Forum</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="about.php">About Us</a></li>
+            <li><a href="faq.php">FAQs</a></li>
+            <li><a href="forum.php">Forum</a></li>
+            <li><a href="contact.php">Contact</a></li>
         </ul>
         <div class="navbar-buttons">
             <button class="btn">Host an Event</button>
-            <button class="btn btn-primary">Login</button>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <form action="logout.php" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-primary">Logout</button>
+                </form>
+            <?php else: ?>
+                <button class="btn btn-primary" onclick="window.location.href='login.php'">Login</button>
+            <?php endif; ?>
         </div>
     </nav>
 </body>
