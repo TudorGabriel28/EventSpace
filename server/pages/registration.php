@@ -28,9 +28,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $sql = "INSERT INTO user (firstName, lastName, email, password, dateOfBirth) VALUES (?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("sssss", $firstName, $lastName, $email, $password, $dateOfBirth);
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $stmt->bind_param("sssss", $firstName, $lastName, $email, $hashedPassword, $dateOfBirth);
             if($stmt->execute() === TRUE) {
                 $successMessage = "Account successfully created";
+                header("Location: login.php");
             } else {
                 $errorMessage = "Error: " . $stmt->error;
             }
@@ -55,13 +57,10 @@ $conn->close();
 <div class="container">
 
     <div class="image-section">
-        <p style="background-image: url('../assets/event-preview.png');"></p>
-        <div class="overlay">
-            <div class="logo">EVENTSPACE</div>
-            <a href="#" class="back-button">Back to website →</a>
-        </div>
+        <a href="#" class="navbar-logo">
+            <img src="../assets/logo-black.png" alt="Logo">
+        </a>
     </div>
-
 
     <div class="form-section">
         <h2>Create an account</h2>
@@ -74,11 +73,9 @@ $conn->close();
             <input type="email" name="email" placeholder="Email" required>
             <div class="password-row">
                 <input type="password" name="password" placeholder="Enter your password" required>
-                <button type="button" class="password-toggle">👁️</button>
             </div>
             <div class="password-row">
                 <input type="password" name="confirmPassword" placeholder="Confirm your password" required>
-                <button type="button" class="password-toggle">👁️</button>
             </div>
             <button type="submit" class="btn primary">Sign Up</button>
         </form>
