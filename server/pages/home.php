@@ -3,56 +3,93 @@
 include '../config.php';
 include '../db_connection.php';
 
+$stylesheet = "home.css";
+
 // Query to fetch events
-$sql = "SELECT id, name, description, coverPhoto FROM event";
-$result = $conn->query($sql);
+$eventQuery = "SELECT 
+    e.id AS id, 
+    e.name AS name, 
+    e.description AS description, 
+    e.coverPhoto AS coverPhoto, 
+    c.id AS categoryId, 
+    c.name AS categoryName, 
+    JSON_ARRAYAGG(JSON_OBJECT('city', l.city, 'postalCode', l.postalCode)) AS locations
+FROM 
+    event e
+JOIN 
+    eventcategory ec ON e.id = ec.idEvent
+JOIN 
+    category c ON ec.idCategory = c.id
+JOIN 
+    planning p ON e.id = p.idEvent
+JOIN 
+    location l ON p.idLocation = l.id
+GROUP BY 
+    e.id, e.name, e.description, e.coverPhoto, c.id, c.name
+ORDER BY e.creationTimestamp DESC
+LIMIT 5";
+
+$categoryQuery = "SELECT id, name, photo FROM category";
+
+$eventResult = $conn->query($eventQuery);
+$categoryResult = $conn->query($categoryQuery);
+
+$events = [];
+$categories = [];
+
+if ($eventResult->num_rows > 0) {
+    while($row = $eventResult->fetch_assoc()) {
+        $events[] = $row;
+    }
+}
+
+if ($categoryResult->num_rows > 0) {
+    while($row = $categoryResult->fetch_assoc()) {
+        $categories[] = $row;
+    }
+}
+
+$conn->close();
+
+
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Events List</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-        }
-    </style>
-</head>
-<body>
 
-<h1>Upcoming Events</h1>
+<?php include_once '../components/header.php'; ?>
+<main>
+    <div id="hero-image">
+        <h1>Come &<br> Be a part<br> of the family</h1>
+    </div>
+    <div id="popular-events">
+        <h2 class="section-title">Newest Events</h2>
+        <div class="event-preview-list">
+            <!-- list of events -->
+            <?php foreach ($events as $event): ?>
+                <?php 
+                    $eventData = ['event' => $event];
+                    include '../components/event-preview.php'; 
+                ?>
+        <?php endforeach; ?>
 
-<?php if ($result->num_rows > 0): ?>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Cover photo</th>
-        </tr>
-        <?php while ($row = $result->fetch_assoc()): ?>
-            <tr>
-                <td><?= $row["id"] ?></td>
-                <td><?= htmlspecialchars($row["name"]) ?></td>
-                <td><?= $row["description"] ?></td>
-                <td><?= htmlspecialchars($row["coverPhoto"]) ?></td>
-            </tr>
-        <?php endwhile; ?>
-    </table>
-<?php else: ?>
-    <p>No events found.</p>
-<?php endif; ?>
+             
+        
+        </div>
+    </div>
+    <div id="categories">
+        <h2 class="section-title">Browse all the activities</h2>
+        <div class="category-list">
+        <?php foreach ($categories as $category): ?>
+            <div class="category">
+                <img class="category-image" src="<?= htmlspecialchars($category['photo']) ?>" alt="">
+                <div class="category-title"><?= $category['name'] ?></div>
+            </div>
+        <?php endforeach; ?>
+    
+        </div>
 
-<?php $conn->close(); ?>
+    </div>
+    
+</main>
+<?php include_once '../components/footer.php'; ?>
 </body>
 </html>

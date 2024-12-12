@@ -1,0 +1,77 @@
+.container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.image-section {
+    flex: 1;
+    background: url('../assets/login.jpg') no-repeat center center/cover;
+}
+
+.form-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+.form-section h1 {
+    margin-bottom: 30px;
+    font-size: 24px;
+    color: #333;
+}
+
+.form-section input {
+    width: 100%;
+    max-width: 500px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+}
+
+.form-section a {
+    color: var(--primary-color-hover)
+}
+
+ .form-section button {
+    width: 100%;
+    max-width: 500px;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+.image-section img {
+    top: 50px;
+    left: 50px;
+    position: absolute;
+}
+
+#passwordError {
+    color: red;
+    font-size: 12px;
+    margin-top: -10px;  
+    margin-bottom: 20px;
+}
+
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .image-section {
+        display: none;
+    }
+
+    .form-section {
+        padding: 20px;
+    }
+}
