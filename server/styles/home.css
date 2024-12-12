@@ -93,5 +93,9 @@ main {
     text-align: center;
 }
 
+.category-link {
+    text-decoration: none;
+    color: inherit;
+}
 
 

@@ -163,7 +163,7 @@ INSERT INTO `faq` (`id`, `question`, `answer`) VALUES
 (3, 'How do I register for an event?', 'To register for an event, simply visit the event page, select the event you’re interested in, and click on the \'Register\' button. You may need to create an account or log in to complete your registration.'),
 (4, 'Can I host my own event?', 'Yes! Eventspace allows users to create and host their own events. You can choose the category, set the date, and provide all the event details. Once your event is created, others can register and participate.'),
 (5, 'How can I find events related to my interests?', 'You can browse events by categories such as Music, Technology, Sports, and Art. Additionally, you can use the search function to find events based on location, date, or keywords.'),
-(6, 'Can I cancel my registration for an event?', 'Yes, you can cancel your registration. Simply go to your profile or the event page, and you\'ll find an option to cancel your registration. Please check if the event has any specific cancellation policies.'),
+(6, 'Can I cancel my registration for an event?', 'Yes, you can cancel your registration. Simply go to your profile or the event page, and youll find an option to cancel your registration. Please check if the event has any specific cancellation policies.'),
 (7, 'What should I do if I want to modify my event details after posting?', 'If you need to update the event details, you can edit the event by logging into your Eventspace account. Changes will be reflected on the event page once updated.'),
 (8, 'What happens if an event I registered for gets canceled?', 'If an event is canceled, you will be notified via email or through your account. Depending on the event, you may be offered a refund if there was a registration fee.'),
 (9, 'Can I create an event with multiple categories?', 'Yes, you can select multiple categories for your event if it fits within different interests, such as combining Music and Technology for a music tech event.'),
@@ -429,7 +429,7 @@ CREATE TABLE `usereventwaitlist` (
 -- Volcado de datos para la tabla `usereventwaitlist`
 --
 
-INSERT INTO `usereventwaitlist` (`id`, `ticketQuantity`, `timestamp`, `idUser`, `idEvent`) VALUES
+INSERT INTO `usereventwaitlist` (`id`, `ticketQuantity`, `timestamp`, `idUser`, `idPlanning`) VALUES
 (1, 1, '2024-11-03 08:00:00', 3, 1);
 
 --
