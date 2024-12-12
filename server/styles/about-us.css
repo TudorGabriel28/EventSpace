@@ -1,0 +1,62 @@
+.grid-container {
+    display: grid;
+    grid-template-rows: auto auto auto;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.title img {
+    width: 100%;
+    height: auto;
+}
+
+.who-we-are {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 2rem;
+    grid-template-areas: "text image";
+}
+
+.who-we-are-text {
+    grid-area: text;
+    padding: 1rem;
+}
+
+.who-we-are-image {
+    grid-area: image;
+}
+
+.who-we-are-image img {
+    width: 80%; 
+    height: auto; 
+}
+
+.what-we-do {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 2rem;
+    grid-template-areas: "image text";
+}
+
+.what-we-do-text {
+    grid-area: text;
+    padding: 1rem;
+}
+
+.what-we-do-image {
+    grid-area: image;
+}
+
+.what-we-do-image img {
+    width: 80%; 
+    height: auto; 
+}
+
+.banner {
+    width: 100%;
+    height: auto;
+    max-height: 300px; 
+    overflow: hidden;
+}
