@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2c2c2c; /* Dark background for contrast */
+            color: white; /* White text for readability */
+            margin: 0;
+            padding: 0;
+        }
+
+        .contact-container {
+            background: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+            padding: 30px;
+            max-width: 900px; /* Centered container width */
+            margin: 50px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Shadow for a modern look */
+        }
+
+        .contact-container h1 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .contact-info p {
+            margin: 5px 0;
+        }
+
+        .contact-info a {
+            color: #ff6600; /* Orange link color */
+            text-decoration: none;
+        }
+
+        /* Form container divided into two columns using flexbox */
+        .form-container {
+            display: flex;
+            justify-content: space-between; /* Space between left and right columns */
+            gap: 20px; /* Adds spacing between the two sections */
+        }
+
+        /* Left column containing Name, Phone, and Email */
+        .form-column-left {
+            width: 48%; /* Take up almost half the container */
+        }
+
+        /* Right column containing the message textarea */
+        .form-column-right {
+            width: 48%; /* Also take up almost half the container */
+        }
+
+        .form-group {
+            margin-bottom: 20px; /* Space between input fields */
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: none; /* Prevent resizing of the textarea */
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%; /* Inputs stretch to fill the div */
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background: #f4f4f4; /* Light background for input fields */
+            color: #333; /* Dark text for inputs */
+            font-size: 1em;
+        }
+
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff6600; /* Orange button background */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .form-group button:hover {
+            background-color: #cc5200; /* Darker orange on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="contact-container">
+        <h1>Contact Us & Get In Touch</h1>
+        <div class="contact-info">
+            <p>Phone: +33 6 25 45 54 66</p>
+            <p>E-mail: <a href="mailto:contact-us@eventspace.com">contact-us@eventspace.com</a></p>
+            <p>Location: Rue de Vanves, 92130 Issy-Les-Moulineaux</p>
+        </div>
+
+        <!-- Form layout with two columns -->
+        <form action="#" method="post" class="form-container">
+            <!-- Left column: Name, Phone, and Email -->
+            <div class="form-column-left">
+                <!-- Name input -->
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Full Name" required>
+                </div>
+                <!-- Phone input -->
+                <div class="form-group">
+                    <input type="tel" name="phone" placeholder="Phone Number" required>
+                </div>
+                <!-- Email input -->
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="E-mail" required>
+                </div>
+            </div>
+
+            <!-- Right column: Message textarea -->
+            <div class="form-column-right">
+                <div class="form-group">
+                    <textarea name="message" placeholder="Write your message here" required></textarea>
+                </div>
+            </div>
+        </form>
+
+        <!-- Submit button spans the full width below the form -->
+        <div class="form-group">
+            <button type="submit">Send Message</button>
+        </div>
+    </div>
+</body>
+</html>
