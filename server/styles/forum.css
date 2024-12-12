@@ -1,0 +1,64 @@
+.forum-container {
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.discussions, .add-discussion {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.discussion-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.discussion-item {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    width: 80%;
+    transition: background-color 0.3s;
+}
+
+.discussion-item:hover {
+    background-color: #e9e9e9;
+}
+
+.discussion-item h3 {
+    margin: 0 0 10px;
+}
+
+.discussion-item p {
+    margin: 0;
+    color: #555;
+}
+
+.add-discussion form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.add-discussion label {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.add-discussion input[type="text"],
+.add-discussion textarea {
+    width: 80%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
