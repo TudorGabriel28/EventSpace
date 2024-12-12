@@ -10,7 +10,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EventSpace Navbar</title>
+    <title>EventSpace 6ar</title>
 </head>
 <body>
     <nav class="navbar">
@@ -30,7 +30,7 @@ session_start();
             <li><a href="contact.php">Contact</a></li>
         </ul>
         <div class="navbar-buttons">
-            <button class="btn">Host an Event</button>
+            <button class="btn" onclick="window.location.href='host.php'">Host an Event</button>
             <?php if (isset($_SESSION['user_id'])): ?>
                 <form action="logout.php" method="POST" style="display:inline;">
                     <button type="submit" class="btn btn-primary">Logout</button>
