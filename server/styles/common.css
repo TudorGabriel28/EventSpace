@@ -180,6 +180,16 @@ body {
   border: 1px solid var(--border-color-active);
 }
 
+
+
+.nav-profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: 1em;
+}
+
 /* Event Preview Item */
 
 .event-preview {
