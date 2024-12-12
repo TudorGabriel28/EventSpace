@@ -4,13 +4,13 @@ include '../db_connection.php';
 
 $stylesheet = "user-profile.css";
 
-$userId = 1; // Replace with dynamic user ID (e.g., from session or login)
+if (!isset($_SESSION['user_id'])) {
+  header('Location: /pages/login.php');
+  exit();
+}
 
-//$stmt = prepare("SELECT * FROM user WHERE id = :id");
-//$stmt->execute(['id' => $userId]);
+$userId = $_SESSION['user_id'];
 
-
-// Fetch user data
 $query = "SELECT * FROM user WHERE id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $userId);
@@ -20,7 +20,6 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $user = $result->fetch_assoc();
 } else {
-    // Redirect to login page if user not found
     header('Location: /pages/login.php');
 }
 
@@ -33,29 +32,40 @@ $email = htmlspecialchars($user['email']);
 $dateOfBirth = htmlspecialchars($user['dateOfBirth']);
 $profilePicture = htmlspecialchars($user['profilePicture']);
 
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $firstName = $_POST['firstName'];
+  $lastName = $_POST['lastName'];
+  $email = $_POST['email'];
+  $dateOfBirth = $_POST['dateOfBirth'];
+  $profilePictureName = $profilePicture; // Default to existing picture
+  
+  // Handle file upload
+  if (isset($_FILES['profilePicture']) && $_FILES['profilePicture']['error'] == 0) {
+      $targetDir = "../assets/users/";
+      $profilePictureName = $targetDir . basename($_FILES["profilePicture"]["name"]);
+      $targetFilePath = $targetDir . $profilePictureName;
 
+      // Move the uploaded file to the target directory
+      if (move_uploaded_file($_FILES["profilePicture"]["tmp_name"], $targetFilePath)) {
+          // File successfully uploaded
+      } else {
+          echo "Sorry, there was an error uploading your file.";
+      }
+  }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Handle form submission to update user data
-    $firstName = $_POST['firstName'];
-    $lastName = $_POST['lastName'];
-    $email = $_POST['email'];
-    $dateOfBirth = $_POST['dateOfBirth'];
-    $profilePicture = $_POST['profilePicture'];
+  // Update user information in the database
+  $query = "UPDATE user SET firstName = ?, lastName = ?, email = ?, dateOfBirth = ?, profilePicture = ? WHERE id = ?";
+  
+  $stmt = $conn->prepare($query);
+  $stmt->bind_param("sssssi", $firstName, $lastName, $email, $dateOfBirth, $profilePictureName, $userId);
+  
+  $stmt->execute();
+  $stmt->close();
 
-    $updateStmt = $pdo->prepare(
-        "UPDATE user SET firstName = :firstName, lastName = :lastName, email = :email, 
-        dateOfBirth = :dateOfBirth, profilePicture = :profilePicture WHERE id = :id"
-    );
-
-    $updateStmt->execute([
-        'firstName' => $firstName,
-        'lastName' => $lastName,
-        'email' => $email,
-        'dateOfBirth' => $dateOfBirth,
-        'profilePicture' => $profilePicture,
-        'id' => $userId
-    ]);
+  // Redirect or display a success message
+  header("Location: user-profile.php");
+  exit();
 }
 
 $conn->close();
@@ -67,7 +77,7 @@ $conn->close();
     <div class="profile-container">
       <div class="profile-header">
         <div class="profile-picture">
-          <img id="preview" src="$profilePicture" alt="User Avatar">
+          <img id="preview" src="<?php echo $profilePicture; ?>" alt="User Avatar">
         </div>
         <div class="event-buttons">
           <button>Subscribed Events</button>
@@ -79,7 +89,7 @@ $conn->close();
   
       <div class="personal-info">
         <h2>Personal Information</h2>
-        <form>
+        <form method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="first-name">First Name</label>
                 <input type="text" id="fname" name="firstName" placeholder="Enter Your First Name" value="<?php echo $firstName; ?>" required>

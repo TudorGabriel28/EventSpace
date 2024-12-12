@@ -17,7 +17,6 @@ body {
     max-width: 900px;
     margin: 20px auto;
     background-color: #333;
-    color: white;
     border-radius: 8px;
     overflow: hidden;
     padding: 20px;
@@ -40,7 +39,6 @@ body {
     height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid white;
 }
   
 .profile-picture input {

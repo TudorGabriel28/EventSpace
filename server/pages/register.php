@@ -98,7 +98,7 @@ document.querySelector('form').addEventListener('submit', function (e) {
     var confirmPassword = document.getElementById('confirmPassword').value;
     var passwordError = document.getElementById('passwordError');
     
-    var passwordPattern = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
+    var passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$";
     
     if (!passwordPattern.test(password)) {
         e.preventDefault();
