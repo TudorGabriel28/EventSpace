@@ -2,12 +2,21 @@
 include '../config.php';
 include '../db_connection.php';
 
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 $stylesheet = "event-details.css";
 $script = "event-details.js";
 
 
-$eventId = 1;
-$userId = 1;
+$eventId = isset($_GET['id']) ? intval($_GET['id']) : 0;
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+$userId = $_SESSION['user_id'];
 
 
 // Query for event name and descrption
