@@ -28,8 +28,8 @@
 }
 
 .who-we-are-image img {
-    width: 100%;
-    height: auto;
+    width: 80%; 
+    height: auto; 
 }
 
 .what-we-do {
@@ -50,6 +50,13 @@
 }
 
 .what-we-do-image img {
+    width: 80%; 
+    height: auto; 
+}
+
+.banner {
     width: 100%;
     height: auto;
+    max-height: 300px; 
+    overflow: hidden;
 }
