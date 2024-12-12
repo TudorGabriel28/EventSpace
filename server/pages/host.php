@@ -36,7 +36,7 @@ $stylesheet = "host.css";
 
       <!-- Number of Locations -->
       <label for="num-locations">Number of Locations:</label>
-      <input type="number" id="num-locations" placeholder="Enter the number of locations" min="1" max="10">
+      <input type="number" id="num-locations" name="location_num" placeholder="Enter the number of locations" min="1" max="10">
 
       <!-- Tabs Container -->
       <div id="tabs-container" class="tabs"></div>
@@ -51,5 +51,7 @@ $stylesheet = "host.css";
 </main>
 <?php include_once '../components/footer.php'; ?>
 <script src="../scripts/host_event.js" defer></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $stylesheet; ?>">
+
 </body>
 </html>

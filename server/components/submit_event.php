@@ -1,68 +1,79 @@
 <?php
-
+// Enable error reporting
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 // Include configuration and database connection files
-include '../server/config.php';
-include '../server/db_connection.php';
+include '../config.php';
+include '../db_connection.php';
+// Check if the form was submitted
 
-// Check if form is submitted
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  // Validate and sanitize input
-  $event_name = trim($_POST['event_name']);
-  $description = trim($_POST['description']);
-  $category = (int) $_POST['category'];
-  $cover_photo = $_FILES['cover_photo']['name'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get data from the form
+    $event_name = $_POST['event_name'];
+    $description = $_POST['description'];
+    $category = (int) $_POST['category'];
+    $cover_photo = $_FILES['coverPhoto']['name'];
 
-  if (empty($event_name) || empty($description) || empty($category) || empty($cover_photo)) {
-      die("Please fill in all required fields.");
-  }
 
-  // Handle file upload
-  $target_dir = "uploads/";
-  $target_file = $target_dir . basename($cover_photo);
-  if (!move_uploaded_file($_FILES['cover_photo']['tmp_name'], $target_file)) {
-      die("Error uploading cover photo.");
-  }
 
-  // Insert event details
-  $stmt = $conn->prepare("INSERT INTO event (name, description, coverphoto) VALUES (?, ?, ?)");
-  $stmt->bind_param("sss", $event_name, $description, $cover_photo);
-  if (!$stmt->execute()) {
-      die("Event insertion failed: " . $stmt->error);
-  }
-  $event_id = $conn->insert_id;
+    // Handle file upload
+    $target_dir = "../assets/events/";
+    $target_file = $target_dir . basename($cover_photo);
+    if (!move_uploaded_file($_FILES['coverPhoto']['tmp_name'], $target_file)) {
+        die("Error uploading cover photo.");
+    }
 
-  // Insert category details
-  $stmt = $conn->prepare("INSERT INTO eventcategory (category_id, event_id) VALUES (?, ?)");
-  $stmt->bind_param("ii", $category, $event_id);
-  if (!$stmt->execute()) {
-      die("Category insertion failed: " . $stmt->error);
-  }
+    // Insert event details
+    $sql_event = "INSERT INTO event (name, description, coverPhoto) VALUES (?, ?, ?)";
+    $stmt_event = $conn->prepare($sql_event);
+    $stmt_event->bind_param("sss", $event_name, $description, $cover_photo);
+    if (!$stmt_event->execute()) {
+        die("Event insertion failed: " . $stmt->error);
+    }
+    $stmt_event->insert_id;
 
-  // Handle locations and planning data
-  $location_names = $_POST['location_name'];
-  $location_addresses = $_POST['location_address'];
-  $start_dates = $_POST['start_date'];
-  $end_dates = $_POST['end_date'];
-  $capacities = $_POST['capacity'];
-  $prices = $_POST['price'];
-  $postal_codes = $_POST['postal_code'];
+    $address = $_POST['location_address'];
+    $city = $_POST['location_city'];
+    $postalCode = $_POST['postal_code'];
+    $location_num = $_POST['location_num'];
 
-  for ($i = 0; $i < count($location_names); $i++) {
-      $stmt = $conn->prepare("INSERT INTO location (address, city, postal_code) VALUES (?, ?, ?)");
-      $stmt->bind_param("sss", $location_addresses[$i], $location_names[$i], $postal_codes[$i]);
-      if (!$stmt->execute()) {
-          die("Location insertion failed: " . $stmt->error);
-      }
-      $location_id = $conn->insert_id;
+    // Ensure that the data is in array format
+    if (!is_array($address) || !is_array($city) || !is_array($postalCode)) {
+        die("Invalid data format.");
+    }
 
-      $stmt = $conn->prepare("INSERT INTO planning (capacity, startDate, endDate, price, eventid, locationid) VALUES (?, ?, ?, ?, ?, ?)");
-      $stmt->bind_param("issdii", $capacities[$i], $start_dates[$i], $end_dates[$i], $prices[$i], $event_id, $location_id);
-      if (!$stmt->execute()) {
-          die("Planning insertion failed: " . $stmt->error);
-      }
-  }
+    // Insert the data into the database
+    $sql_location = "INSERT INTO location ( postalCode, city, address ) VALUES (?, ?, ?)";
+    $stmt_location = $conn->prepare($sql_location);
+    
 
-  echo "<p>Event successfully created!</p>";
+    // Check if the statement was prepared successfully
+    if ($stmt_location === false) {
+        die("Error preparing the SQL statement: " . $conn->error);
+    }
+
+    // Iterate over the arrays and bind parameters for each value
+    for ($i = 0; $i < count($address); $i++) {
+        $postalCode = $postalCode[$i];
+        $city = $city[$i];
+        $address = $address[$i];
+
+    $stmt_location->bind_param("sss", $postalCode, $city, $address);
+
+    // Execute the query
+    if ($stmt_location->execute()) {
+        echo "Location successfully added with ID: " . $stmt_location->insert_id;
+        header("Location: ../pages/home.php"); // Redirect to a different page (optional)
+        exit; // Ensure the script stops after redirect
+    } else {
+        echo "Error: " . $stmt_location->error;
+    }
+}
+
+    // Close the statement and connection
+    $stmt_location->close();
+    $conn->close();
 }
 
 ?>
