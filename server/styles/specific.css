@@ -1,0 +1,106 @@
+@import url("footer.css");
+@import url("navbar.css");
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+  background-color: #f4f4f4;
+}
+
+:root {
+  --primary-color: #ff7f00;
+  --primary-color-hover: #e67300;
+  --primary-color-active: #cc6600;
+  --border-color: #d3d3d3;
+  --border-color-hover: #c6c6c6;
+  --border-color-active: #8a8a8a;
+}
+
+/* Header Section */
+.header {
+  text-align: center;
+  padding: 40px;
+  background-image: url('background.jpg'); /* Customize your background */
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  font-weight: bold;
+  color: black; /* Change the color to black */
+}
+
+/* Event Preview Section */
+.event-preview-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 3rem;
+  margin: 2rem;
+  padding: 2rem;
+}
+
+.event-preview {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.3s ease-in-out;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-preview:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.event-preview img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.event-details {
+  padding: 15px;
+}
+
+.event-details h2 {
+  font-size: 1.5rem;
+  margin: 0 0 10px;
+  color: var(--primary-color);
+}
+
+.event-details p {
+  font-size: 1rem;
+  color: #555;
+  margin: 0 0 10px;
+}
+
+.event-details .date,
+.event-details .location,
+.event-details .price {
+  font-size: 0.9rem;
+  color: #777;
+  margin: 0 0 10px;
+}
+
+.event-details button {
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.event-details button:hover {
+  background-color: var(--primary-color-hover);
+}
+
+.event-details button:active {
+  background-color: var(--primary-color-active);
+}
