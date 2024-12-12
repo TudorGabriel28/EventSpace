@@ -2,7 +2,7 @@
 include '../config.php';
 include '../db_connection.php';
 
-$stylesheet = "common.css";
+$stylesheet = "specific.css";
 
 $categoryId = isset($_GET['categoryId']) ? $_GET['categoryId'] : '';
 
@@ -52,18 +52,9 @@ if ($result->num_rows > 0) {
 $conn->close(); // Close database connection
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Specific Category - Eventspace</title>
-    <link rel="stylesheet" href="../styles/common.css">
-</head>
-<body>
-    <?php include_once '../components/header.php'; ?>
 
-    <main>
+<?php include_once '../components/header.php'; ?>
+<main>
         <div class="header">
             <h1>Events in Specific Category</h1>
         </div>
