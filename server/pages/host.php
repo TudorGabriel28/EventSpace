@@ -1,5 +1,29 @@
 <?php
 $stylesheet = "host.css";
+
+// Enable error reporting
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Include configuration and database connection files
+include '../config.php';
+include '../db_connection.php';
+
+// Fetch categories from the database
+$sql_category = "SELECT id, name FROM category";
+$result_category = $conn->query($sql_category);
+
+if ($result_category === false) {
+    die("Error fetching categories: " . $conn->error);
+}
+
+$categories = [];
+while ($row = $result_category->fetch_assoc()) {
+    $categories[] = $row;
+}
+
+$conn->close();
 ?>
 
 <?php include_once '../components/header.php'; ?>
@@ -24,10 +48,10 @@ $stylesheet = "host.css";
       <!-- Category -->
       <label for="Category">Category</label>
       <select id="Category" name="category" required>
-        <option value="">Value</option>
-        <option value="music">Music</option>
-        <option value="sports">Sports</option>
-        <option value="conference">Conference</option>
+      <option value="">Select Category</option>
+        <?php foreach ($categories as $category): ?>
+          <option value="<?php echo $category['id']; ?>"><?php echo $category['name']; ?></option>
+        <?php endforeach; ?>
       </select>
 
       <!-- Cover Photo -->
