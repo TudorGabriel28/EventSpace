@@ -59,9 +59,11 @@ $conn->close();
             <?php else: ?>
                 <button class="btn btn-primary" onclick="window.location.href='login.php'">Login</button>
             <?php endif; ?>
-            <a href="user-profile.php">
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <a href="user-profile.php">
                     <img src="<?php echo $profilePicture; ?>" alt="Profile" class="nav-profile">
                 </a>
+            <?php endif; ?>
         </div>
     </nav>
 </body>
