@@ -170,7 +170,7 @@ $conn->close();
                             <?php if ($showWaitlistButton): ?>
                                 <button class="btn" type="submit" name="join-waitlist" id="waitlist-button" onclick="alert('You have joined the waitlist!');">Join waitlist</button>
                             <?php else: ?>
-                                <button class="btn" type="submit" name="subscribe" id="subscribe-button" <?php if ($userId !== 0 && $planningId !== 0) echo 'onclick="alert(\'You have subscribed to the event!\');"'; ?>>Subscribe event</button>
+                                <button class="btn" type="submit" name="subscribe" id="subscribe-button" <?php if ($userId !== 0 && $planningId !== 0 && $showWaitlistButton !== 0) echo 'onclick="alert(\'You have subscribed to the event!\');"'; ?>>Subscribe event</button>
                             <?php endif; ?>
                             <?php if ($errorMessage): ?>
                                 <p class="error" style="color: red;"><?php echo $errorMessage; ?></p>
