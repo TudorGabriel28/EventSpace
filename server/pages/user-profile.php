@@ -33,23 +33,6 @@ $email = htmlspecialchars($user['email']);
 $dateOfBirth = htmlspecialchars($user['dateOfBirth']);
 $profilePicture = htmlspecialchars($user['profilePicture']);
 
-// Retrieve attended events
-$attendedEventsQuery = "SELECT event.name FROM event 
-INNER JOIN planning ON event.id = planning.idEvent
-INNER JOIN usereventreservation ON event.id = usereventreservation.idPlanning
-WHERE usereventreservation.idUser = ?";
-$attendedStmt = $conn->prepare($attendedEventsQuery);
-$attendedStmt->bind_param("i", $userId);
-$attendedStmt->execute();
-$attendedEventsResult = $attendedStmt->get_result();
-
-$attendedEvents = [];
-if ($attendedEventsResult->num_rows > 0) {
-    while ($row = $attendedEventsResult->fetch_assoc()) {
-        $attendedEvents[] = $row;
-    }
-}
-$attendedStmt->close();
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -145,28 +128,29 @@ $conn->close();
             <div class="form-group">
               <label for="first-name">First Name</label>
               <div class="icon-container">
-                <input type="text" id="fname" name="firstName" placeholder="Enter Your First Name" value="<?php echo $firstName; ?>" required>
-                <i class="fas fa-edit" id="edit-icon" onclick="toggleEdit('fname')"></i>
+                <input type="text" id="fname" name="firstName" placeholder="Enter Your First Name" value="<?php echo $firstName; ?>" required disabled>
+                <button type="button" class="edit-btn" onclick="toggleEdit('fname')">Edit</button>
               </div>
             </div>
             <div class="form-group">
               <label for="name">Last Name</label>
               <div class="icon-container">
-                <input type="text" id="lname" name="lastName" placeholder="Enter Your Last Name" value="<?php echo $lastName; ?>" required>
-                <i class="fas fa-edit" id="edit-icon" onclick="toggleEdit('lname')"></i>
+                <input type="text" id="lname" name="lastName" placeholder="Enter Your Last Name" value="<?php echo $lastName; ?>" required disabled>
+                <button type="button" class="edit-btn" onclick="toggleEdit('lname')">Edit</button>
               </div>
             </div>
             <div class="form-group">
               <label for="email">E-Mail Address</label>
               <div class="icon-container">
-                <input type="email" id="email" name="email" placeholder="Enter Your E-mail" value="<?php echo $email; ?>" required>
-                <i class="fas fa-edit" id="edit-icon" onclick="toggleEdit('email')"></i>
+                <input type="email" id="email" name="email" placeholder="Enter Your E-mail" value="<?php echo $email; ?>" required disabled>
+                <button type="button" class="edit-btn" onclick="toggleEdit('email')">Edit</button>
               </div>
             </div>
             <div class="form-group">
               <label for="date">Date Of Birth</label>
               <div class="icon-container">
-                <input type="date" id="DOB" name="dateOfBirth" value="<?php echo $dateOfBirth; ?>" required>
+                <input type="date" id="DOB" name="dateOfBirth" value="<?php echo $dateOfBirth; ?>" required disabled>
+                <button type="button" class="edit-btn" onclick="toggleEdit('DOB')">Edit</button>
               </div>
             </div>
             <div class="form-group">
