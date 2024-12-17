@@ -64,10 +64,11 @@ if ($result->num_rows > 0) {
 // Handling subscription
 $errorMessage = '';
 $showWaitlistButton = false;
+$planningId = 0;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $userId !== 0) {
     $ticketQuantity = intval($_POST['ticket-quantity']);
-    $planningId = intval($_POST['event-selector']);
+    $planningId = isset($_POST['event-selector']) ? intval($_POST['event-selector']) : 0;
 
     if (empty($planningId)) {
         $errorMessage = "Error: Please select a planning.";
@@ -169,16 +170,13 @@ $conn->close();
                             <?php if ($showWaitlistButton): ?>
                                 <button class="btn" type="submit" name="join-waitlist" id="waitlist-button" onclick="alert('You have joined the waitlist!');">Join waitlist</button>
                             <?php else: ?>
-                                <button class="btn" type="submit" name="subscribe" id="subscribe-button" <?php if ($userId !== 0) echo 'onclick="alert(\'You have subscribed to the event!\');"'; ?>>Subscribe event</button>
+                                <button class="btn" type="submit" name="subscribe" id="subscribe-button" <?php if ($userId !== 0 && $planningId !== 0) echo 'onclick="alert(\'You have subscribed to the event!\');"'; ?>>Subscribe event</button>
                             <?php endif; ?>
                             <?php if ($errorMessage): ?>
                                 <p class="error" style="color: red;"><?php echo $errorMessage; ?></p>
                             <?php endif; ?>
                         </div>
                     </form>
-                    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['subscribe']) && empty($_POST['event-selector'])): ?>
-                        <p class="error">Please select a planning before subscribing.</p>
-                    <?php endif; ?>
                     <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['subscribe'])): ?>
                         <?php if (!isset($_SESSION['user_id'])) {
                             header("Location: login.php");
