@@ -12,11 +12,7 @@ $script = "event-details.js";
 
 
 $eventId = isset($_GET['id']) ? intval($_GET['id']) : 0;
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
-$userId = $_SESSION['user_id'];
+$userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
 
 // Query for event name and descrption
@@ -69,7 +65,7 @@ if ($result->num_rows > 0) {
 $errorMessage = '';
 $showWaitlistButton = false;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $userId !== 0) {
     $ticketQuantity = intval($_POST['ticket-quantity']);
     $planningId = intval($_POST['event-selector']);
 
@@ -99,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("iii", $ticketQuantity, $planningId, $userId);
                 if ($stmt->execute()) {
-                    $errorMessage = "Reservation successful!";
+                    $successMessage = "Reservation successful!";
                 } else {
                     $errorMessage = "Error: " . $stmt->error;
                 }
@@ -114,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("iii", $ticketQuantity, $userId, $planningId);
                 if ($stmt->execute()) {
-                    $errorMessage = "You have been added to the waitlist!";
+                    $successMessage = "You have been added to the waitlist!";
                 } else {
                     $errorMessage = "Error: " . $stmt->error;
                 }
@@ -171,9 +167,9 @@ $conn->close();
                                 <p class="text-sm">Total price: <span id="event-price"></span></p>
                             </div>
                             <?php if ($showWaitlistButton): ?>
-                                <button class="btn" type="submit" name="join-waitlist" id="waitlist-button">Join waitlist</button>
+                                <button class="btn" type="submit" name="join-waitlist" id="waitlist-button" onclick="alert('You have joined the waitlist!');">Join waitlist</button>
                             <?php else: ?>
-                                <button class="btn" type="submit" name="subscribe" id="subscribe-button">Subscribe event</button>
+                                <button class="btn" type="submit" name="subscribe" id="subscribe-button" <?php if ($userId !== 0) echo 'onclick="alert(\'You have subscribed to the event!\');"'; ?>>Subscribe event</button>
                             <?php endif; ?>
                             <?php if ($errorMessage): ?>
                                 <p class="error" style="color: red;"><?php echo $errorMessage; ?></p>
@@ -182,6 +178,12 @@ $conn->close();
                     </form>
                     <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['subscribe']) && empty($_POST['event-selector'])): ?>
                         <p class="error">Please select a planning before subscribing.</p>
+                    <?php endif; ?>
+                    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['subscribe'])): ?>
+                        <?php if (!isset($_SESSION['user_id'])) {
+                            header("Location: login.php");
+                            exit();
+                        } ?>
                     <?php endif; ?>
                 </section>
             </section>
