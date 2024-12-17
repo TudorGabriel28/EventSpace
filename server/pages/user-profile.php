@@ -3,6 +3,7 @@ include '../config.php';
 include '../db_connection.php';
 
 $stylesheet = "user-profile.css";
+$script = "user-profile.js";
 
 if (!isset($_SESSION['user_id'])) {
   header('Location: /pages/login.php');
@@ -80,41 +81,76 @@ $conn->close();
           <img id="preview" src="<?php echo $profilePicture; ?>" alt="User Avatar">
         </div>
         <div class="event-buttons">
-          <button>Subscribed Events</button>
-          <button>Wait Listed Events</button>
-          <button>Previously Attended Events</button>
-          <button>Created Events</button>
+          <button id="attended-events-btn">Attended Events</button>
+          <button id="waitListed-events-btn">Wait Listed Events</button>
+          <button id="created-events-btn">Created Events</button>
         </div>
       </div>
-  
+      <!-- Popup Windows -->
+      <div id="popup-attended" class="popup">
+        <div class="popup-content">
+          <span class="close-btn">&times;</span>
+          <h2>Attended Events</h2>
+          <p>Attended Event information...</p>
+        </div>
+      </div>
+
+      <div id="popup-waitlisted" class="popup">
+        <div class="popup-content">
+          <span class="close-btn">&times;</span>
+          <h2>Wait Listed Events</h2>
+          <p>Example content for wait listed events...</p>
+        </div>
+      </div>
+
+      <div id="popup-created" class="popup">
+        <div class="popup-content">
+          <span class="close-btn">&times;</span>
+          <h2>Created Events</h2>
+          <p>Example content for created events...</p>
+        </div>
+      </div>
+      <!-- End of Popup Windows -->
+       
       <div class="personal-info">
         <h2>Personal Information</h2>
         <form method="POST" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="first-name">First Name</label>
+              <label for="first-name">First Name</label>
+              <div class="icon-container">
                 <input type="text" id="fname" name="firstName" placeholder="Enter Your First Name" value="<?php echo $firstName; ?>" required>
+                <i class="fas fa-edit" id="edit-icon" onclick="toggleEdit('fname')"></i>
+              </div>
             </div>
             <div class="form-group">
-                <label for="name">Last Name</label>
+              <label for="name">Last Name</label>
+              <div class="icon-container">
                 <input type="text" id="lname" name="lastName" placeholder="Enter Your Last Name" value="<?php echo $lastName; ?>" required>
+                <i class="fas fa-edit" id="edit-icon" onclick="toggleEdit('lname')"></i>
+              </div>
             </div>
             <div class="form-group">
-                <label for="email">E-Mail Address</label>
+              <label for="email">E-Mail Address</label>
+              <div class="icon-container">
                 <input type="email" id="email" name="email" placeholder="Enter Your E-mail" value="<?php echo $email; ?>" required>
+                <i class="fas fa-edit" id="edit-icon" onclick="toggleEdit('email')"></i>
+              </div>
             </div>
             <div class="form-group">
-                <label for="date">Date Of Birth</label>
+              <label for="date">Date Of Birth</label>
+              <div class="icon-container">
                 <input type="date" id="DOB" name="dateOfBirth" value="<?php echo $dateOfBirth; ?>" required>
+              </div>
             </div>
             <div class="form-group">
-                <label for="profilePicture">Profile Picture</label>
+                <label for="profilePicture">Picture</label>
                 <input type="file" id="profilePicture" name="profilePicture" placeholder="Upload Your Picture">
             </div>
             <button type="submit" class="save-button">Save Changes</button>
         </form>
       </div>
     </div>
-    </main>
+</main>
 <?php include_once '../components/footer.php'; ?>
 </body>
 </html>
