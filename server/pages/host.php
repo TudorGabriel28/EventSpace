@@ -36,10 +36,10 @@ $conn->close();
     
   <div class="container">
     <h2>Enter event details</h2>
-    <form action="../components/submit_event.php" method="POST" enctype="multipart/form-data">
+    <form action="../components/submit_event.php" method="POST" enctype="multipart/form-data" class="host-event-form">
       <!-- Event Name -->
       <label for="event-name">Event Name:</label>
-      <input type="text" id="event-name" name="event_name", placeholder="Enter the event name">
+      <input class="host-event-input" type="text" id="event-name" name="event_name", placeholder="Enter the event name">
 
       <!-- Description -->
       <label for="description">Description:</label>
@@ -56,11 +56,11 @@ $conn->close();
 
       <!-- Cover Photo -->
       <label for="cover-photo">Cover Photo:</label>
-      <input type="file" id="cover-photo" name="coverPhoto" required>
+      <input class="host-event-input" type="file" id="cover-photo" name="coverPhoto" required>
 
       <!-- Number of Locations -->
       <label for="num-locations">Number of Locations:</label>
-      <input type="number" id="num-locations" name="location_num" placeholder="Enter the number of locations" min="1" max="10">
+      <input class="host-event-input" type="number" id="num-locations" name="location_num" placeholder="Enter the number of locations" min="1" max="10">
 
       <!-- Tabs Container -->
       <div id="tabs-container" class="tabs"></div>
