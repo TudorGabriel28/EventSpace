@@ -3,10 +3,10 @@
 include '../config.php';
 include '../db_connection.php';
 
-// Fetch users from the database
+// Fetch users
 $users = [];
 try {
-    $query = "SELECT id, firstName, lastName, email, deleted_at FROM user";
+    $query = "SELECT id, firstName, lastName, email FROM user";
     $stmt = $conn->prepare($query);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -17,10 +17,10 @@ try {
     die("Error fetching users: " . $e->getMessage());
 }
 
-// Fetch events from the database
+// Fetch events
 $events = [];
 try {
-    $query = "SELECT id, name, description, deleted_at FROM event";
+    $query = "SELECT id, name, description FROM event";
     $stmt = $conn->prepare($query);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -31,261 +31,328 @@ try {
     die("Error fetching events: " . $e->getMessage());
 }
 
-// Fetch forum discussions from the database
-$forumDiscussions = [];
+// Fetch forum discussions
+$forums = [];
 try {
-    $query = "SELECT id, title, question, idUser, deleted_at FROM forumdiscussion";
+    $query = "SELECT id, title, question, idUser FROM forumdiscussion";
     $stmt = $conn->prepare($query);
     $stmt->execute();
     $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) {
-        $forumDiscussions[] = $row;
+        $forums[] = $row;
     }
 } catch (mysqli_sql_exception $e) {
-    die("Error fetching forum discussions: " . $e->getMessage());
+    die("Error fetching forums: " . $e->getMessage());
 }
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* General styles */
+        /* Global Styles */
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #1e1e1e;
-            color: white;
             margin: 0;
             padding: 0;
+            background-color: #f9fafc;
+            color: #333;
         }
-
         .header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #2c2c2c, #444);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            justify-content: space-between;
+            background-color: #ffffff;
+            color: black;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
-
+        .header img {
+            height: 50px;
+        }
         .header h1 {
-            color: #ff8800;
-            font-size: 2em;
+            margin: 0;
+            font-size: 1.8em;
+            text-align: center;
+            flex-grow: 1;
+            font-weight: 500;
+            color: black;
         }
-
         .sidebar {
             position: fixed;
-            top: 80px;
+            top: 70px;
             left: 0;
-            width: 250px;
-            background-color: #2c2c2c;
-            height: calc(100% - 80px);
-            padding: 10px;
+            width: 240px;
+            height: 100%;
+            background-color: #f4f5f7;
+            padding-top: 20px;
+            box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
         }
-
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .sidebar ul li a {
-            text-decoration: none;
-            color: white;
-            padding: 10px;
+        .sidebar a {
             display: block;
-            border-radius: 5px;
-            margin-bottom: 10px;
+            color: #333;
+            text-decoration: none;
+            padding: 15px 20px;
+            font-weight: 500;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-
-        .sidebar ul li a:hover {
-            background-color: #444;
+        .sidebar a:hover {
+            background-color: #e7f3ff;
+            color: #007bff;
         }
-
-        .main-content {
-            margin-left: 270px;
-            padding: 30px;
+        .content {
+            margin-left: 260px;
+            padding: 100px 20px 20px;
         }
-
         .section {
-            background-color: #2e2e2e;
+            background: white;
+            border-radius: 8px;
             padding: 20px;
-            border-radius: 10px;
             margin-bottom: 20px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 10px;
+            border-radius: 8px;
+            overflow: hidden;
         }
-
         table th, table td {
-            padding: 10px;
-            border-bottom: 1px solid #444;
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
         }
-
         table th {
-            color: #ff8800;
+            background-color: #f0f2f5;
+            color: #333;
+            font-weight: 500;
         }
-
+        table tr:nth-child(odd) {
+            background-color: #f9fafc;
+        }
         table tr:hover {
-            background-color: #444;
+            background-color: #e7f3ff;
         }
-
-        .action-btn {
-            padding: 5px 10px;
+        table td[contenteditable="true"] {
+            border: 1px solid #007bff;
+            background-color: #e7f3ff;
+        }
+        button {
+            margin: 3px;
+            padding: 8px 15px;
             border: none;
-            border-radius: 5px;
-            color: white;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
         }
-
-        .btn-edit {
-            background-color: #ffa500;
+        .edit-btn { background: #ff9800; color: white; }
+        .save-btn { background: #28a745; color: white; }
+        .cancel-btn { background: #007bff; color: white; }
+        .delete-btn { background: #dc3545; color: white; }
+        button:hover {
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         }
-
-        .btn-edit:hover {
-            background-color: #e67600;
-        }
-
-        .btn-delete {
-            background-color: #d9534f;
-        }
-
-        .btn-delete:hover {
-            background-color: #c9302c;
-        }
-
-        .btn-undo {
-            background-color: #5bc0de;
-        }
-
-        .btn-undo:hover {
-            background-color: #31b0d5;
-        }
-
-        .btn-permanent-delete {
-            background-color: #ff0000;
-        }
-
-        .btn-permanent-delete:hover {
-            background-color: #cc0000;
-        }
+        .save-btn, .cancel-btn { display: none; }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <div class="header">
+        <img src="../assets/logo-black.png" alt="Logo">
         <h1>Admin Dashboard</h1>
-        <button class="logout-btn">Logout</button>
     </div>
 
+    <!-- Sidebar -->
     <div class="sidebar">
-        <ul>
-            <li><a href="#manage-users">Manage Users</a></li>
-            <li><a href="#manage-events">Manage Events</a></li>
-            <li><a href="#manage-forum">Manage Forum Questions</a></li>
-        </ul>
+        <a href="#users">Manage Users</a>
+        <a href="#events">Manage Events</a>
+        <a href="#forums">Manage Forum Questions</a>
     </div>
 
-    <div class="main-content">
-        <!-- Manage Users -->
-        <div id="manage-users" class="section">
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Users Section -->
+        <div id="users" class="section">
             <h2>Manage Users</h2>
             <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($users as $user): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($user['id']); ?></td>
-                            <td><?php echo htmlspecialchars($user['firstName']); ?></td>
-                            <td><?php echo htmlspecialchars($user['lastName']); ?></td>
-                            <td><?php echo htmlspecialchars($user['email']); ?></td>
-                            <td>
-                                <a href="edit.php?type=user&id=<?php echo $user['id']; ?>" class="action-btn btn-edit">Edit</a>
-                                <?php if (empty($user['deleted_at'])): ?>
-                                    <a href="delete.php?type=user&id=<?php echo $user['id']; ?>" class="action-btn btn-delete">Delete</a>
-                                <?php else: ?>
-                                    <a href="undo.php?type=user&id=<?php echo $user['id']; ?>" class="action-btn btn-undo">Undo</a>
-                                    <a href="permanent_delete.php?type=user&id=<?php echo $user['id']; ?>" class="action-btn btn-permanent-delete">Permanent Delete</a>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+                <?php foreach ($users as $user): ?>
+                <tr>
+                    <td><?php echo $user['id']; ?></td>
+                    <td contenteditable="false"><?php echo $user['firstName']; ?></td>
+                    <td contenteditable="false"><?php echo $user['lastName']; ?></td>
+                    <td contenteditable="false"><?php echo $user['email']; ?></td>
+                    <td>
+                        <button class="edit-btn" onclick="editRow(this)">Edit</button>
+                        <button class="save-btn" onclick="saveRow(this, 'user')">Save</button>
+                        <button class="cancel-btn" onclick="cancelEdit(this)">Cancel</button>
+                        <button class="delete-btn" onclick="confirmDelete('<?php echo $user['id']; ?>', 'user')">Delete</button>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
             </table>
         </div>
 
-        <!-- Manage Events -->
-        <div id="manage-events" class="section">
+        <!-- Events Section -->
+        <div id="events" class="section">
             <h2>Manage Events</h2>
             <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($events as $event): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($event['id']); ?></td>
-                            <td><?php echo htmlspecialchars($event['name']); ?></td>
-                            <td><?php echo htmlspecialchars($event['description']); ?></td>
-                            <td>
-                                <a href="edit.php?type=event&id=<?php echo $event['id']; ?>" class="action-btn btn-edit">Edit</a>
-                                <?php if (empty($event['deleted_at'])): ?>
-                                    <a href="delete.php?type=event&id=<?php echo $event['id']; ?>" class="action-btn btn-delete">Delete</a>
-                                <?php else: ?>
-                                    <a href="undo.php?type=event&id=<?php echo $event['id']; ?>" class="action-btn btn-undo">Undo</a>
-                                    <a href="permanent_delete.php?type=event&id=<?php echo $event['id']; ?>" class="action-btn btn-permanent-delete">Permanent Delete</a>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+                <?php foreach ($events as $event): ?>
+                <tr>
+                    <td><?php echo $event['id']; ?></td>
+                    <td contenteditable="false"><?php echo $event['name']; ?></td>
+                    <td contenteditable="false"><?php echo $event['description']; ?></td>
+                    <td>
+                        <button class="edit-btn" onclick="editRow(this)">Edit</button>
+                        <button class="save-btn" onclick="saveRow(this, 'event')">Save</button>
+                        <button class="cancel-btn" onclick="cancelEdit(this)">Cancel</button>
+                        <button class="delete-btn" onclick="confirmDelete('<?php echo $event['id']; ?>', 'event')">Delete</button>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
             </table>
         </div>
 
-        <!-- Manage Forum Questions -->
-        <div id="manage-forum" class="section">
+        <!-- Forums Section -->
+        <div id="forums" class="section">
             <h2>Manage Forum Questions</h2>
             <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Question</th>
-                        <th>User ID</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($forumDiscussions as $discussion): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($discussion['id']); ?></td>
-                            <td><?php echo htmlspecialchars($discussion['title']); ?></td>
-                            <td><?php echo htmlspecialchars($discussion['question']); ?></td>
-                            <td><?php echo htmlspecialchars($discussion['idUser']); ?></td>
-                            <td>
-                                <a href="edit.php?type=forum&id=<?php echo $discussion['id']; ?>" class="action-btn btn-edit">Edit</a>
-                                <?php if (empty($discussion['deleted_at'])): ?>
-                                    <a href="delete.php?type=forum&id=<?php echo $discussion['id']; ?>" class="action-btn btn-delete">Delete</a>
-                                <?php else: ?>
-                                    <a href="undo.php?type=forum&id=<?php echo $discussion['id']; ?>" class="action-btn btn-undo">Undo</a>
-                                    <a href="permanent_delete.php?type=forum&id=<?php echo $discussion['id']; ?>" class="action-btn btn-permanent-delete">Permanent Delete</a>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Question</th>
+                    <th>User ID</th>
+                    <th>Actions</th>
+                </tr>
+                <?php foreach ($forums as $forum): ?>
+                <tr>
+                    <td><?php echo $forum['id']; ?></td>
+                    <td contenteditable="false"><?php echo $forum['title']; ?></td>
+                    <td contenteditable="false"><?php echo $forum['question']; ?></td>
+                    <td><?php echo $forum['idUser']; ?></td>
+                    <td>
+                        <button class="edit-btn" onclick="editRow(this)">Edit</button>
+                        <button class="save-btn" onclick="saveRow(this, 'forum')">Save</button>
+                        <button class="cancel-btn" onclick="cancelEdit(this)">Cancel</button>
+                        <button class="delete-btn" onclick="confirmDelete('<?php echo $forum['id']; ?>', 'forum')">Delete</button>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
             </table>
         </div>
     </div>
+
+    <script>
+        let originalData = {};
+
+        function editRow(btn) {
+            const row = btn.parentElement.parentElement;
+            originalData[row] = [...row.cells].map(cell => cell.innerText);
+
+            [...row.cells].forEach((cell, index) => {
+                if (index > 0 && index < row.cells.length - 1) {
+                    cell.contentEditable = "true";
+                    cell.style.border = "1px solid #007bff";
+                    cell.style.backgroundColor = "#e7f3ff";
+                }
+            });
+            toggleButtons(btn, true);
+        }
+
+        function saveRow(btn, type) {
+            const row = btn.parentElement.parentElement;
+            const data = [...row.cells].slice(1, -1).map(cell => cell.innerText);
+            const id = row.cells[0].innerText;
+
+            const updateData = type === "user"
+                ? { firstName: data[0], lastName: data[1], email: data[2] }
+                : type === "event"
+                ? { name: data[0], description: data[1] }
+                : { title: data[0], question: data[1] };
+
+            fetch("edit.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ type, id, data: updateData }),
+            })
+                .then(response => response.json())
+                .then(response => {
+                    if (response.status === "success") {
+                        alert("Data updated successfully!");
+
+                        // Revert cell styles to normal
+                        [...row.cells].forEach((cell, index) => {
+                            if (index > 0 && index < row.cells.length - 1) {
+                                cell.contentEditable = "false";
+                                cell.style.border = "none";
+                                cell.style.backgroundColor = "transparent";
+                            }
+                        });
+
+                        toggleButtons(btn, false);
+                    }
+                });
+        }
+
+        function confirmDelete(id, type) {
+            if (confirm("Are you sure you want to delete this record?")) {
+                fetch("delete.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ type, id }),
+                })
+                    .then(response => response.json())
+                    .then(response => {
+                        if (response.status === "success") {
+                            alert("Record deleted successfully!");
+                            location.reload();
+                        }
+                    });
+            }
+        }
+
+        function cancelEdit(btn) {
+            const row = btn.parentElement.parentElement;
+            [...row.cells].forEach((cell, index) => {
+                if (index > 0 && index < row.cells.length - 1) {
+                    cell.innerText = originalData[row][index];
+                    cell.contentEditable = "false";
+                    cell.style.border = "none";
+                    cell.style.backgroundColor = "transparent";
+                }
+            });
+            toggleButtons(btn, false);
+        }
+
+        function toggleButtons(btn, isEditing) {
+            const buttons = btn.parentElement.children;
+            buttons[0].style.display = isEditing ? "none" : "inline";
+            buttons[1].style.display = isEditing ? "inline" : "none";
+            buttons[2].style.display = isEditing ? "inline" : "none";
+        }
+    </script>
 </body>
 </html>
