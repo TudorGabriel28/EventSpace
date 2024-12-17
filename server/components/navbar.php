@@ -1,9 +1,4 @@
 <?php
-<<<<<<< HEAD
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-=======
 include '../config.php';
 include '../db_connection.php';
 
@@ -29,7 +24,6 @@ if (isset($_SESSION['user_id'])) {
 }
 
 $conn->close();
->>>>>>> origin/main
 ?>
 
 <!DOCTYPE html>
