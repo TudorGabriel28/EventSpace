@@ -33,6 +33,24 @@ $email = htmlspecialchars($user['email']);
 $dateOfBirth = htmlspecialchars($user['dateOfBirth']);
 $profilePicture = htmlspecialchars($user['profilePicture']);
 
+// Retrieve attended events
+$attendedEventsQuery = "SELECT event.name FROM event 
+INNER JOIN planning ON event.id = planning.idEvent
+INNER JOIN usereventreservation ON event.id = usereventreservation.idPlanning
+WHERE usereventreservation.idUser = ?";
+$attendedStmt = $conn->prepare($attendedEventsQuery);
+$attendedStmt->bind_param("i", $userId);
+$attendedStmt->execute();
+$attendedEventsResult = $attendedStmt->get_result();
+
+$attendedEvents = [];
+if ($attendedEventsResult->num_rows > 0) {
+    while ($row = $attendedEventsResult->fetch_assoc()) {
+        $attendedEvents[] = $row;
+    }
+}
+$attendedStmt->close();
+
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $firstName = $_POST['firstName'];
@@ -91,7 +109,17 @@ $conn->close();
         <div class="popup-content">
           <span class="close-btn">&times;</span>
           <h2>Attended Events</h2>
-          <p>Attended Event information...</p>
+          <p>
+            <?php
+            if (!empty($attendedEvents)) {
+                foreach ($attendedEvents as $event) {
+                    echo htmlspecialchars($event['name']) . "<br>";
+                }
+            } else {
+                echo "No attended events found.";
+            }
+            ?>
+          </p>
         </div>
       </div>
 
@@ -111,7 +139,6 @@ $conn->close();
         </div>
       </div>
       <!-- End of Popup Windows -->
-       
       <div class="personal-info">
         <h2>Personal Information</h2>
         <form method="POST" enctype="multipart/form-data">
