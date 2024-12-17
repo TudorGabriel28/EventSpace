@@ -1,8 +1,29 @@
 <?php
-session_start();
+include '../config.php';
+include '../db_connection.php';
 
+$profilePicture = 'default-profile.png'; // Default profile picture
 
+// Check if the user is logged in
+if (isset($_SESSION['user_id'])) {
+    $userId = $_SESSION['user_id'];
 
+    // Fetch user data
+    $query = "SELECT profilePicture FROM user WHERE id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        $profilePicture = htmlspecialchars($user['profilePicture']);
+    }
+
+    $stmt->close();
+}
+
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -37,6 +58,11 @@ session_start();
                 </form>
             <?php else: ?>
                 <button class="btn btn-primary" onclick="window.location.href='login.php'">Login</button>
+            <?php endif; ?>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <a href="user-profile.php">
+                    <img src="<?php echo $profilePicture; ?>" alt="Profile" class="nav-profile">
+                </a>
             <?php endif; ?>
         </div>
     </nav>
