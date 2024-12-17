@@ -80,10 +80,10 @@ $conn->close();
           <img id="preview" src="<?php echo $profilePicture; ?>" alt="User Avatar">
         </div>
         <div class="event-buttons">
-          <button>Subscribed Events</button>
-          <button>Wait Listed Events</button>
-          <button>Previously Attended Events</button>
-          <button>Created Events</button>
+          <button class="btn">Subscribed Events</button>
+          <button class="btn">Wait Listed Events</button>
+          <button class="btn">Previously Attended Events</button>
+          <button class="btn">Created Events</button>
         </div>
       </div>
   
