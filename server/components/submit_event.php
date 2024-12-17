@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Insert event details
     $sql_event = "INSERT INTO event (name, description, coverPhoto) VALUES (?, ?, ?)";
     $stmt_event = $conn->prepare($sql_event);
-    $stmt_event->bind_param("sss", $event_name, $description, $cover_photo);
+    $stmt_event->bind_param("sss", $event_name, $description, $target_file);
     if (!$stmt_event->execute()) {
         die("Event insertion failed: " . $stmt->error);
     }
