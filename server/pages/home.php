@@ -13,6 +13,7 @@ $eventQuery = "SELECT
     e.coverPhoto AS coverPhoto, 
     c.id AS categoryId, 
     c.name AS categoryName, 
+    MIN(p.startDate) AS startDateTime,
     JSON_ARRAYAGG(JSON_OBJECT('city', l.city, 'postalCode', l.postalCode)) AS locations
 FROM 
     event e
