@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     .form-group button {
         width: 100%;
         padding: 10px;
-        background-color: #007bff;
+        background-color: orange;
         color: white;
         border: none;
         border-radius: 4px;
