@@ -53,12 +53,7 @@ try {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         /* Global Styles */
@@ -94,7 +89,7 @@ try {
             color: black;
         }
         .logout-btn {
-            background-color: #dc3545;
+            background-color: orange;
             color: white;
             padding: 10px 15px;
             border: none;
@@ -102,6 +97,8 @@ try {
             font-size: 0.9em;
             cursor: pointer;
             text-decoration: none;
+            margin-right: 20px; /* Add margin to the right */
+            position: relative; /* Ensure it stays within the header */
         }
         .logout-btn:hover {
             background-color: #c82333;
