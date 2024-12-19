@@ -73,7 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $conn->close();
 ?>
 
-
 <?php include_once '../components/header.php'; ?>
 <main>
     <div class="profile-container">
@@ -155,7 +154,10 @@ $conn->close();
             </div>
             <div class="form-group">
                 <label for="profilePicture">Picture</label>
-                <input type="file" id="profilePicture" name="profilePicture" placeholder="Upload Your Picture">
+                <div class="icon-container">
+                    <input type="file" id="profilePicture" name="profilePicture" placeholder="Upload Your Picture" disabled>
+                    <button type="button" class="edit-btn" onclick="toggleEdit('profilePicture')">Edit</button>
+                </div>
             </div>
             <button type="submit" class="save-button">Save Changes</button>
         </form>
