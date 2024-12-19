@@ -3,6 +3,13 @@
 include '../config.php';
 include '../db_connection.php';
 
+// Check if admin is logged in
+session_start();
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: admin-login.php");
+    exit();
+}
+
 // Fetch users
 $users = [];
 try {
@@ -85,6 +92,19 @@ try {
             flex-grow: 1;
             font-weight: 500;
             color: black;
+        }
+        .logout-btn {
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9em;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .logout-btn:hover {
+            background-color: #c82333;
         }
         .sidebar {
             position: fixed;
@@ -171,6 +191,8 @@ try {
     <div class="header">
         <img src="../assets/logo-black.png" alt="Logo">
         <h1>Admin Dashboard</h1>
+        <!-- Logout Button -->
+        <a href="admin-logout.php" class="logout-btn">Logout</a>
     </div>
 
     <!-- Sidebar -->
@@ -351,8 +373,4 @@ try {
             const buttons = btn.parentElement.children;
             buttons[0].style.display = isEditing ? "none" : "inline";
             buttons[1].style.display = isEditing ? "inline" : "none";
-            buttons[2].style.display = isEditing ? "inline" : "none";
-        }
-    </script>
-</body>
-</html>
+            buttons[2].style.display = isEditing ? "inline" : "
