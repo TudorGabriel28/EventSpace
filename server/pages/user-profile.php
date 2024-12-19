@@ -35,7 +35,7 @@ $profilePicture = htmlspecialchars($user['profilePicture']);
 
 
 // Handle form submission
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST'&& isset($_POST['update-profile'])) {
   $firstName = $_POST['firstName'];
   $lastName = $_POST['lastName'];
   $email = $_POST['email'];
@@ -70,8 +70,86 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   exit();
 }
 
+// Query for attended events in the past
+$sql = "SELECT usereventreservation.id as userreservationid, event.name, planning.startDate, usereventreservation.ticketQuantity, event.id
+  FROM event 
+  INNER JOIN planning ON event.id = planning.idEvent
+  INNER JOIN usereventreservation ON planning.id = usereventreservation.idPlanning
+  WHERE usereventreservation.idUser = ? AND planning.startDate < CURDATE()";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$attendedEvents = [];
+while ($row = $result->fetch_assoc()) {
+    $attendedEvents[] = $row;
+}
+$stmt->close();
+
+// Query for subsribed events in the future
+$sql = "SELECT usereventreservation.id as userreservationid, event.name, planning.startDate, usereventreservation.ticketQuantity, event.id
+  FROM event 
+  INNER JOIN planning ON event.id = planning.idEvent
+  INNER JOIN usereventreservation ON planning.id = usereventreservation.idPlanning
+  WHERE usereventreservation.idUser = ? AND planning.startDate >= CURDATE()";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$subscribedEvents = [];
+while ($row = $result->fetch_assoc()) {
+    $subscribedEvents[] = $row;
+}
+$stmt->close();
+
+// Query to cancel a reservation
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel-reservation'])) {
+    $reservationId = $_POST['reservation-id'];
+    $sql = "DELETE FROM usereventreservation WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $reservationId);
+    $stmt->execute();
+    $stmt->close();
+    header("Location: user-profile.php");
+    exit();
+}
+
+// Query for waitlisted events
+$sql = "SELECT usereventwaitlist.id as userwaitlistid, event.name, planning.startDate, usereventwaitlist.ticketQuantity, event.id
+  FROM event 
+  INNER JOIN planning ON event.id = planning.idEvent
+  INNER JOIN usereventwaitlist ON planning.id = usereventwaitlist.idPlanning
+  WHERE usereventwaitlist.idUser = ? AND planning.startDate >= CURDATE()";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$waitlistedEvents = [];
+while ($row = $result->fetch_assoc()) {
+    $waitlistedEvents[] = $row;
+}
+$stmt->close();
+
+// Query to leave the waitlist
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['leave-waitlist'])) {
+  $waitlistId = $_POST['waitlist-id'];
+  $sql = "DELETE FROM usereventwaitlist WHERE id = ?";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("i", $waitlistId);
+  $stmt->execute();
+  $stmt->close();
+  header("Location: user-profile.php");
+  exit();
+}
+
+// Query for created events
+
 $conn->close();
 ?>
+
 
 <?php include_once '../components/header.php'; ?>
 <main>
@@ -82,26 +160,78 @@ $conn->close();
         </div>
         <div class="event-buttons">
           <button id="attended-events-btn">Attended Events</button>
+          <button id="subscribed-events-btn">Subscribed Events</button>
           <button id="waitListed-events-btn">Wait Listed Events</button>
           <button id="created-events-btn">Created Events</button>
         </div>
       </div>
       <!-- Popup Windows -->
       <div id="popup-attended" class="popup">
+          <div class="popup-content">
+              <span class="close-btn">&times;</span>
+              <h2>Attended Events</h2>
+              <?php if (!empty($attendedEvents)): ?>
+                  <table>
+                      <thead>
+                          <tr>
+                              <th>Reservation ID</th>
+                              <th>Event Name</th>
+                              <th>Start Date</th>
+                              <th>Ticket Quantity</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <?php foreach ($attendedEvents as $event): ?>
+                              <tr>
+                                  <td><?php echo htmlspecialchars($event['userreservationid']); ?></td>
+                                  <td><a href="event-details.php?id=<?php echo htmlspecialchars($event['id']); ?>"><?php echo htmlspecialchars($event['name']); ?></a></td>
+                                  <td><?php echo htmlspecialchars($event['startDate']); ?></td>
+                                  <td><?php echo htmlspecialchars($event['ticketQuantity']); ?></td>
+                              </tr>
+                          <?php endforeach; ?>
+                      </tbody>
+                  <tr>
+                  </table>
+              <?php else: ?>
+                  <p>No attended events found.</p>
+              <?php endif; ?>
+          </div>
+      </div>
+
+      <div id="popup-subscribed" class="popup">
         <div class="popup-content">
           <span class="close-btn">&times;</span>
-          <h2>Attended Events</h2>
-          <p>
-            <?php
-            if (!empty($attendedEvents)) {
-                foreach ($attendedEvents as $event) {
-                    echo htmlspecialchars($event['name']) . "<br>";
-                }
-            } else {
-                echo "No attended events found.";
-            }
-            ?>
-          </p>
+          <h2>Subcsribed Events</h2>
+          <?php if (!empty($subscribedEvents)): ?>
+              <table>
+                  <thead>
+                      <tr>
+                          <th>Reservation ID</th>
+                          <th>Event Name</th>
+                          <th>Start Date</th>
+                          <th>Ticket Quantity</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <?php foreach ($subscribedEvents as $event): ?>
+                          <tr>
+                              <td><?php echo htmlspecialchars($event['userreservationid']); ?></td>
+                              <td><a href="event-details.php?id=<?php echo htmlspecialchars($event['id']); ?>"><?php echo htmlspecialchars($event['name']); ?></a></td>
+                              <td><?php echo htmlspecialchars($event['startDate']); ?></td>
+                              <td><?php echo htmlspecialchars($event['ticketQuantity']); ?></td>
+                              <td>
+                              <form method="POST" action="" onsubmit="return confirm('Are you sure you want to cancel this reservation?');">
+                                  <input type="hidden" name="reservation-id" value="<?php echo htmlspecialchars($event['userreservationid']); ?>">
+                                  <button class="cancel-btn" type="submit" name="cancel-reservation">Unsubscribe event</button>
+                              </form>
+                              </td>
+                          </tr>
+                      <?php endforeach; ?>
+                  </tbody>
+              </table>
+          <?php else: ?>
+              <p>No subscribed events found.</p>
+          <?php endif; ?>
         </div>
       </div>
 
@@ -109,7 +239,36 @@ $conn->close();
         <div class="popup-content">
           <span class="close-btn">&times;</span>
           <h2>Wait Listed Events</h2>
-          <p>Example content for wait listed events...</p>
+          <?php if (!empty($waitlistedEvents)): ?>
+              <table>
+                  <thead>
+                      <tr>
+                          <th>Waitlist ID</th>
+                          <th>Event Name</th>
+                          <th>Start Date</th>
+                          <th>Ticket Quantity</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <?php foreach ($waitlistedEvents as $event): ?>
+                          <tr>
+                              <td><?php echo htmlspecialchars($event['userwaitlistid']); ?></td>
+                              <td><a href="event-details.php?id=<?php echo htmlspecialchars($event['id']); ?>"><?php echo htmlspecialchars($event['name']); ?></a></td>
+                              <td><?php echo htmlspecialchars($event['startDate']); ?></td>
+                              <td><?php echo htmlspecialchars($event['ticketQuantity']); ?></td>
+                              <td>
+                                <form method="POST" action="" onsubmit="return confirm('Are you sure you want to leave the waitlist?');">
+                                    <input type="hidden" name="waitlist-id" value="<?php echo htmlspecialchars($event['userwaitlistid']); ?>">
+                                    <button class="cancel-btn" type="submit" name="leave-waitlist">Leave waitlist</button>
+                                </form>
+                              </td>
+                          </tr>
+                      <?php endforeach; ?>
+                  </tbody>
+              </table>
+              <?php else: ?>
+                  <p>No events on the waitlist found.</p>
+              <?php endif; ?>
         </div>
       </div>
 
@@ -154,12 +313,9 @@ $conn->close();
             </div>
             <div class="form-group">
                 <label for="profilePicture">Picture</label>
-                <div class="icon-container">
-                    <input type="file" id="profilePicture" name="profilePicture" placeholder="Upload Your Picture" disabled>
-                    <button type="button" class="edit-btn" onclick="toggleEdit('profilePicture')">Edit</button>
-                </div>
+                <input type="file" id="profilePicture" name="profilePicture" placeholder="Upload Your Picture">
             </div>
-            <button type="submit" class="save-button">Save Changes</button>
+            <button type="submit" name="update-profile" class="save-button">Save Changes</button>
         </form>
       </div>
     </div>

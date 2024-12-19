@@ -32,6 +32,10 @@ document.getElementById('attended-events-btn').addEventListener('click', functio
   document.getElementById('popup-attended').style.display = 'block';
 });
 
+document.getElementById('subscribed-events-btn').addEventListener('click', function() {
+  document.getElementById('popup-subscribed').style.display = 'block';
+});
+
 document.getElementById('waitListed-events-btn').addEventListener('click', function() {
   document.getElementById('popup-waitlisted').style.display = 'block';
 });
