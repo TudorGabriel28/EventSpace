@@ -12,9 +12,9 @@
         <a href="#">Forum</a>
       </div>
       <div class="footer-column">
-        <a href="#">FAQ</a>
+        <a href="faq.php">FAQ</a>
         <a href="#">Contact</a>
-        <a href="#">Terms & Conditions</a>
+        <a href="terms.php">Terms & Conditions</a>
       </div>
     </div>
     <div class="footer-social">

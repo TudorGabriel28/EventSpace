@@ -334,7 +334,7 @@ CREATE TABLE `user` (
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `dateOfBirth` date DEFAULT NULL,
-  `profilePicture` varchar(255) DEFAULT NULL,
+  `profilePicture` varchar(255) DEFAULT '../assets/users/generic-user.png',
   `accessRight` enum('admin','user') NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -373,13 +373,13 @@ INSERT INTO `user` (`id`, `firstName`, `lastName`, `email`, `password`, `dateOfB
 (28, 'Joseph', 'Lewis', 'joseph.lewis@example.com', 'password125', '1988-12-22', '../assets/users/generic-user.png', 'user'),
 (29, 'Grace', 'Walker', 'grace.walker@example.com', 'password126', '1990-07-07', '../assets/users/generic-user.png', 'user'),
 (30, 'Samuel', 'Young', 'samuel.young@example.com', 'password127', '1989-03-10', '../assets/users/generic-user.png', 'user'),
-(31, 'Luke', 'Littler', 'lukelitller@example.com', '1234', '2003-01-31', NULL, 'user'),
-(32, 'Michael', 'Smith', 'michaelsmith@example.com', '123', '2000-01-20', NULL, 'user'),
-(33, 'Michael', 'Van Gerwen', 'michaelvangerwen@example.com', '098', '1999-04-20', NULL, 'user'),
-(34, 'Laura', 'Espinosa Alfonso', 'laura@example.com', '1234', '2003-09-05', NULL, 'user'),
-(35, 'Alex', 'Smith', 'alexsmith@example.com', '123', '2000-11-11', NULL, 'user'),
-(36, 'Kamil', 'Sikora', 'kamilsikora@example.com', '123', '2000-11-11', NULL, 'user'),
-(37, 'Dan', 'Gabi', 'clewmcl@jkaka.com', '$2y$10$TRojK4R9CBbIdxEARjQaGOFDvFyanhZe6c7rdGVdecAljzyyIZfu6', '2000-11-11', NULL, 'user');
+(31, 'Luke', 'Littler', 'lukelitller@example.com', '1234', '2003-01-31', '../assets/users/generic-user.png', 'user'),
+(32, 'Michael', 'Smith', 'michaelsmith@example.com', '123', '2000-01-20', '../assets/users/generic-user.png', 'user'),
+(33, 'Michael', 'Van Gerwen', 'michaelvangerwen@example.com', '098', '1999-04-20', '../assets/users/generic-user.png', 'user'),
+(34, 'Laura', 'Espinosa Alfonso', 'laura@example.com', '1234', '2003-09-05', '../assets/users/generic-user.png', 'user'),
+(35, 'Alex', 'Smith', 'alexsmith@example.com', '123', '2000-11-11', '../assets/users/generic-user.png', 'user'),
+(36, 'Kamil', 'Sikora', 'kamilsikora@example.com', '123', '2000-11-11', '../assets/users/generic-user.png', 'user'),
+(37, 'Dan', 'Gabi', 'clewmcl@jkaka.com', '$2y$10$TRojK4R9CBbIdxEARjQaGOFDvFyanhZe6c7rdGVdecAljzyyIZfu6', '2000-11-11', '../assets/users/generic-user.png', 'user');
 
 -- --------------------------------------------------------
 

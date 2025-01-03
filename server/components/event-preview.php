@@ -2,7 +2,7 @@
 <div class="event-preview">
                 <div class="event-preview-image" style="background-image: url('<?= htmlspecialchars($event['coverPhoto']) ?>');">
                     <div class="event-preview-date">
-                        On 05/05/2024
+                        On <?= date('Y/m/d', strtotime($event['startDateTime'])) ?>
                     </div>
                 </div>
                 <div class="event-preview-info">

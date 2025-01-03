@@ -1,4 +1,7 @@
 <?php
+
+session_start(); // Ensure the session is started
+
 // Enable error reporting
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -6,9 +9,28 @@ error_reporting(E_ALL);
 // Include configuration and database connection files
 include '../config.php';
 include '../db_connection.php';
+
+function handleCreateEvent() {
+    // Check if the user is logged in
+    if (!isset($_SESSION['user_id'])) {
+        // User is not logged in
+        echo "<script>
+            alert('Please log in first to create an event.');
+            window.location.href = '../pages/login.php'; // Redirect to login page
+        </script>";
+        exit();
+    } else {
+        // User is logged in
+        echo "<script>alert('New event created successfully'); window.location.href = '../pages/home.php';</script>";
+        exit();
+    }
+}
+
 // Check if the form was submitted
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    handleCreateEvent();
     // Get data from the form
     $event_name = $_POST['event_name'];
     $description = $_POST['description'];
@@ -120,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 
     // Display success message
-    echo "<script>alert('New event created successfully'); window.location.href = '../pages/home.php';</script>";
+    
 }else {
     die("Invalid request method.");
 }

@@ -49,17 +49,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
               <label for="price-${i + 1}">Price:</label>
               <input type="number" id="price-${i + 1}" name="price[]" placeholder="Enter the price" step="0.01" min="0" required>
-
+              
               
           `;
           locationContainer.appendChild(locationDiv);
+          
 
           // Add input validation for postal code
           const postalCodeInput = document.getElementById(`postal-code-${i + 1}`);
           postalCodeInput.addEventListener('input', function() {
               this.value = this.value.replace(/\D/g, '').slice(0, 5);
           });
-        }
+      }
     
         setTabFunctionality();
       });

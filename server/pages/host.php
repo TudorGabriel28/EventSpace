@@ -1,5 +1,6 @@
 <?php
-$stylesheet = "host.css";
+
+$stylesheet = "../styles/host.css";
 
 // Enable error reporting
 ini_set('display_errors', 1);
@@ -27,13 +28,13 @@ $conn->close();
 ?>
 
 <?php include_once '../components/header.php'; ?>
-<main>
+<main class="host-event">
 
   <section class="page-title">
     <h1>Host Event</h1>
     <p>Your Event ! Your Squad ! Your Way!</p>
   </section>
-    
+
   <div class="container">
     <h2>Enter event details</h2>
     <form action="../components/submit_event.php" method="POST" enctype="multipart/form-data">
@@ -68,11 +69,13 @@ $conn->close();
       <!-- Location Details Container -->
       <div id="location-container"></div>
       
-      <button type="submit" class="create-event">Create Event</button>
+      <button type="submit" name="createEvent" class="create-event">Create Event</button>
     </form>
   </div>
+
   
 </main>
+
 <?php include_once '../components/footer.php'; ?>
 <script src="../scripts/host_event.js" defer></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $stylesheet; ?>">

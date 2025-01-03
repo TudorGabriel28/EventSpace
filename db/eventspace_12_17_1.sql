@@ -334,7 +334,7 @@ CREATE TABLE `user` (
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `dateOfBirth` date DEFAULT NULL,
-  `profilePicture` varchar(255) DEFAULT NULL,
+  `profilePicture` varchar(255) DEFAULT '../assets/users/generic-user.png',
   `accessRight` enum('admin','user') NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -373,13 +373,13 @@ INSERT INTO `user` (`id`, `firstName`, `lastName`, `email`, `password`, `dateOfB
 (28, 'Joseph', 'Lewis', 'joseph.lewis@example.com', 'password125', '1988-12-22', '../assets/users/generic-user.png', 'user'),
 (29, 'Grace', 'Walker', 'grace.walker@example.com', 'password126', '1990-07-07', '../assets/users/generic-user.png', 'user'),
 (30, 'Samuel', 'Young', 'samuel.young@example.com', 'password127', '1989-03-10', '../assets/users/generic-user.png', 'user'),
-(31, 'Luke', 'Littler', 'lukelitller@example.com', '1234', '2003-01-31', NULL, 'user'),
-(32, 'Michael', 'Smith', 'michaelsmith@example.com', '123', '2000-01-20', NULL, 'user'),
-(33, 'Michael', 'Van Gerwen', 'michaelvangerwen@example.com', '098', '1999-04-20', NULL, 'user'),
-(34, 'Laura', 'Espinosa Alfonso', 'laura@example.com', '1234', '2003-09-05', NULL, 'user'),
-(35, 'Alex', 'Smith', 'alexsmith@example.com', '123', '2000-11-11', NULL, 'user'),
-(36, 'Kamil', 'Sikora', 'kamilsikora@example.com', '123', '2000-11-11', NULL, 'user'),
-(37, 'Dan', 'Gabi', 'clewmcl@jkaka.com', '$2y$10$TRojK4R9CBbIdxEARjQaGOFDvFyanhZe6c7rdGVdecAljzyyIZfu6', '2000-11-11', NULL, 'user');
+(31, 'Luke', 'Littler', 'lukelitller@example.com', '1234', '2003-01-31', '../assets/users/generic-user.png', 'user'),
+(32, 'Michael', 'Smith', 'michaelsmith@example.com', '123', '2000-01-20', '../assets/users/generic-user.png', 'user'),
+(33, 'Michael', 'Van Gerwen', 'michaelvangerwen@example.com', '098', '1999-04-20', '../assets/users/generic-user.png', 'user'),
+(34, 'Laura', 'Espinosa Alfonso', 'laura@example.com', '1234', '2003-09-05', '../assets/users/generic-user.png', 'user'),
+(35, 'Alex', 'Smith', 'alexsmith@example.com', '123', '2000-11-11', '../assets/users/generic-user.png', 'user'),
+(36, 'Kamil', 'Sikora', 'kamilsikora@example.com', '123', '2000-11-11', '../assets/users/generic-user.png', 'user'),
+(37, 'Dan', 'Gabi', 'clewmcl@jkaka.com', '$2y$10$TRojK4R9CBbIdxEARjQaGOFDvFyanhZe6c7rdGVdecAljzyyIZfu6', '2000-11-11', '../assets/users/generic-user.png', 'user');
 
 -- --------------------------------------------------------
 
@@ -696,6 +696,77 @@ ALTER TABLE `usereventrole`
 ALTER TABLE `usereventwaitlist`
   ADD CONSTRAINT `fk_UserEventWaitlist_Planning` FOREIGN KEY (`idPlanning`) REFERENCES `planning` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `usereventwaitlist_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- phpMyAdmin SQL Dump
+-- version 5.1.2
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost:3306
+-- Generation Time: Dec 17, 2024 at 05:28 PM
+-- Server version: 5.7.24
+-- PHP Version: 8.3.1
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `eventspace`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `terms_conditions`
+--
+
+CREATE TABLE `terms_conditions` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `terms_conditions`
+--
+
+INSERT INTO `terms_conditions` (`id`, `title`, `content`, `created_at`) VALUES
+(5, 'General Terms', 'Eventspace provides a platform for users to discover, participate in, and host events. All users must adhere to these terms to ensure a safe and enjoyable experience.', '2024-12-13 09:21:56'),
+(6, 'User Responsibilities', 'Users agree to:\n- Provide accurate and truthful information when registering.\n- Refrain from sharing content that is harmful, offensive, or unlawful.\n- Respect the platform and fellow users by avoiding spamming or misuse.', '2024-12-13 09:21:56'),
+(7, 'Event Hosting Guidelines', 'Event hosts must:\n- Ensure their events comply with local laws and regulations.\n- Provide accurate descriptions of their events.\n- Communicate any changes or cancellations to participants promptly.', '2024-12-13 09:21:56'),
+(8, 'Prohibited Activities', 'To maintain the integrity of our platform, users must not:\n- Host or participate in fraudulent or illegal events.\n- Upload harmful, inappropriate, or copyrighted material without permission.\n- Attempt to exploit or hack the platform.', '2024-12-13 09:21:56'),
+(9, 'Disclaimers', 'Eventspace is a platform for connecting users to events. We are not liable for disputes, injuries, or issues that may arise during event participation or hosting. Users participate at their own risk.', '2024-12-13 09:21:56');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `terms_conditions`
+--
+ALTER TABLE `terms_conditions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `terms_conditions`
+--
+ALTER TABLE `terms_conditions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
