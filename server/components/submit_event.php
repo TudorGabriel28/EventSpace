@@ -76,10 +76,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // Ensure that the data is in array format
-    if (!is_array($address) || !is_array($city) || !is_array($postalCode)) {
-        die("Invalid data format.");
-    }
-
+    //if (!is_array($address) || !is_array($city) || !is_array($postalCode) || !is_array($start_dates) || !is_array($end_dates) || !is_array($capacity) || !is_array($price)) {
+       // die("Invalid data format.");
+    //}
 
     
 
@@ -96,12 +95,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      // Insert the data into the database
     $sql_location = "INSERT INTO location ( postalCode, city, address ) VALUES (?, ?, ?)";
     $stmt_location = $conn->prepare($sql_location);
-
+    
 
     // Check if the statement was prepared successfully
     if (!$stmt_location) {
         die("Location insertion failed: " . $conn->error);
-    }  
+    } 
+
+
+     
     
     // Convert datetime format from 'YYYY-MM-DDTHH:MM' to 'YYYY-MM-DD HH:MM:SS'
     //$start_dates = str_replace('T', ' ', $start_dates) . ':00';
