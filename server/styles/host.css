@@ -92,7 +92,7 @@ label {
 .location-details.active {
   display: block; /* Show active location */
 }
-button {
+/* button {
 width: 100%;
 padding: 10px;
 margin-bottom: 15px;
@@ -101,4 +101,4 @@ color: black;
 border: 1px solid #ccc;
 border-radius: 5px;
 font-size: 14px;
-}
+} */
