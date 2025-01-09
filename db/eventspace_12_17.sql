@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 27-11-2024 a las 15:54:39
+-- Tiempo de generación: 12-12-2024 a las 13:56:10
 -- Versión del servidor: 5.7.24
 -- Versión de PHP: 8.3.1
 
@@ -70,30 +70,30 @@ INSERT INTO `event` (`id`, `name`, `description`, `coverPhoto`, `creationTimesta
 (4, 'Tech Conference', 'A conference showcasing the latest in technology.', '../assets/events/event4.jpg', '2024-11-27 15:51:16'),
 (5, 'Fashion Show', 'A runway show featuring the latest fashion trends.', '../assets/events/event5.jpg', '2024-11-27 15:51:16'),
 (6, 'Sports Gala', 'An event celebrating achievements in sports.', '../assets/events/event6.jpg', '2024-11-27 15:51:16'),
-(7, 'Food Truck Rally', 'A gathering of the best food trucks in the city.', '../assets/events/event7.jpg', '2024-11-27 15:51:16'),
-(8, 'Art Workshop', 'A hands-on workshop for aspiring artists.', '../assets/events/event8.jpg', '2024-11-27 15:51:16'),
-(9, 'Jazz Night', 'An evening of live jazz music.', '../assets/events/event9.jpg', '2024-11-27 15:51:16'),
-(10, 'Startup Pitch', 'A platform for startups to pitch their ideas.', '../assets/events/event10.jpg', '2024-11-27 15:51:16'),
-(11, 'Photography Exhibition', 'An exhibition of stunning photographs.', '../assets/events/event11.jpg', '2024-11-27 15:51:16'),
-(12, 'Book Fair', 'A fair showcasing a wide range of books.', '../assets/events/event12.jpg', '2024-11-27 15:51:16'),
-(13, 'Film Festival', 'A festival screening independent films.', '../assets/events/event13.jpg', '2024-11-27 15:51:16'),
-(14, 'Dance Competition', 'A competition featuring various dance styles.', '../assets/events/event14.jpg', '2024-11-27 15:51:16'),
-(15, 'Science Fair', 'An event showcasing scientific projects.', '../assets/events/event15.jpg', '2024-11-27 15:51:16'),
-(16, 'Wine Tasting', 'An event for wine enthusiasts to taste different wines.', '../assets/events/event16.jpg', '2024-11-27 15:51:16'),
-(17, 'Charity Run', 'A run to raise funds for charity.', '../assets/events/event17.jpg', '2024-11-27 15:51:16'),
-(18, 'Yoga Retreat', 'A retreat focusing on yoga and wellness.', '../assets/events/event18.jpg', '2024-11-27 15:51:16'),
-(19, 'Gaming Convention', 'A convention for gaming enthusiasts.', '../assets/events/event19.jpg', '2024-11-27 15:51:16'),
-(20, 'Culinary Class', 'A class teaching culinary skills.', '../assets/events/event20.jpg', '2024-11-27 15:51:16'),
-(21, 'Theater Play', 'A live theater performance.', '../assets/events/event21.jpg', '2024-11-27 15:51:16'),
-(22, 'Comedy Show', 'A show featuring stand-up comedians.', '../assets/events/event22.jpg', '2024-11-27 15:51:16'),
-(23, 'Craft Fair', 'A fair showcasing handmade crafts.', '../assets/events/event23.jpg', '2024-11-27 15:51:16'),
-(24, 'Pet Expo', 'An expo for pet lovers.', '../assets/events/event24.jpg', '2024-11-27 15:51:16'),
-(25, 'Marathon', 'A long-distance running event.', '../assets/events/event25.jpg', '2024-11-27 15:51:16'),
-(26, 'Music Workshop', 'A workshop for aspiring musicians.', '../assets/events/event26.jpg', '2024-11-27 15:51:16'),
-(27, 'Art Auction', 'An auction of fine art pieces.', '../assets/events/event27.jpg', '2024-11-27 15:51:16'),
-(28, 'Tech Meetup', 'A meetup for tech enthusiasts.', '../assets/events/event28.jpg', '2024-11-27 15:51:16'),
-(29, 'Fashion Bazaar', 'A bazaar featuring fashion items.', '../assets/events/event29.jpg', '2024-11-27 15:51:16'),
-(30, 'Food Expo', 'An expo showcasing different cuisines.', '../assets/events/event30.jpg', '2024-11-27 15:51:16');
+(7, 'Food Truck Rally', 'A gathering of the best food trucks in the city.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(8, 'Art Workshop', 'A hands-on workshop for aspiring artists.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(9, 'Jazz Night', 'An evening of live jazz music.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(10, 'Startup Pitch', 'A platform for startups to pitch their ideas.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(11, 'Photography Exhibition', 'An exhibition of stunning photographs.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(12, 'Book Fair', 'A fair showcasing a wide range of books.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(13, 'Film Festival', 'A festival screening independent films.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(14, 'Dance Competition', 'A competition featuring various dance styles.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(15, 'Science Fair', 'An event showcasing scientific projects.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(16, 'Wine Tasting', 'An event for wine enthusiasts to taste different wines.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(17, 'Charity Run', 'A run to raise funds for charity.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(18, 'Yoga Retreat', 'A retreat focusing on yoga and wellness.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(19, 'Gaming Convention', 'A convention for gaming enthusiasts.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(20, 'Culinary Class', 'A class teaching culinary skills.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(21, 'Theater Play', 'A live theater performance.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(22, 'Comedy Show', 'A show featuring stand-up comedians.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(23, 'Craft Fair', 'A fair showcasing handmade crafts.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(24, 'Pet Expo', 'An expo for pet lovers.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(25, 'Marathon', 'A long-distance running event.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(26, 'Music Workshop', 'A workshop for aspiring musicians.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(27, 'Art Auction', 'An auction of fine art pieces.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(28, 'Tech Meetup', 'A meetup for tech enthusiasts.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(29, 'Fashion Bazaar', 'A bazaar featuring fashion items.', '../assets/events/event.jpg', '2024-11-27 15:51:16'),
+(30, 'Food Expo', 'An expo showcasing different cuisines.', '../assets/events/event.jpg', '2024-11-27 15:51:16');
 
 -- --------------------------------------------------------
 
@@ -160,10 +160,10 @@ CREATE TABLE `faq` (
 --
 
 INSERT INTO `faq` (`id`, `question`, `answer`) VALUES
-(3, 'How do I register for an event?', 'To register for an event, simply visit the event page, select the event you’re interested in, and click on the \'Register\' button. You may need to create an account or log in to complete your registration.'),
+(3, 'How do I register for an event?', 'To register for an event, simply visit the event page, select the event you’re interested in, and click on the Register button. You may need to create an account or log in to complete your registration.'),
 (4, 'Can I host my own event?', 'Yes! Eventspace allows users to create and host their own events. You can choose the category, set the date, and provide all the event details. Once your event is created, others can register and participate.'),
 (5, 'How can I find events related to my interests?', 'You can browse events by categories such as Music, Technology, Sports, and Art. Additionally, you can use the search function to find events based on location, date, or keywords.'),
-(6, 'Can I cancel my registration for an event?', 'Yes, you can cancel your registration. Simply go to your profile or the event page, and youll find an option to cancel your registration. Please check if the event has any specific cancellation policies.'),
+(6, 'Can I cancel my registration for an event?', 'Yes, you can cancel your registration. Simply go to your profile or the event page, and you ll find an option to cancel your registration. Please check if the event has any specific cancellation policies.'),
 (7, 'What should I do if I want to modify my event details after posting?', 'If you need to update the event details, you can edit the event by logging into your Eventspace account. Changes will be reflected on the event page once updated.'),
 (8, 'What happens if an event I registered for gets canceled?', 'If an event is canceled, you will be notified via email or through your account. Depending on the event, you may be offered a refund if there was a registration fee.'),
 (9, 'Can I create an event with multiple categories?', 'Yes, you can select multiple categories for your event if it fits within different interests, such as combining Music and Technology for a music tech event.'),
@@ -188,7 +188,12 @@ CREATE TABLE `forumcomment` (
 
 INSERT INTO `forumcomment` (`id`, `content`, `idDiscussion`, `idUser`) VALUES
 (1, 'The cheese stalls are amazing!', 1, 2),
-(2, 'Bring a picnic blanket and enjoy the art!', 2, 1);
+(2, 'Bring a picnic blanket and enjoy the art!', 1, 3),
+(3, 'I have the same question too!', 1, 6),
+(6, 'You should try the spanish food stand!', 1, 1),
+(8, 'The hamburguers are top', 1, 1),
+(9, 'Yes!!! I love tacos and they are amazing there', 5, 1),
+(10, 'Yes!!! I love tacos and they are amazing there', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -199,6 +204,7 @@ INSERT INTO `forumcomment` (`id`, `content`, `idDiscussion`, `idUser`) VALUES
 CREATE TABLE `forumdiscussion` (
   `id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
+  `question` text NOT NULL,
   `idUser` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -206,9 +212,12 @@ CREATE TABLE `forumdiscussion` (
 -- Volcado de datos para la tabla `forumdiscussion`
 --
 
-INSERT INTO `forumdiscussion` (`id`, `title`, `idUser`) VALUES
-(1, 'Best Food at the Paris Food Festival?', 1),
-(2, 'What to Bring to Art in the Park?', 3);
+INSERT INTO `forumdiscussion` (`id`, `title`, `question`, `idUser`) VALUES
+(1, 'Best Food at the Paris Food Festival?', 'I wanted to know what is the best stands that I can visit this weekend in the festival?', 1),
+(2, 'What to Bring to Art in the Park?', '', 3),
+(3, 'Football event in Issy-les-Molineaux', 'What types of shoes are you going to bring to the event?', 8),
+(4, 'Company for the Paris Food Festival', 'Is there someone looking forward to going to the Paris Food Festival? I am new in the city and it would be great to meet new people there.', 8),
+(5, 'Mexican food at the Paris Food Festival?', 'Is there anyone that has gone to the PFF and has seen a mexican food stand?', 8);
 
 -- --------------------------------------------------------
 
@@ -270,7 +279,7 @@ CREATE TABLE `planning` (
 --
 
 INSERT INTO `planning` (`id`, `startDate`, `endDate`, `capacity`, `price`, `idEvent`, `idLocation`) VALUES
-(1, '2024-11-20 10:00:00', '2024-11-20 20:00:00', 200, '50.00', 1, 1),
+(1, '2024-11-20 10:00:00', '2024-11-20 20:00:00', 2, '50.00', 1, 1),
 (2, '2024-12-05 09:00:00', '2024-12-05 19:00:00', 150, '40.00', 2, 2),
 (3, '2024-12-15 12:00:00', '2024-12-15 23:00:00', 500, '60.00', 3, 4),
 (4, '2024-12-20 10:00:00', '2024-12-20 20:00:00', 200, '50.00', 4, 3),
@@ -325,8 +334,8 @@ CREATE TABLE `user` (
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `dateOfBirth` date DEFAULT NULL,
-  `profilePicture` varchar(255) DEFAULT NULL,
-  `accessRight` enum('admin','user') NOT NULL
+  `profilePicture` varchar(255) DEFAULT '../assets/users/generic-user.png',
+  `accessRight` enum('admin','user') NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -334,36 +343,43 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `firstName`, `lastName`, `email`, `password`, `dateOfBirth`, `profilePicture`, `accessRight`) VALUES
-(1, 'Alice', 'Dupont', 'alice.dupont@example.com', 'password123', '1992-05-14', 'profile1.jpg', 'user'),
-(2, 'Alejandro', 'Martin', 'bob.martin@example.com', 'password456', '1985-08-20', 'profile2.jpg', 'admin'),
-(3, 'Charlie', 'Renard', 'charlie.renard@example.com', 'password789', '1990-11-02', 'profile3.jpg', 'user'),
-(4, 'David', 'Smith', 'david.smith@example.com', 'password101', '1988-03-15', 'profile4.jpg', 'user'),
-(5, 'Emma', 'Johnson', 'emma.johnson@example.com', 'password102', '1995-07-22', 'profile5.jpg', 'user'),
-(6, 'Lucas', 'Brown', 'lucas.brown@example.com', 'password103', '1993-12-05', 'profile6.jpg', 'user'),
-(7, 'Olivia', 'Jones', 'olivia.jones@example.com', 'password104', '1991-09-18', 'profile7.jpg', 'user'),
-(8, 'Liam', 'Garcia', 'liam.garcia@example.com', 'password105', '1987-04-10', 'profile8.jpg', 'user'),
-(9, 'Sophia', 'Martinez', 'sophia.martinez@example.com', 'password106', '1994-06-30', 'profile9.jpg', 'user'),
-(10, 'Mason', 'Rodriguez', 'mason.rodriguez@example.com', 'password107', '1992-11-25', 'profile10.jpg', 'user'),
-(11, 'Isabella', 'Hernandez', 'isabella.hernandez@example.com', 'password108', '1990-02-14', 'profile11.jpg', 'user'),
-(12, 'Ethan', 'Lopez', 'ethan.lopez@example.com', 'password109', '1989-08-08', 'profile12.jpg', 'user'),
-(13, 'Ava', 'Gonzalez', 'ava.gonzalez@example.com', 'password110', '1996-01-20', 'profile13.jpg', 'user'),
-(14, 'James', 'Wilson', 'james.wilson@example.com', 'password111', '1986-05-12', 'profile14.jpg', 'user'),
-(15, 'Mia', 'Anderson', 'mia.anderson@example.com', 'password112', '1991-10-03', 'profile15.jpg', 'user'),
-(16, 'Alexander', 'Thomas', 'alexander.thomas@example.com', 'password113', '1993-03-27', 'profile16.jpg', 'user'),
-(17, 'Charlotte', 'Taylor', 'charlotte.taylor@example.com', 'password114', '1994-12-17', 'profile17.jpg', 'user'),
-(18, 'Benjamin', 'Moore', 'benjamin.moore@example.com', 'password115', '1988-07-09', 'profile18.jpg', 'user'),
-(19, 'Amelia', 'Jackson', 'amelia.jackson@example.com', 'password116', '1992-11-11', 'profile19.jpg', 'user'),
-(20, 'Henry', 'Martin', 'henry.martin@example.com', 'password117', '1990-04-25', 'profile20.jpg', 'user'),
-(21, 'Evelyn', 'Lee', 'evelyn.lee@example.com', 'password118', '1989-09-19', 'profile21.jpg', 'user'),
-(22, 'Sebastian', 'Perez', 'sebastian.perez@example.com', 'password119', '1995-06-15', 'profile22.jpg', 'user'),
-(23, 'Harper', 'White', 'harper.white@example.com', 'password120', '1991-01-29', 'profile23.jpg', 'user'),
-(24, 'Daniel', 'Harris', 'daniel.harris@example.com', 'password121', '1987-10-21', 'profile24.jpg', 'user'),
-(25, 'Ella', 'Sanchez', 'ella.sanchez@example.com', 'password122', '1993-05-06', 'profile25.jpg', 'user'),
-(26, 'Matthew', 'Clark', 'matthew.clark@example.com', 'password123', '1994-08-13', 'profile26.jpg', 'user'),
-(27, 'Scarlett', 'Ramirez', 'scarlett.ramirez@example.com', 'password124', '1992-02-28', 'profile27.jpg', 'user'),
-(28, 'Joseph', 'Lewis', 'joseph.lewis@example.com', 'password125', '1988-12-22', 'profile28.jpg', 'user'),
-(29, 'Grace', 'Walker', 'grace.walker@example.com', 'password126', '1990-07-07', 'profile29.jpg', 'user'),
-(30, 'Samuel', 'Young', 'samuel.young@example.com', 'password127', '1989-03-10', 'profile30.jpg', 'user');
+(1, 'Alice', 'Dupont', 'alice.dupont@example.com', 'password123', '1992-05-14', '../assets/users/generic-user.png', 'user'),
+(2, 'Alejandro', 'Martin', 'bob.martin@example.com', 'password456', '1985-08-20', '../assets/users/generic-user.png', 'admin'),
+(3, 'Charlie', 'Renard', 'charlie.renard@example.com', 'password789', '1990-11-02', '../assets/users/generic-user.png', 'user'),
+(4, 'David', 'Smith', 'david.smith@example.com', 'password101', '1988-03-15', '../assets/users/generic-user.png', 'user'),
+(5, 'Emma', 'Johnson', 'emma.johnson@example.com', 'password102', '1995-07-22', '../assets/users/generic-user.png', 'user'),
+(6, 'Lucas', 'Brown', 'lucas.brown@example.com', 'password103', '1993-12-05', '../assets/users/generic-user.png', 'user'),
+(7, 'Olivia', 'Jones', 'olivia.jones@example.com', 'password104', '1991-09-18', '../assets/users/generic-user.png', 'user'),
+(8, 'Liam', 'Garcia', 'liam.garcia@example.com', 'password105', '1987-04-10', '../assets/users/generic-user.png', 'user'),
+(9, 'Sophia', 'Martinez', 'sophia.martinez@example.com', 'password106', '1994-06-30', '../assets/users/generic-user.png', 'user'),
+(10, 'Mason', 'Rodriguez', 'mason.rodriguez@example.com', 'password107', '1992-11-25', '../assets/users/generic-user.png', 'user'),
+(11, 'Isabella', 'Hernandez', 'isabella.hernandez@example.com', 'password108', '1990-02-14', '../assets/users/generic-user.png', 'user'),
+(12, 'Ethan', 'Lopez', 'ethan.lopez@example.com', 'password109', '1989-08-08', '../assets/users/generic-user.png', 'user'),
+(13, 'Ava', 'Gonzalez', 'ava.gonzalez@example.com', 'password110', '1996-01-20', '../assets/users/generic-user.png', 'user'),
+(14, 'James', 'Wilson', 'james.wilson@example.com', 'password111', '1986-05-12', '../assets/users/generic-user.png', 'user'),
+(15, 'Mia', 'Anderson', 'mia.anderson@example.com', 'password112', '1991-10-03', '../assets/users/generic-user.png', 'user'),
+(16, 'Alexander', 'Thomas', 'alexander.thomas@example.com', 'password113', '1993-03-27', '../assets/users/generic-user.png', 'user'),
+(17, 'Charlotte', 'Taylor', 'charlotte.taylor@example.com', 'password114', '1994-12-17', '../assets/users/generic-user.png', 'user'),
+(18, 'Benjamin', 'Moore', 'benjamin.moore@example.com', 'password115', '1988-07-09', '../assets/users/generic-user.png', 'user'),
+(19, 'Amelia', 'Jackson', 'amelia.jackson@example.com', 'password116', '1992-11-11', '../assets/users/generic-user.png', 'user'),
+(20, 'Henry', 'Martin', 'henry.martin@example.com', 'password117', '1990-04-25', '../assets/users/generic-user.png', 'user'),
+(21, 'Evelyn', 'Lee', 'evelyn.lee@example.com', 'password118', '1989-09-19', '../assets/users/generic-user.png', 'user'),
+(22, 'Sebastian', 'Perez', 'sebastian.perez@example.com', 'password119', '1995-06-15', '../assets/users/generic-user.png', 'user'),
+(23, 'Harper', 'White', 'harper.white@example.com', 'password120', '1991-01-29', '../assets/users/generic-user.png', 'user'),
+(24, 'Daniel', 'Harris', 'daniel.harris@example.com', 'password121', '1987-10-21', '../assets/users/generic-user.png', 'user'),
+(25, 'Ella', 'Sanchez', 'ella.sanchez@example.com', 'password122', '1993-05-06', '../assets/users/generic-user.png', 'user'),
+(26, 'Matthew', 'Clark', 'matthew.clark@example.com', 'password123', '1994-08-13', '../assets/users/generic-user.png', 'user'),
+(27, 'Scarlett', 'Ramirez', 'scarlett.ramirez@example.com', 'password124', '1992-02-28', '../assets/users/generic-user.png', 'user'),
+(28, 'Joseph', 'Lewis', 'joseph.lewis@example.com', 'password125', '1988-12-22', '../assets/users/generic-user.png', 'user'),
+(29, 'Grace', 'Walker', 'grace.walker@example.com', 'password126', '1990-07-07', '../assets/users/generic-user.png', 'user'),
+(30, 'Samuel', 'Young', 'samuel.young@example.com', 'password127', '1989-03-10', '../assets/users/generic-user.png', 'user'),
+(31, 'Luke', 'Littler', 'lukelitller@example.com', '1234', '2003-01-31', '../assets/users/generic-user.png', 'user'),
+(32, 'Michael', 'Smith', 'michaelsmith@example.com', '123', '2000-01-20', '../assets/users/generic-user.png', 'user'),
+(33, 'Michael', 'Van Gerwen', 'michaelvangerwen@example.com', '098', '1999-04-20', '../assets/users/generic-user.png', 'user'),
+(34, 'Laura', 'Espinosa Alfonso', 'laura@example.com', '1234', '2003-09-05', '../assets/users/generic-user.png', 'user'),
+(35, 'Alex', 'Smith', 'alexsmith@example.com', '123', '2000-11-11', '../assets/users/generic-user.png', 'user'),
+(36, 'Kamil', 'Sikora', 'kamilsikora@example.com', '123', '2000-11-11', '../assets/users/generic-user.png', 'user'),
+(37, 'Dan', 'Gabi', 'clewmcl@jkaka.com', '$2y$10$TRojK4R9CBbIdxEARjQaGOFDvFyanhZe6c7rdGVdecAljzyyIZfu6', '2000-11-11', '../assets/users/generic-user.png', 'user');
 
 -- --------------------------------------------------------
 
@@ -374,19 +390,39 @@ INSERT INTO `user` (`id`, `firstName`, `lastName`, `email`, `password`, `dateOfB
 CREATE TABLE `usereventreservation` (
   `id` int(11) NOT NULL,
   `ticketQuantity` int(11) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `ticketPrice` decimal(10,2) NOT NULL,
-  `idUser` int(11) DEFAULT NULL,
-  `idEvent` int(11) DEFAULT NULL
+  `timestamp` datetime DEFAULT CURRENT_TIMESTAMP,
+  `idPlanning` int(11) NOT NULL,
+  `idUser` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `usereventreservation`
 --
 
-INSERT INTO `usereventreservation` (`id`, `ticketQuantity`, `timestamp`, `ticketPrice`, `idUser`, `idEvent`) VALUES
-(1, 2, '2024-11-01 13:30:00', '50.00', 1, 1),
-(2, 1, '2024-11-02 16:00:00', '30.00', 3, 2);
+INSERT INTO `usereventreservation` (`id`, `ticketQuantity`, `timestamp`, `idPlanning`, `idUser`) VALUES
+(6, 1, '2024-12-03 18:57:53', 1, 1),
+(9, 2, '2024-12-03 19:03:55', 1, 1),
+(13, 2, '2024-12-04 17:24:19', 1, 1),
+(14, 3, '2024-12-04 17:37:37', 1, 5),
+(17, 4, '2024-12-04 17:41:01', 1, 1),
+(18, 4, '2024-12-04 17:41:26', 1, 1),
+(20, 4, '2024-12-04 17:41:57', 1, 1),
+(22, 1, '2024-12-05 11:35:42', 1, 1),
+(23, 1, '2024-12-05 11:46:16', 1, 1),
+(24, 3, '2024-12-05 12:05:09', 1, 1),
+(25, 3, '2024-12-05 12:07:43', 1, 1),
+(27, 1, '2024-12-05 12:08:45', 1, 5),
+(28, 1, '2024-12-05 12:10:20', 5, 1),
+(29, 2, '2024-12-05 12:10:27', 31, 1),
+(30, 2, '2024-12-05 12:40:42', 31, 1),
+(31, 1, '2024-12-05 12:40:51', 5, 1),
+(32, 2, '2024-12-05 14:57:20', 31, 1),
+(33, 1, '2024-12-05 15:05:10', 1, 1),
+(34, 1, '2024-12-05 15:05:15', 1, 1),
+(35, 1, '2024-12-05 15:05:23', 5, 1),
+(36, 2, '2024-12-05 15:05:36', 1, 1),
+(37, 1, '2024-12-05 16:01:51', 5, 1),
+(38, 1, '2024-12-05 16:04:35', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -398,18 +434,19 @@ CREATE TABLE `usereventrole` (
   `id` int(11) NOT NULL,
   `function` varchar(50) NOT NULL,
   `idUser` int(11) DEFAULT NULL,
-  `idEvent` int(11) DEFAULT NULL
+  `idEvent` int(11) DEFAULT NULL,
+  `idPlanning` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `usereventrole`
 --
 
-INSERT INTO `usereventrole` (`id`, `function`, `idUser`, `idEvent`) VALUES
-(1, 'Organizer', 2, 1),
-(2, 'Participant', 1, 1),
-(3, 'Organizer', 2, 2),
-(4, 'Participant', 3, 3);
+INSERT INTO `usereventrole` (`id`, `function`, `idUser`, `idEvent`, `idPlanning`) VALUES
+(1, 'Organizer', 2, 1, NULL),
+(2, 'Participant', 1, 1, NULL),
+(3, 'Organizer', 2, 2, NULL),
+(4, 'Participant', 3, 3, NULL);
 
 -- --------------------------------------------------------
 
@@ -422,7 +459,7 @@ CREATE TABLE `usereventwaitlist` (
   `ticketQuantity` int(11) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `idUser` int(11) DEFAULT NULL,
-  `idEvent` int(11) DEFAULT NULL
+  `idPlanning` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -430,7 +467,14 @@ CREATE TABLE `usereventwaitlist` (
 --
 
 INSERT INTO `usereventwaitlist` (`id`, `ticketQuantity`, `timestamp`, `idUser`, `idPlanning`) VALUES
-(1, 1, '2024-11-03 08:00:00', 3, 1);
+(1, 1, '2024-11-03 08:00:00', 3, NULL),
+(2, 1, '2024-12-05 14:49:39', 1, 1),
+(3, 1, '2024-12-05 14:59:52', 1, 1),
+(4, 1, '2024-12-05 15:00:10', 1, 1),
+(5, 1, '2024-12-05 15:00:29', 1, 1),
+(6, 2, '2024-12-05 15:17:37', 1, 1),
+(7, 3, '2024-12-05 15:28:20', 1, 1),
+(8, 1, '2024-12-05 15:45:58', 1, 1);
 
 --
 -- Índices para tablas volcadas
@@ -504,8 +548,8 @@ ALTER TABLE `user`
 --
 ALTER TABLE `usereventreservation`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idUser` (`idUser`),
-  ADD KEY `idEvent` (`idEvent`);
+  ADD KEY `idPlanning` (`idPlanning`),
+  ADD KEY `idUser` (`idUser`);
 
 --
 -- Indices de la tabla `usereventrole`
@@ -513,7 +557,8 @@ ALTER TABLE `usereventreservation`
 ALTER TABLE `usereventrole`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idUser` (`idUser`),
-  ADD KEY `idEvent` (`idEvent`);
+  ADD KEY `idEvent` (`idEvent`),
+  ADD KEY `fk_UserEventRole_Planning` (`idPlanning`);
 
 --
 -- Indices de la tabla `usereventwaitlist`
@@ -521,7 +566,7 @@ ALTER TABLE `usereventrole`
 ALTER TABLE `usereventwaitlist`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idUser` (`idUser`),
-  ADD KEY `idEvent` (`idEvent`);
+  ADD KEY `fk_UserEventWaitlist_Planning` (`idPlanning`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -555,13 +600,13 @@ ALTER TABLE `faq`
 -- AUTO_INCREMENT de la tabla `forumcomment`
 --
 ALTER TABLE `forumcomment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `forumdiscussion`
 --
 ALTER TABLE `forumdiscussion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `location`
@@ -579,13 +624,13 @@ ALTER TABLE `planning`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT de la tabla `usereventreservation`
 --
 ALTER TABLE `usereventreservation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de la tabla `usereventrole`
@@ -597,7 +642,7 @@ ALTER TABLE `usereventrole`
 -- AUTO_INCREMENT de la tabla `usereventwaitlist`
 --
 ALTER TABLE `usereventwaitlist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Restricciones para tablas volcadas
@@ -634,13 +679,14 @@ ALTER TABLE `planning`
 -- Filtros para la tabla `usereventreservation`
 --
 ALTER TABLE `usereventreservation`
-  ADD CONSTRAINT `usereventreservation_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `usereventreservation_ibfk_2` FOREIGN KEY (`idEvent`) REFERENCES `event` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `usereventreservation_ibfk_1` FOREIGN KEY (`idPlanning`) REFERENCES `planning` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `usereventreservation_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usereventrole`
 --
 ALTER TABLE `usereventrole`
+  ADD CONSTRAINT `fk_UserEventRole_Planning` FOREIGN KEY (`idPlanning`) REFERENCES `planning` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `usereventrole_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `usereventrole_ibfk_2` FOREIGN KEY (`idEvent`) REFERENCES `event` (`id`) ON DELETE CASCADE;
 
@@ -648,8 +694,8 @@ ALTER TABLE `usereventrole`
 -- Filtros para la tabla `usereventwaitlist`
 --
 ALTER TABLE `usereventwaitlist`
-  ADD CONSTRAINT `usereventwaitlist_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `usereventwaitlist_ibfk_2` FOREIGN KEY (`idEvent`) REFERENCES `event` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_UserEventWaitlist_Planning` FOREIGN KEY (`idPlanning`) REFERENCES `planning` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `usereventwaitlist_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

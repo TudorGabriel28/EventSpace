@@ -59,4 +59,5 @@
     height: auto;
     max-height: 300px; 
     overflow: hidden;
+    object-fit: cover;
 }

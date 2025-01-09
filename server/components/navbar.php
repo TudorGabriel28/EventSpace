@@ -51,7 +51,7 @@ $conn->close();
             <li><a href="contact.php">Contact</a></li>
         </ul>
         <div class="navbar-buttons">
-            <button class="btn">Host an Event</button>
+            <button class="btn" onclick="window.location.href='host.php'">Host an Event</button>
             <?php if (isset($_SESSION['user_id'])): ?>
                 <form action="logout.php" method="POST" style="display:inline;">
                     <button type="submit" class="btn btn-primary">Logout</button>
@@ -59,9 +59,11 @@ $conn->close();
             <?php else: ?>
                 <button class="btn btn-primary" onclick="window.location.href='login.php'">Login</button>
             <?php endif; ?>
-            <a href="user-profile.php">
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <a href="user-profile.php">
                     <img src="<?php echo $profilePicture; ?>" alt="Profile" class="nav-profile">
                 </a>
+            <?php endif; ?>
         </div>
     </nav>
 </body>

@@ -13,6 +13,7 @@ $eventQuery = "SELECT
     e.coverPhoto AS coverPhoto, 
     c.id AS categoryId, 
     c.name AS categoryName, 
+    MIN(p.startDate) AS startDateTime,
     JSON_ARRAYAGG(JSON_OBJECT('city', l.city, 'postalCode', l.postalCode)) AS locations
 FROM 
     event e
@@ -79,10 +80,12 @@ $conn->close();
         <h2 class="section-title">Browse all the activities</h2>
         <div class="category-list">
         <?php foreach ($categories as $category): ?>
-            <div class="category">
-                <img class="category-image" src="<?= htmlspecialchars($category['photo']) ?>" alt="">
-                <div class="category-title"><?= $category['name'] ?></div>
-            </div>
+            <a href="specific.php?categoryId=<?= htmlspecialchars($category['id']) ?>" class="category-link">
+                <div class="category">
+                    <img class="category-image" src="<?= htmlspecialchars($category['photo']) ?>" alt="">
+                    <div class="category-title"><?= htmlspecialchars($category['name']) ?></div>
+                </div>
+            </a>
         <?php endforeach; ?>
     
         </div>
