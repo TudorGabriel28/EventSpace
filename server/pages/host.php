@@ -37,7 +37,7 @@ $conn->close();
 
   <div class="container">
     <h2>Enter event details</h2>
-    <form action="../components/submit_event.php" method="POST" enctype="multipart/form-data">
+    <form id="host-event-form" action="../components/submit_event.php" method="POST" enctype="multipart/form-data">
       <!-- Event Name -->
       <label for="event-name">Event Name:</label>
       <input type="text" id="event-name" name="event_name", placeholder="Enter the event name">
@@ -75,6 +75,21 @@ $conn->close();
 
   
 </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('host-event-form');
+    const isLoggedIn = <?php echo json_encode(isset($_SESSION['user_id'])); ?>;
+
+    form.addEventListener('submit', function(event) {
+        if (!isLoggedIn) {
+            event.preventDefault();
+            alert('Please log in first to create an event.');
+            window.location.href = '../pages/login.php'; // Redirect to login page
+        }
+    });
+});
+</script>
 
 <?php include_once '../components/footer.php'; ?>
 <script src="../scripts/host_event.js" defer></script>
