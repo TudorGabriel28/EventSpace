@@ -1,7 +1,7 @@
 <footer>
   <div class="footer-container">
     <div class="footer-logo-contact">
-      <img class="footer-logo" src="../server/assets/logo-black.png" alt="Logo">
+      <img class="footer-logo" src="../assets/logo-black.png" alt="Logo">
       <p>info@eventspace.com</p>
       <p>+33 06 54 51 21 14</p>
     </div>
@@ -18,10 +18,10 @@
       </div>
     </div>
     <div class="footer-social">
-      <a href="#"><img src="../server/assets/facebook.png" alt="Facebook"></a>
-      <a href="#"><img src="../server/assets/x.png" alt="X"></a>
-      <a href="#"><img src="../server/assets/instagram.png" alt="Instagram"></a>
-      <a href="#"><img src="../server/assets/youtube.png" alt="Youtube"></a>
+      <a href="#"><img src="../assets/facebook.png" alt="Facebook"></a>
+      <a href="#"><img src="../assets/x.png" alt="X"></a>
+      <a href="#"><img src="../assets/instagram.png" alt="Instagram"></a>
+      <a href="#"><img src="../assets/youtube.png" alt="Youtube"></a>
     </div>
   </div>
   <div class="footer-bottom">
