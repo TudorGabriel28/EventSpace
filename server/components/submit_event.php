@@ -66,6 +66,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Invalid data format.");
     }
 
+    // Validate dates
+    foreach ($start_dates as $index => $start_date) {
+        $end_date = $end_dates[$index];
+        if (strtotime($end_date) < strtotime($start_date)) {
+            die("Error: End date cannot be earlier than start date for location " . ($index + 1) . ".");
+        }
+    }
+
     
 
     // Iterate over the arrays and bind parameters for each value

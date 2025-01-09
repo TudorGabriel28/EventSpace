@@ -31,6 +31,7 @@ $conn->close();
 <main class="host-event">
 
   <section class="page-title">
+  
     <h1>Host Event</h1>
     <p>Your Event ! Your Squad ! Your Way!</p>
   </section>
