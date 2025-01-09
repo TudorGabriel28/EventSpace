@@ -174,12 +174,6 @@ $conn->close();
                                 <button class="btn" type="submit" name="join-waitlist" id="waitlist-button" onclick="alert('You have joined the waitlist!');">Join waitlist</button>
                             <?php else: ?>
                                 <button class="btn" type="submit" name="subscribe" id="subscribe-button">Subscribe event</button>
-                                <?php
-                                    echo "User ID: " . $userId . "<br>";
-                                    echo "Planning ID: " . $planningId . "<br>";
-                                    echo "Show Waitlist Button: " . $showWaitlistButton . "<br>";
-                                ?>
-                                
                             <?php endif; ?>
                             <?php if ($errorMessage): ?>
                                 <p class="error" style="color: red;"><?php echo $errorMessage; ?></p>
