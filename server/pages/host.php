@@ -28,7 +28,6 @@ $conn->close();
 
 <?php include_once '../components/header.php'; ?>
 <main>
-
   <section class="page-title">
     <h1>Host Event</h1>
     <p>Your Event ! Your Squad ! Your Way!</p>
@@ -36,10 +35,13 @@ $conn->close();
     
   <div class="container">
     <h2>Enter event details</h2>
+    <div class="alert alert-info">
+      <p>Note: Your event will be reviewed by an admin before it goes live.</p>
+    </div>
     <form action="../components/submit_event.php" method="POST" enctype="multipart/form-data" class="host-event-form">
       <!-- Event Name -->
       <label for="event-name">Event Name:</label>
-      <input class="host-event-input" type="text" id="event-name" name="event_name", placeholder="Enter the event name">
+      <input class="host-event-input" type="text" id="event-name" name="event_name" placeholder="Enter the event name">
 
       <!-- Description -->
       <label for="description">Description:</label>
@@ -48,7 +50,7 @@ $conn->close();
       <!-- Category -->
       <label for="Category">Category</label>
       <select id="Category" name="category" required>
-      <option value="">Select Category</option>
+        <option value="">Select Category</option>
         <?php foreach ($categories as $category): ?>
           <option value="<?php echo $category['id']; ?>"><?php echo $category['name']; ?></option>
         <?php endforeach; ?>
