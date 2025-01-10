@@ -51,7 +51,7 @@ $conn->close();
             <li><a href="contact.php">Contact</a></li>
         </ul>
         <div class="navbar-buttons">
-            <button class="btn">Host an Event</button>
+            <button class="btn" onclick="window.location.href='host.php'">Host an Event</button>
             <?php if (isset($_SESSION['user_id'])): ?>
                 <form action="logout.php" method="POST" style="display:inline;">
                     <button type="submit" class="btn btn-primary">Logout</button>

@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Insert event details
-    $sql_event = "INSERT INTO event (name, description, coverPhoto) VALUES (?, ?, ?)";
+    $sql_event = "INSERT INTO event (name, description, coverPhoto, isApproved) VALUES (?, ?, ?, 0)";
     $stmt_event = $conn->prepare($sql_event);
     $stmt_event->bind_param("sss", $event_name, $description, $target_file);
     if (!$stmt_event->execute()) {
@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     foreach ($start_dates as $index => $start_date) {
         $end_date = $end_dates[$index];
         if (strtotime($end_date) < strtotime($start_date)) {
-            die("Error: End date cannot be earlier than start date for location " . ($index + 1) . ".");
+            die("Error: End date cannot be earlier than start date " . ($index + 1) . ".");
         }
     }
 
@@ -123,7 +123,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("Planning insertion failed: " . $stmt_planning->error);
         }
         $stmt_planning->insert_id;
-        header("Location: ../pages/home.php"); // Redirect to a different page (optional)
+        // Set success message and redirect to the host page
+        $_SESSION['success'] = "Event is pending for approval.";
+        header("Location: ../pages/host.php");
+        
         exit; // Ensure the script stops after redirect
     } else {
         echo "Error: " . $stmt_location->error;

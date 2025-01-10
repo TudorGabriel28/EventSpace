@@ -39,7 +39,12 @@ $conn->close();
   <div class="container">
     <h2>Enter event details</h2>
     <form id="host-event-form" action="../components/submit_event.php" method="POST" enctype="multipart/form-data">
-      <!-- Event Name -->
+    
+    <div class="note" style="background-color: #f8d7da; color: #721c24; padding: 10px; border: 1px solid #f5c6cb; border-radius:5px;">
+    <p>Note: The event will be created once approved by the admin.</p>
+    </div>
+    
+    <!-- Event Name -->
       <label for="event-name">Event Name:</label>
       <input type="text" id="event-name" name="event_name", placeholder="Enter the event name">
 
@@ -89,6 +94,13 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = '../pages/login.php'; // Redirect to login page
         }
     });
+
+
+<?php if (isset($_SESSION['success'])): ?>
+        alert("<?php echo $_SESSION['success']; ?>");
+        <?php unset($_SESSION['success']); ?>
+        window.location.href = '../pages/home.php'; // Redirect to home page
+    <?php endif; ?>
 });
 </script>
 
