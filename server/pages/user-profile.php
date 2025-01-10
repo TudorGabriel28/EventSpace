@@ -1,4 +1,5 @@
 <?php
+session_start();
 include '../config.php';
 include '../db_connection.php';
 
@@ -26,7 +27,7 @@ if ($result->num_rows > 0) {
 
 $stmt->close();
 
-
+// php for form submission
 $firstName = htmlspecialchars($user['firstName']);
 $lastName = htmlspecialchars($user['lastName']);
 $email = htmlspecialchars($user['email']);
@@ -34,29 +35,26 @@ $dateOfBirth = htmlspecialchars($user['dateOfBirth']);
 $profilePicture = htmlspecialchars($user['profilePicture']);
 
 
-// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST'&& isset($_POST['update-profile'])) {
   $firstName = !empty($_POST['firstName']) ? $_POST['firstName'] : $firstName;
   $lastName = !empty($_POST['lastName']) ? $_POST['lastName'] : $lastName;
   $email = !empty($_POST['email']) ? $_POST['email'] : $email;
   $dateOfBirth = !empty($_POST['dateOfBirth']) ? $_POST['dateOfBirth'] : $dateOfBirth;
-  $profilePictureName = $profilePicture; // Default to existing picture
+  $profilePictureName = $profilePicture;
   
-  // Handle file upload
+
   if (isset($_FILES['profilePicture']) && $_FILES['profilePicture']['error'] == 0) {
       $targetDir = "../assets/users/";
       $profilePictureName = basename($_FILES["profilePicture"]["name"]);
       $targetFilePath = $targetDir . $profilePictureName;
 
-      // Move the uploaded file to the target directory
       if (move_uploaded_file($_FILES["profilePicture"]["tmp_name"], $targetFilePath)) {
-          $profilePicture = $profilePictureName; // Update profile picture path
+          $profilePicture = $profilePictureName;
       } else {
           echo "Sorry, there was an error uploading your file.";
       }
   }
 
-  // Update user information in the database
   $query = "UPDATE user SET firstName = ?, lastName = ?, email = ?, dateOfBirth = ?, profilePicture = ? WHERE id = ?";
   
   $stmt = $conn->prepare($query);
@@ -65,17 +63,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'&& isset($_POST['update-profile'])) {
   $stmt->execute();
   $stmt->close();
 
-  // Redirect or display a success message
   header("Location: user-profile.php");
   exit();
 }
 
-// Query for attended events in the past
-$sql = "SELECT usereventreservation.id as userreservationid, event.name, planning.startDate, usereventreservation.ticketQuantity, event.id
-  FROM event 
-  INNER JOIN planning ON event.id = planning.idEvent
-  INNER JOIN usereventreservation ON planning.id = usereventreservation.idPlanning
-  WHERE usereventreservation.idUser = ? AND planning.startDate < CURDATE()";
+$sql = "SELECT usereventreservation.id as userreservationid, event.name, planning.startDate, usereventreservation.ticketQuantity, event.id FROM event 
+        INNER JOIN planning ON event.id = planning.idEvent
+        INNER JOIN usereventreservation ON planning.id = usereventreservation.idPlanning
+        WHERE usereventreservation.idUser = ? AND planning.startDate < CURDATE()";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $userId);
 $stmt->execute();
@@ -87,12 +82,11 @@ while ($row = $result->fetch_assoc()) {
 }
 $stmt->close();
 
-// Query for subsribed events in the future
-$sql = "SELECT usereventreservation.id as userreservationid, event.name, planning.startDate, usereventreservation.ticketQuantity, event.id
-  FROM event 
-  INNER JOIN planning ON event.id = planning.idEvent
-  INNER JOIN usereventreservation ON planning.id = usereventreservation.idPlanning
-  WHERE usereventreservation.idUser = ? AND planning.startDate >= CURDATE()";
+
+$sql = "SELECT usereventreservation.id as userreservationid, event.name, planning.startDate, usereventreservation.ticketQuantity, event.id FROM event 
+        INNER JOIN planning ON event.id = planning.idEvent
+        INNER JOIN usereventreservation ON planning.id = usereventreservation.idPlanning
+        WHERE usereventreservation.idUser = ? AND planning.startDate >= CURDATE()";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $userId);
 $stmt->execute();
@@ -104,7 +98,7 @@ while ($row = $result->fetch_assoc()) {
 }
 $stmt->close();
 
-// Query to cancel a reservation
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel-reservation'])) {
     $reservationId = $_POST['reservation-id'];
     $sql = "DELETE FROM usereventreservation WHERE id = ?";
@@ -116,12 +110,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel-reservation'])
     exit();
 }
 
-// Query for waitlisted events
-$sql = "SELECT usereventwaitlist.id as userwaitlistid, event.name, planning.startDate, usereventwaitlist.ticketQuantity, event.id
-  FROM event 
-  INNER JOIN planning ON event.id = planning.idEvent
-  INNER JOIN usereventwaitlist ON planning.id = usereventwaitlist.idPlanning
-  WHERE usereventwaitlist.idUser = ? AND planning.startDate >= CURDATE()";
+
+$sql = "SELECT usereventwaitlist.id as userwaitlistid, event.name, planning.startDate, usereventwaitlist.ticketQuantity, event.id FROM event 
+        INNER JOIN planning ON event.id = planning.idEvent
+        INNER JOIN usereventwaitlist ON planning.id = usereventwaitlist.idPlanning
+        WHERE usereventwaitlist.idUser = ? AND planning.startDate >= CURDATE()";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $userId);
 $stmt->execute();
@@ -133,7 +126,7 @@ while ($row = $result->fetch_assoc()) {
 }
 $stmt->close();
 
-// Query to leave the waitlist
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['leave-waitlist'])) {
   $waitlistId = $_POST['waitlist-id'];
   $sql = "DELETE FROM usereventwaitlist WHERE id = ?";
@@ -145,7 +138,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['leave-waitlist'])) {
   exit();
 }
 
-// Query for created events
+
+$sql = "SELECT event.id, event.name, MIN(planning.startDate) as startDate, MAX(planning.endDate) as endDate FROM event
+        INNER JOIN planning ON event.id = planning.idEvent
+        INNER JOIN usereventrole AS role ON role.idUser = ? AND role.idEvent = event.id
+        WHERE role.function = 'Host'
+        GROUP BY event.id, event.name";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$createdEvents = [];
+while ($row = $result->fetch_assoc()) {
+    $createdEvents[] = $row;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete-event'])) {
+  $eventId = $_POST['event-id'];
+  $sql = "DELETE FROM event WHERE id = ? AND id IN (SELECT idEvent FROM usereventrole WHERE idUser = ? AND function = 'Host')";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("ii", $eventId, $userId);
+  $stmt->execute();
+  $stmt->close();
+  header("Location: user-profile.php");
+  exit();
+}
 
 $conn->close();
 ?>
@@ -156,7 +175,7 @@ $conn->close();
     <div class="profile-container">
       <div class="profile-header">
         <div class="profile-picture">
-          <img id="preview" src="<?php echo $profilePicture; ?>" alt="User Avatar">
+        <img id="preview" src="<?php echo "../assets/users/" .  $profilePicture . '?' . time(); ?>" alt="User Avatar">
         </div>
         <div class="event-buttons">
           <button id="attended-events-btn">Attended Events</button>
@@ -165,7 +184,7 @@ $conn->close();
           <button id="created-events-btn">Created Events</button>
         </div>
       </div>
-      <!-- Popup Windows -->
+<!-- Popup Functionality -->
       <div id="popup-attended" class="popup">
           <div class="popup-content">
               <span class="close-btn">&times;</span>
@@ -201,7 +220,7 @@ $conn->close();
       <div id="popup-subscribed" class="popup">
         <div class="popup-content">
           <span class="close-btn">&times;</span>
-          <h2>Subcsribed Events</h2>
+          <h2>Subscribed Events</h2>
           <?php if (!empty($subscribedEvents)): ?>
               <table>
                   <thead>
@@ -210,6 +229,7 @@ $conn->close();
                           <th>Event Name</th>
                           <th>Start Date</th>
                           <th>Ticket Quantity</th>
+                          <th>Actions</th>
                       </tr>
                   </thead>
                   <tbody>
@@ -247,6 +267,7 @@ $conn->close();
                           <th>Event Name</th>
                           <th>Start Date</th>
                           <th>Ticket Quantity</th>
+                          <th>Actions</th>
                       </tr>
                   </thead>
                   <tbody>
@@ -272,14 +293,45 @@ $conn->close();
         </div>
       </div>
 
-      <div id="popup-created" class="popup">
-        <div class="popup-content">
-          <span class="close-btn">&times;</span>
-          <h2>Created Events</h2>
-          <p>Example content for created events...</p>
-        </div>
-      </div>
-      <!-- End of Popup Windows -->
+    <div id="popup-created" class="popup">
+    <div class="popup-content">
+        <span class="close-btn">&times;</span>
+        <h2>Created Events</h2>
+        <?php if (!empty($createdEvents)): ?>
+        <table>
+            <thead>
+                <tr>
+                    <th>Event ID</th>
+                    <th>Event Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($createdEvents as $event): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($event['id']); ?></td>
+                    <td><a href="event-details.php?id=<?php echo htmlspecialchars($event['id']); ?>"><?php echo htmlspecialchars($event['name']); ?></a></td>
+                    <td><?php echo htmlspecialchars($event['startDate']); ?></td>
+                    <td><?php echo htmlspecialchars($event['endDate']); ?></td>
+                    <td>
+                        <form method="POST" action="" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                            <input type="hidden" name="event-id" value="<?php echo htmlspecialchars($event['id']); ?>">
+                            <button class="cancel-btn" type="submit" name="delete-event">Delete Event</button>
+                        </form>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <?php else: ?>
+        <p>User has not hosted an event.</p>
+        <?php endif; ?>
+    </div>
+</div>
+
+<!-- Form Section -->
       <div class="personal-info">
         <h2>Personal Information</h2>
         <form method="POST" enctype="multipart/form-data">
