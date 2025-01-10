@@ -70,7 +70,7 @@ $conn->close();
       <!-- Location Details Container -->
       <div id="location-container"></div>
       
-      <button type="submit" class="create-event">Create Event</button>
+      <button class="btn btn-primary" type="submit" class="create-event">Create Event</button>
     </form>
   </div>
   
