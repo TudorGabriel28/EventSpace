@@ -54,7 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $address = $_POST['location_address'];
     $city = $_POST['location_city'];
     $postalCode = $_POST['postal_code'];
-    $location_num = $_POST['location_num'];
     $start_dates = $_POST['start_date'];
     $end_dates = $_POST['end_date'];
     $capacity = $_POST['capacity'];
@@ -67,84 +66,81 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Validate dates
+    $error_message = "";
     foreach ($start_dates as $index => $start_date) {
         $end_date = $end_dates[$index];
         if (strtotime($end_date) < strtotime($start_date)) {
-            die("Error: End date cannot be earlier than start date " . ($index + 1) . ".");
-        }
+            $error_message = "End date cannot be earlier than start date" . ($index + 1) . ".";
+            break;
     }
-
+}
+    if ($error_message) {
+        echo "<input type='hidden' id='error_message' value='$error_message'>";
+        
+    } else {
     
-
     // Iterate over the arrays and bind parameters for each value
     for ($i = 0; $i < count($address); $i++) {
-        $postalCode = $postalCode[$i];
-        $city = $city[$i];
-        $address = $address[$i];
-        $start_dates = $start_dates[$i];
-        $end_dates = $end_dates[$i];
-        $capacity = $capacity[$i];
-        $price = $price[$i];
+        $current_postalCode = $postalCode[$i];
+        $current_city = $city[$i];
+        $current_address = $address[$i];
+        $current_start_dates = $start_dates[$i];
+        $current_end_dates = $end_dates[$i];
+        $current_capacity = $capacity[$i];
+        $current_price = $price[$i];
 
      // Insert the data into the database
-    $sql_location = "INSERT INTO location ( postalCode, city, address ) VALUES (?, ?, ?)";
-    $stmt_location = $conn->prepare($sql_location);
-    
-
+        $sql_location = "INSERT INTO location ( postalCode, city, address) VALUES (?, ?, ?)";
+        $stmt_location = $conn->prepare($sql_location);
+        $stmt_location->bind_param("sss", $current_postalCode, $current_city, $current_address);
+        //$stmt_location->execute();
     // Check if the statement was prepared successfully
-    if (!$stmt_location) {
-        die("Location insertion failed: " . $conn->error);
-    } 
-
-
-     
-    
-    // Convert datetime format from 'YYYY-MM-DDTHH:MM' to 'YYYY-MM-DD HH:MM:SS'
-    //$start_dates = str_replace('T', ' ', $start_dates) . ':00';
-   // $end_dates = str_replace('T', ' ', $end_dates) . ':00';
-   
-    // Format the date and time
-    $formatted_startdate = date('Y-m-d H:i:s', strtotime(str_replace('T', ' ', $start_dates)));
-    $formatted_enddate = date('Y-m-d H:i:s', strtotime(str_replace('T', ' ', $end_dates)));
-
-    // Debugging: Check the values of start_date and end_date
-    echo "Start Date: $formatted_startdate, End Date: $formatted_enddate<br>";
-
-    $stmt_location->bind_param("sss", $postalCode, $city, $address);
-
-    // Execute the query
-    if ($stmt_location->execute()) {
+        if (!$stmt_location->execute()) {
+        die("Location insertion failed: " . $stmt_location->error);
+        }
         $location_id = $stmt_location->insert_id;
+        
+    // Format the date and time
+        $formatted_startdate = date('Y-m-d H:i:s', strtotime(str_replace('T', ' ', $current_start_dates)));
+        $formatted_enddate = date('Y-m-d H:i:s', strtotime(str_replace('T', ' ', $current_end_dates)));
+            
         // Insert data into the planning table
         $sql_planning = "INSERT INTO planning (startDate, endDate, capacity, price, idEvent, idLocation) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt_planning = $conn->prepare($sql_planning);
-        $stmt_planning->bind_param("ssiiii", $formatted_startdate, $formatted_enddate, $capacity, $price, $event_id, $location_id);
+        $stmt_planning->bind_param("ssiiii", $formatted_startdate, $formatted_enddate, $current_capacity, $current_price, $event_id, $location_id);
         if (!$stmt_planning->execute()) {
             die("Planning insertion failed: " . $stmt_planning->error);
         }
-        $stmt_planning->insert_id;
-        // Set success message and redirect to the host page
-        $_SESSION['success'] = "Event is pending for approval.";
-        header("Location: ../pages/host.php");
+
         
-        exit; // Ensure the script stops after redirect
-    } else {
-        echo "Error: " . $stmt_location->error;
-    }
+        $stmt_location->close();
+        $stmt_planning->close();
+           
 }
 
-    // Close the statement and connection
-    $stmt_event->close();
-    $stmt_eventcategory->close();
-    $stmt_location->close();
-    $stmt_planning->close();
-    $conn->close();
+// Set success message and redirect to the host page
+$_SESSION['success'] = "Event is pending for approval.";
+header("Location: ../pages/host.php");
 
-    // Display success message
-    
-}else {
+exit; // Ensure the script stops after redirect
+
+}  
+}
+else {
     die("Invalid request method.");
 }
-
+// Close the statement and connection
+$stmt_event->close();
+$stmt_eventcategory->close();
+$conn->close();
 
 ?>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var errorMessage = document.getElementById('error_message');
+      if (errorMessage) {
+          alert(errorMessage.value);
+         window.location.href = "../pages/host.php"; // Redirect to host.php
+      }
+  });
+</script>

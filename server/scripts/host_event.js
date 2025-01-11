@@ -66,28 +66,13 @@ document.addEventListener("DOMContentLoaded", () => {
         setTabFunctionality();
       });
 
-      form.addEventListener('submit', function(event) {
-        const startDates = document.querySelectorAll('input[name="start_date[]"]');
-        const endDates = document.querySelectorAll('input[name="end_date[]"]');
-        const postalCodes = document.querySelectorAll('input[name="postal_code[]"]');
-
-        for (let i = 0; i < startDates.length; i++) {
-            const startDate = new Date(startDates[i].value);
-            const endDate = new Date(endDates[i].value);
-            
-
-            if (endDate < startDate) {
-                alert(`End date must be later than start date for location ${i + 1}`);
-                event.preventDefault();
-                return;
-            }
-            if (postalCodes[i].value.length !== 5) {
-              alert(`Postal code must be exactly 5 digits for location ${i + 1}`);
-              event.preventDefault();
-              return;
-          }
+      document.addEventListener("DOMContentLoaded", function() {
+        var errorMessage = document.getElementById('error_message');
+        if (errorMessage) {
+            alert(errorMessage.value);
         }
     });
+
     
       function setTabFunctionality() {
         const tabs = document.querySelectorAll(".tab");
