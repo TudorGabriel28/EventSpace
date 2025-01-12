@@ -1,0 +1,66 @@
+.legal-container{
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.notice{
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    width: 80%;
+    transition: background-color 0.3s;
+}
+
+
+.notice h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.notice p {
+    margin: 10px 0 0;
+    color: #666;
+    line-height: 1.6;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.notice.active p {
+    max-height: 200px;
+    opacity: 1;
+}
+
+.notice:hover {
+    background-color: #ff8800;
+    color: white;
+    
+}
+
+.notice:hover h2,
+.notice:hover p {
+    color: white;
+}
+
+.notice::after {
+    font-size: 22px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    color: #666;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.notice.active::after {
+    color: white;
+}
