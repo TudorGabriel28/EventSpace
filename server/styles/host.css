@@ -1,71 +1,113 @@
 /* General Styles */
 
-.page-title {
+
+.host-event .page-title {
 text-align: center;
 padding: 20px;
-background-color: #fff;
+background-color: #e9e5e5;
 margin-bottom: 20px;
 border-bottom: 1px solid #ddd;
-background-image: url('../assets/host-event.jpg');
+background-image: url('../assets/host_event.jpg');
 background-size: cover;
 background-position: center;
 padding: 50px 0;
-color: white;
-}
-.container {
-max-width: 800px;
-margin: 10px auto;
-background: #fff;
-padding: 35px;
-border-radius: 5px;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+color: rgb(255, 255, 255);
+
 }
 
-select {
+.host-event .container {
+max-width: 800px;
+margin: 10px auto;
+background: rgba(255, 255, 255, 0.9);
+padding: 35px;
+border-radius: 15px;
+box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+transition: box-shadow 0.3s ease-in-out;
+}
+
+.host-event .container:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+
+.host-event select {
 width: 100%; /* Makes it take the full width of its container */
 max-width: 300px; /* Set a maximum width if needed */
 padding: 8px; /* Optional: Add some padding for better appearance */
 font-size: 14px; /* Optional: Adjust font size */
+transition: transform 0.1s ;
 }
 
-.host-event-form {
+.host-event select:hover{
+transform: scale(1.05);
+}
+
+
+.host-event form input, 
+.host-event form textarea {
+width: 90%;
+padding: 30px;
+margin-bottom: 15px;
+border: 1px solid #ccc;
+border-radius: 15px;
+font-size: 14px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+transition: box-shadow 0.3s ease-in-out;
+}
+
+.host-event form input:focus, 
+.host-event form textarea:focus {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    outline: none;
+}
+
+.host-event .host-event-form {
   line-height: 1.6;
 }
 
-.host-event-form .host-event-input,  .host-event-form textarea  {
+.host-event .host-event-form .host-event-input, .host-event .host-event-form textarea  {
   width: 90%;
   padding: 30px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 15px;
   font-size: 14px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
 }
 
-textarea {
+.host-event .host-event-form .host-event-input:focus, .host-event .host-event-form textarea:focus {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+.host-event textarea {
 resize: none;
 height: 80px;
 }
 
-label {
+.host-event label {
   display: block;
   margin: 10px 0 5px;
 }
-.host-event-input[type="text"], .host-event-input[type="number"] {
+
+/* Button Styles */
+.host-event button {
   width: 90%;
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 15px;
 }
 
 /* Tabs Styles */
-.tabs {
+.host-event .tabs {
   display: flex;
   gap: 10px;
   margin-top: 20px;
 }
 
-.tab {
+.host-event .tab {
   padding: 10px 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -73,26 +115,26 @@ label {
   background-color: #f9f9f9;
 }
 
-.tab.active {
+.host-event .tab.active {
   background-color: orange;
   color: white;
   border-color: orange;
 }
 
 /* Location Content Styles */
-.location-details {
+.host-event .location-details {
   margin-top: 20px;
   padding: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #f9f9f9;
-  display: none; /* Hidden by default */
+  display: none;
 }
 
-.location-details.active {
+.host-event .location-details.active {
   display: block; /* Show active location */
 }
-/* button {
+.host-event .create-event { 
 width: 100%;
 padding: 10px;
 margin-bottom: 15px;
@@ -101,4 +143,8 @@ color: black;
 border: 1px solid #ccc;
 border-radius: 5px;
 font-size: 14px;
-} */
+}
+
+.host-event .create-event:hover {
+background-color: #d47130;
+}
