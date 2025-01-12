@@ -55,7 +55,7 @@ $conn->close();
       <!-- Category -->
       <label for="Category">Category</label>
       <select id="Category" name="category" required>
-      <option value="">Select Category</option>
+        <option value="">Select Category</option>
         <?php foreach ($categories as $category): ?>
           <option value="<?php echo $category['id']; ?>"><?php echo $category['name']; ?></option>
         <?php endforeach; ?>

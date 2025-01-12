@@ -128,7 +128,7 @@ height: 80px;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #f9f9f9;
-  display: none; /* Hidden by default */
+  display: none;
 }
 
 .host-event .location-details.active {

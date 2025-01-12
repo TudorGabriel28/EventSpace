@@ -1,18 +1,17 @@
 <?php
-
-session_start(); // Ensure the session is started
-
 // Enable error reporting
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-// Include configuration and database connection files
+
 include '../config.php';
 include '../db_connection.php';
 
 
 
 // Check if the form was submitted
+session_start();
+$user_id = $_SESSION['user_id'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -22,8 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $description = $_POST['description'];
     $category = (int) $_POST['category'];
     $cover_photo = $_FILES['coverPhoto']['name'];
-
-
 
     // Handle file upload
     $target_dir = "../assets/events/";
@@ -37,11 +34,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt_event = $conn->prepare($sql_event);
     $stmt_event->bind_param("sss", $event_name, $description, $target_file);
     if (!$stmt_event->execute()) {
-        die("Event insertion failed: " . $stmt->error);
+        die("Event insertion failed: " . $stmt_event->error);
     }
     $event_id = $stmt_event->insert_id;
 
-    // Insert category details
+    // Insert category
     $sql_eventcategory = "INSERT INTO eventcategory (idEvent, idCategory) VALUES (?, ?)";
     $stmt_eventcategory = $conn->prepare($sql_eventcategory);
     $stmt_eventcategory->bind_param("ii", $event_id, $category);
