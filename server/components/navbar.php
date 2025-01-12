@@ -61,7 +61,7 @@ $conn->close();
             <?php endif; ?>
             <?php if (isset($_SESSION['user_id'])): ?>
                 <a href="user-profile.php">
-                    <img src="<?php echo $profilePicture; ?>" alt="Profile" class="nav-profile">
+                    <img src="<?php echo "../assets/users/" .  $profilePicture; ?>" alt="Profile" class="nav-profile">
                 </a>
             <?php endif; ?>
         </div>

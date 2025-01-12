@@ -5,6 +5,9 @@ error_reporting(E_ALL);
 
 include '../config.php';
 include '../db_connection.php';
+// Check if the form was submitted
+session_start();
+$user_id = $_SESSION['user_id'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Basic event details
@@ -74,7 +77,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!$stmt_planning->execute()) {
             die("Planning insertion failed: " . $stmt_planning->error);
         }
+        $stmt_planning->insert_id;
+
+        // Insert into usereventrole table
+        $sql_usereventrole = "INSERT INTO usereventrole (function, idUser, idEvent, idPlanning) VALUES ('Host', ?, ?, NULL)";
+        $stmt_usereventrole = $conn->prepare($sql_usereventrole);
+        $stmt_usereventrole->bind_param("ii", $user_id, $event_id);
+        if (!$stmt_usereventrole->execute()) {
+            die("User event role insertion failed: " . $stmt_usereventrole->error);
+        }
+
+        header("Location: ../pages/home.php"); // Redirect to a different page (optional)
+        exit; // Ensure the script stops after redirect
+    } else {
+        echo "Error: " . $stmt_location->error;
     }
+}
 
     // Close statements
     $stmt_event->close();
