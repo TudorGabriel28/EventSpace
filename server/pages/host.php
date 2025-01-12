@@ -1,5 +1,6 @@
 <?php
-$stylesheet = "host.css";
+
+$stylesheet = "../styles/host.css";
 
 // Enable error reporting
 ini_set('display_errors', 1);
@@ -27,21 +28,25 @@ $conn->close();
 ?>
 
 <?php include_once '../components/header.php'; ?>
-<main>
+<main class="host-event">
+
   <section class="page-title">
+  
     <h1>Host Event</h1>
     <p>Your Event ! Your Squad ! Your Way!</p>
   </section>
-    
+
   <div class="container">
     <h2>Enter event details</h2>
-    <div class="alert alert-info">
-      <p>Note: Your event will be reviewed by an admin before it goes live.</p>
+    <form id="host-event-form" action="../components/submit_event.php" method="POST" enctype="multipart/form-data">
+    
+    <div class="note" style="background-color: #f8d7da; color: #721c24; padding: 10px; border: 1px solid #f5c6cb; border-radius:5px;">
+    <p>Note: The event will be created once approved by the admin.</p>
     </div>
-    <form action="../components/submit_event.php" method="POST" enctype="multipart/form-data" class="host-event-form">
-      <!-- Event Name -->
+    
+    <!-- Event Name -->
       <label for="event-name">Event Name:</label>
-      <input class="host-event-input" type="text" id="event-name" name="event_name" placeholder="Enter the event name">
+      <input type="text" id="event-name" name="event_name", placeholder="Enter the event name">
 
       <!-- Description -->
       <label for="description">Description:</label>
@@ -58,11 +63,11 @@ $conn->close();
 
       <!-- Cover Photo -->
       <label for="cover-photo">Cover Photo:</label>
-      <input class="host-event-input" type="file" id="cover-photo" name="coverPhoto" required>
+      <input type="file" id="cover-photo" name="coverPhoto" required>
 
       <!-- Number of Locations -->
       <label for="num-locations">Number of Locations:</label>
-      <input class="host-event-input" type="number" id="num-locations" name="location_num" placeholder="Enter the number of locations" min="1" max="10">
+      <input type="number" id="num-locations" name="location_num" placeholder="Enter the number of locations" min="1" max="10">
 
       <!-- Tabs Container -->
       <div id="tabs-container" class="tabs"></div>
@@ -70,11 +75,35 @@ $conn->close();
       <!-- Location Details Container -->
       <div id="location-container"></div>
       
-      <button class="btn btn-primary" type="submit" class="create-event">Create Event</button>
+      <button type="submit" name="createEvent" class="create-event">Create Event</button>
     </form>
   </div>
+
   
 </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('host-event-form');
+    const isLoggedIn = <?php echo json_encode(isset($_SESSION['user_id'])); ?>;
+
+    form.addEventListener('submit', function(event) {
+        if (!isLoggedIn) {
+            event.preventDefault();
+            alert('Please log in first to create an event.');
+            window.location.href = '../pages/login.php'; // Redirect to login page
+        }
+    });
+
+
+<?php if (isset($_SESSION['success'])): ?>
+        alert("<?php echo $_SESSION['success']; ?>");
+        <?php unset($_SESSION['success']); ?>
+        window.location.href = '../pages/home.php'; // Redirect to home page
+    <?php endif; ?>
+});
+</script>
+
 <?php include_once '../components/footer.php'; ?>
 <script src="../scripts/host_event.js" defer></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $stylesheet; ?>">

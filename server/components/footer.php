@@ -15,6 +15,7 @@
         <a href="faq.php">FAQ</a>
         <a href="contact.php">Contact</a>
         <a href="terms.php">Terms & Conditions</a>
+        <a href="legal_notice.php">Legal Notice</a>
       </div>
     </div>
     <div class="footer-social">
