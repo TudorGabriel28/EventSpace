@@ -291,6 +291,7 @@ try {
         }
     </style>
 </head>
+
 <body>
     <!-- Loading Overlay -->
     <div class="loading-overlay">
@@ -380,18 +381,19 @@ try {
                     <th>Actions</th>
                 </tr>
                 <?php foreach ($users as $user): ?>
-                <tr>
-                    <td><?php echo $user['id']; ?></td>
-                    <td contenteditable="false"><?php echo $user['firstName']; ?></td>
-                    <td contenteditable="false"><?php echo $user['lastName']; ?></td>
-                    <td contenteditable="false"><?php echo $user['email']; ?></td>
-                    <td>
-                        <button class="edit-btn" onclick="editRow(this)">Edit</button>
-                        <button class="save-btn" onclick="saveRow(this, 'user')">Save</button>
-                        <button class="cancel-btn" onclick="cancelEdit(this)">Cancel</button>
-                        <button class="delete-btn" onclick="confirmDelete('<?php echo $user['id']; ?>', 'user')">Delete</button>
-                    </td>
-                </tr>
+                    <tr>
+                        <td><?php echo $user['id']; ?></td>
+                        <td contenteditable="false"><?php echo $user['firstName']; ?></td>
+                        <td contenteditable="false"><?php echo $user['lastName']; ?></td>
+                        <td contenteditable="false"><?php echo $user['email']; ?></td>
+                        <td>
+                            <button class="edit-btn" onclick="editRow(this)">Edit</button>
+                            <button class="save-btn" onclick="saveRow(this, 'user')">Save</button>
+                            <button class="cancel-btn" onclick="cancelEdit(this)">Cancel</button>
+                            <button class="delete-btn"
+                                onclick="confirmDelete('<?php echo $user['id']; ?>', 'user')">Delete</button>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
             </table>
         </div>
@@ -408,18 +410,19 @@ try {
                     <th>Actions</th>
                 </tr>
                 <?php foreach ($forums as $forum): ?>
-                <tr>
-                    <td><?php echo $forum['id']; ?></td>
-                    <td contenteditable="false"><?php echo $forum['title']; ?></td>
-                    <td contenteditable="false"><?php echo $forum['question']; ?></td>
-                    <td><?php echo $forum['idUser']; ?></td>
-                    <td>
-                        <button class="edit-btn" onclick="editRow(this)">Edit</button>
-                        <button class="save-btn" onclick="saveRow(this, 'forum')">Save</button>
-                        <button class="cancel-btn" onclick="cancelEdit(this)">Cancel</button>
-                        <button class="delete-btn" onclick="confirmDelete('<?php echo $forum['id']; ?>', 'forum')">Delete</button>
-                    </td>
-                </tr>
+                    <tr>
+                        <td><?php echo $forum['id']; ?></td>
+                        <td contenteditable="false"><?php echo $forum['title']; ?></td>
+                        <td contenteditable="false"><?php echo $forum['question']; ?></td>
+                        <td><?php echo $forum['idUser']; ?></td>
+                        <td>
+                            <button class="edit-btn" onclick="editRow(this)">Edit</button>
+                            <button class="save-btn" onclick="saveRow(this, 'forum')">Save</button>
+                            <button class="cancel-btn" onclick="cancelEdit(this)">Cancel</button>
+                            <button class="delete-btn"
+                                onclick="confirmDelete('<?php echo $forum['id']; ?>', 'forum')">Delete</button>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
             </table>
         </div>
@@ -621,8 +624,8 @@ try {
             const updateData = type === "user"
                 ? { firstName: data[0], lastName: data[1], email: data[2] }
                 : type === "event"
-                ? { name: data[0], description: data[1] }
-                : { title: data[0], question: data[1] };
+                    ? { name: data[0], description: data[1] }
+                    : { title: data[0], question: data[1] };
 
             showLoading();
             fetch("edit.php", {
@@ -707,4 +710,5 @@ try {
         }
     </script>
 </body>
+
 </html>
