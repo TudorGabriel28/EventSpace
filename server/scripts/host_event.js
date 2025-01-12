@@ -39,10 +39,10 @@ document.addEventListener("DOMContentLoaded", () => {
               <input class="host-event-input" type="text" id="postal-code-${i + 1}" name="postal_code[]" placeholder="Enter the postal code" required>
 
               <label for="start-date-${i + 1}">Start Date:</label>
-              <input class="host-event-input" type="datetime-local" id="start-date-${i + 1}" name="start_date[]" min="2024-12-01 00:00:00" required>
+              <input class="host-event-input" type="datetime-local" id="start-date-${i + 1}" name="start_date[]" min="2024-12-01T00:00:00" required>
 
               <label for="end-date-${i + 1}">End Date:</label>
-              <input class="host-event-input" type="datetime-local" id="end-date-${i + 1}" name="end_date[]" min="2024-12-01 00:00:00" required>
+              <input class="host-event-input" type="datetime-local" id="end-date-${i + 1}" name="end_date[]" min="2024-12-01T00:00:00" required>
 
               <label for="capacity-${i + 1}">Capacity:</label>
               <input class="host-event-input" type="number" id="capacity-${i + 1}" name="capacity[]" placeholder="Enter the capacity" min="1" required>
@@ -52,6 +52,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
               
           `;
+
+
           locationContainer.appendChild(locationDiv);
 
           // Add input validation for postal code
@@ -64,28 +66,13 @@ document.addEventListener("DOMContentLoaded", () => {
         setTabFunctionality();
       });
 
-      form.addEventListener('submit', function(event) {
-        const startDates = document.querySelectorAll('input[name="start_date[]"]');
-        const endDates = document.querySelectorAll('input[name="end_date[]"]');
-        const postalCodes = document.querySelectorAll('input[name="postal_code[]"]');
-
-        for (let i = 0; i < startDates.length; i++) {
-            const startDate = new Date(startDates[i].value);
-            const endDate = new Date(endDates[i].value);
-            
-
-            if (endDate < startDate) {
-                alert(`End date must be later than start date for location ${i + 1}`);
-                event.preventDefault();
-                return;
-            }
-            if (postalCodes[i].value.length !== 5) {
-              alert(`Postal code must be exactly 5 digits for location ${i + 1}`);
-              event.preventDefault();
-              return;
-          }
+      document.addEventListener("DOMContentLoaded", function() {
+        var errorMessage = document.getElementById('error_message');
+        if (errorMessage) {
+            alert(errorMessage.value);
         }
     });
+
     
       function setTabFunctionality() {
         const tabs = document.querySelectorAll(".tab");
