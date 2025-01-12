@@ -65,6 +65,7 @@ if ($result->num_rows > 0) {
 $errorMessage = '';
 $showWaitlistButton = false;
 $planningId = 0;
+$subscriptionSuccess = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $userId !== 0) {
     $ticketQuantity = intval($_POST['ticket-quantity']);
@@ -97,6 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $userId !== 0) {
                 $stmt->bind_param("iii", $ticketQuantity, $planningId, $userId);
                 if ($stmt->execute()) {
                     $successMessage = "Reservation successful!";
+                    $subscriptionSuccess = true;
                 } else {
                     $errorMessage = "Error: " . $stmt->error;
                 }
@@ -112,6 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $userId !== 0) {
                 $stmt->bind_param("iii", $ticketQuantity, $userId, $planningId);
                 if ($stmt->execute()) {
                     $successMessage = "You have been added to the waitlist!";
+                    $errorMessage = '';
                 } else {
                     $errorMessage = "Error: " . $stmt->error;
                 }
@@ -170,7 +173,7 @@ $conn->close();
                             <?php if ($showWaitlistButton): ?>
                                 <button class="btn" type="submit" name="join-waitlist" id="waitlist-button" onclick="alert('You have joined the waitlist!');">Join waitlist</button>
                             <?php else: ?>
-                                <button class="btn" type="submit" name="subscribe" id="subscribe-button" <?php if ($userId !== 0 && $planningId !== 0 && $showWaitlistButton !== 0) echo 'onclick="alert(\'You have subscribed to the event!\');"'; ?>>Subscribe event</button>
+                                <button class="btn" type="submit" name="subscribe" id="subscribe-button">Subscribe event</button>
                             <?php endif; ?>
                             <?php if ($errorMessage): ?>
                                 <p class="error" style="color: red;"><?php echo $errorMessage; ?></p>
@@ -188,5 +191,10 @@ $conn->close();
         </div>  
     </main>
     <?php include_once '../components/footer.php'; ?>
+    <?php if ($subscriptionSuccess): ?>
+    <script>
+        alert('You have successfully subscribed to the event!');
+    </script>
+<?php endif; ?>
 </body>
 </html>
