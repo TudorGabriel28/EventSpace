@@ -94,4 +94,82 @@ function getSearchResults($conn, $search, $category, $startDate, $endDate): arra
 
     return $events;
 }
+
+function getEventData($conn, $eventId): array {
+    $sql = "SELECT name, description, coverPhoto FROM event WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $eventId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_assoc() ?: ["name" => "Event Not Found", "description" => "", "coverPhoto" => ""];
+}
+
+function getPlanningDetails($conn, $eventId): array {
+    $sql = "SELECT p.id AS planningId, l.address, p.startDate, p.capacity, p.price 
+            FROM planning p 
+            INNER JOIN location l ON p.idLocation = l.id 
+            WHERE p.idEvent = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $eventId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $details = [];
+    while ($row = $result->fetch_assoc()) {
+        $details[] = $row;
+    }
+    return $details;
+}
+
+function handleSubscription($conn, $postData, $userId, $joinWaitlist = false): array {
+    $planningId = intval($postData['event-selector'] ?? 0);
+    $ticketQuantity = intval($postData['ticket-quantity'] ?? 1);
+    $errorMessage = '';
+    $subscriptionSuccess = false;
+    $showWaitlistButton = false;
+
+    if ($planningId === 0) {
+        return ["Error: Please select a planning.", false, false];
+    }
+
+    // Verificar disponibilidad
+    $sql = "SELECT capacity - IFNULL(SUM(ticketQuantity), 0) AS ticketsRemaining 
+            FROM planning p 
+            LEFT JOIN UserEventReservation r ON p.id = r.idPlanning 
+            WHERE p.id = ? GROUP BY p.id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $planningId);
+    $stmt->execute();
+    $ticketsRemaining = 0;
+    $stmt->bind_result($ticketsRemaining);
+    $stmt->fetch();
+    $stmt->close();
+
+    if ($ticketsRemaining >= $ticketQuantity) {
+        // Realizar la reserva
+        $sql = "INSERT INTO UserEventReservation (ticketQuantity, idPlanning, idUser) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("iii", $ticketQuantity, $planningId, $userId);
+        $subscriptionSuccess = $stmt->execute();
+        $stmt->close();
+        return [$subscriptionSuccess ? '' : "Error: Could not complete subscription.", $subscriptionSuccess, false];
+    } elseif ($joinWaitlist) {
+        // Agregar a la lista de espera
+        $sql = "INSERT INTO UserEventWaitlist (ticketQuantity, idUser, idPlanning) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("iii", $ticketQuantity, $userId, $planningId);
+        $waitlistSuccess = $stmt->execute();
+        $stmt->close();
+
+        if ($waitlistSuccess) {
+            return ["You have been added to the waitlist.", false, true];
+        } else {
+            return ["Error: Could not add to waitlist.", false, false];
+        }
+    } else {
+        // Mostrar botón de lista de espera
+        return ["Error: Capacity is not available.", false, true];
+    }
+}
+
+
 ?>
