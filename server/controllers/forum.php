@@ -26,5 +26,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new-discussion'])) {
 
 $discussions = getDiscussions($conn);
 
-include '../views/forum.php';
 ?>

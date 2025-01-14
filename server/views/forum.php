@@ -3,8 +3,10 @@
 
 <main>
     <div class="forum-container">
-        <h1 class="text-center">Forum Page</h1>
-        <p class="text-center">Collaborate, connect and discuss about the upcoming events. See all the discussions...</p>
+        <section class="discussions-header">
+            <h1>Forum Page</h1>
+            <p>Collaborate, connect and discuss about the upcoming events. See all the discussions...</p>
+        </section>
 
         <section class="discussions">
             <?php if (!empty($discussions)): ?>
