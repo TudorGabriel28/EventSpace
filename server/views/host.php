@@ -10,7 +10,7 @@ include_once '../components/header.php';
 
   <div class="container">
     <h2>Enter event details</h2>
-    <form id="host-event-form" action="../components/submit_event.php" method="POST" enctype="multipart/form-data">
+    <form id="host-event-form" action="../controllers/submit_event.php" method="POST" enctype="multipart/form-data">
       <div class="note" style="background-color: #f8d7da; color: #721c24; padding: 10px; border: 1px solid #f5c6cb; border-radius:5px;">
         <p>Note: The event will be created once approved by the admin.</p>
       </div>
@@ -62,14 +62,25 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!isLoggedIn) {
             event.preventDefault();
             alert('Please log in first to create an event.');
-            window.location.href = '../pages/login.php'; // Redirect to login page
+            window.location.href = '../views/login.php'; // Redirect to login page
+        }
+        const startDates = document.querySelectorAll('input[name="start_date[]"]');
+        const endDates = document.querySelectorAll('input[name="end_date[]"]');
+        for (let i = 0; i < startDates.length; i++) {
+            const startDate = new Date(startDates[i].value);
+            const endDate = new Date(endDates[i].value);
+            if (endDate < startDate) {
+                event.preventDefault();
+                alert(`End date cannot be earlier than start date for location ${i + 1}.`);
+                return;
+            }
         }
     });
 
 <?php if (isset($_SESSION['success'])): ?>
         alert("<?= $_SESSION['success']; ?>");
         <?php unset($_SESSION['success']); ?>
-        window.location.href = '../pages/home.php'; // Redirect to home page
+        window.location.href = '../views/home.php'; // Redirect to home page
 <?php endif; ?>
 });
 </script>

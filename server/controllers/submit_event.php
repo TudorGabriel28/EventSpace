@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $conn->commit();
         $_SESSION['success'] = "Event is pending for approval.";
-        header("Location: ../pages/host.php");
+        header("Location: ../views/host.php");
         exit;
     } catch (Exception $e) {
         $conn->rollback();
