@@ -382,7 +382,8 @@ INSERT INTO `user` (`id`, `firstName`, `lastName`, `email`, `password`, `dateOfB
 (36, 'Kamil', 'Sikora', 'kamilsikora@example.com', '123', '2000-11-11', '../assets/users/generic-user.png', 'user'),
 (37, 'Dan', 'Gabi', 'clewmcl@jkaka.com', '$2y$10$TRojK4R9CBbIdxEARjQaGOFDvFyanhZe6c7rdGVdecAljzyyIZfu6', '2000-11-11', '../assets/users/generic-user.png', 'user'),
 (38, 'te', 'test', 'test@example.com', '$2y$10$Fch5B/oOL5YyvM9DOJAP5.uLuLAoW58b6mOXgl1gb5yiJvRxsR.Y6', '2024-12-27', '../assets/users/generic-user.png', 'user'),
-(39, 'Alejandro', 'García Menor', 'alejandrogarciamenor@gmail.com', '$2y$10$FfkqWwceNsqvzlFNZTpTluZCTZkNmQ2GgiD1wXNrRQaxKNJoggTv.', '2003-11-28', '../assets/users/generic-user.png', 'user');
+(39, 'Alejandro', 'García Menor', 'alejandrogarciamenor@gmail.com', '$2y$10$FfkqWwceNsqvzlFNZTpTluZCTZkNmQ2GgiD1wXNrRQaxKNJoggTv.', '2003-11-28', '../assets/users/generic-user.png', 'user'),
+(40, 'Default', 'User', 'default@example.com', '$2y$10$MAu0XMh/AXRkdprMCsDjsu2RGePIXYKujy21AisMJ6b1jooD1vUxu', '1990-10-10', '../assets/users/generic-user.png', 'user');
 
 -- --------------------------------------------------------
 
