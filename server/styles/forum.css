@@ -7,6 +7,35 @@
     border-radius: 8px;
 }
 
+.discussions-header {
+    position: relative;
+    text-align: center; 
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.discussions-header h1 {
+    align-self: center;
+    font-size: 2.5em;
+    margin: 0;
+}
+
+.discussions-header p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+.discussions-header::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 4px;
+    background-color: orange;
+    margin: 20px auto 0;
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+}
+
 .discussions, .add-discussion {
     margin-top: 20px;
     text-align: center;
