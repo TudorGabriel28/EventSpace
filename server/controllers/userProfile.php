@@ -14,6 +14,23 @@ if (!isset($_SESSION['user_id'])) {
 
 $userId = $_SESSION['user_id'];
 
+$attendedEvents = getUserEvents($conn, $userId)['attendedEvents'];
+$subscribedEvents = getUserEvents($conn, $userId)['subscribedEvents'];
+$waitlistedEvents = getUserEvents($conn, $userId)['waitlistedEvents'];
+$createdEvents = getUserEvents($conn, $userId)['createdEvents'];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel-reservation'])) {
+    cancelReservation($conn, $_POST['reservation-id']);
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['leave-waitlist'])) {
+    leaveWaitlist($conn, $_POST['waitlist-id']);
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete-event'])) {
+    deleteEvent($conn, $_POST['event-id'], $userId);
+}
+
 $query = "SELECT * FROM user WHERE id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $userId);
@@ -35,14 +52,12 @@ $email = htmlspecialchars($user['email']);
 $dateOfBirth = htmlspecialchars($user['dateOfBirth']);
 $profilePicture = htmlspecialchars($user['profilePicture']);
 
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST'&& isset($_POST['update-profile'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update-profile'])) {
   $firstName = !empty($_POST['firstName']) ? $_POST['firstName'] : $firstName;
   $lastName = !empty($_POST['lastName']) ? $_POST['lastName'] : $lastName;
   $email = !empty($_POST['email']) ? $_POST['email'] : $email;
   $dateOfBirth = !empty($_POST['dateOfBirth']) ? $_POST['dateOfBirth'] : $dateOfBirth;
   $profilePictureName = $profilePicture;
-  
 
   if (isset($_FILES['profilePicture']) && $_FILES['profilePicture']['error'] == 0) {
       $targetDir = "../assets/users/";
@@ -67,4 +82,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'&& isset($_POST['update-profile'])) {
   header("Location: user-profile.php");
   exit();
 }
+
+$conn->close();
 ?>

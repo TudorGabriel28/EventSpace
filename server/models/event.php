@@ -21,6 +21,8 @@ function getEvents($conn): array
         planning p ON e.id = p.idEvent
     JOIN 
         location l ON p.idLocation = l.id
+    WHERE
+        e.isApproved = 1
     GROUP BY 
         e.id, e.name, e.description, e.coverPhoto, c.id, c.name
     ORDER BY e.creationTimestamp DESC
