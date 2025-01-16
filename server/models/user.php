@@ -47,4 +47,106 @@ function registerUser($conn, $firstName, $lastName, $email, $password, $dateOfBi
         return ['success' => false, 'error' => 'Error: ' . $stmt->error];
     }
 }
+
+
+//User Profile Page
+function getUserEvents($conn, $userId)
+{
+    $events = [];
+
+    // Attended events
+    $sql = "SELECT usereventreservation.id as userreservationid, event.name, planning.startDate, usereventreservation.ticketQuantity, event.id FROM event 
+            INNER JOIN planning ON event.id = planning.idEvent
+            INNER JOIN usereventreservation ON planning.id = usereventreservation.idPlanning
+            WHERE usereventreservation.idUser = ? AND planning.startDate < CURDATE()";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $events['attendedEvents'] = [];
+    while ($row = $result->fetch_assoc()) {
+        $events['attendedEvents'][] = $row;
+    }
+    $stmt->close();
+
+    // Subscribed events
+    $sql = "SELECT usereventreservation.id as userreservationid, event.name, planning.startDate, usereventreservation.ticketQuantity, event.id FROM event 
+            INNER JOIN planning ON event.id = planning.idEvent
+            INNER JOIN usereventreservation ON planning.id = usereventreservation.idPlanning
+            WHERE usereventreservation.idUser = ? AND planning.startDate >= CURDATE()";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $events['subscribedEvents'] = [];
+    while ($row = $result->fetch_assoc()) {
+        $events['subscribedEvents'][] = $row;
+    }
+    $stmt->close();
+
+    // Waitlisted events
+    $sql = "SELECT usereventwaitlist.id as userwaitlistid, event.name, planning.startDate, usereventwaitlist.ticketQuantity, event.id FROM event 
+            INNER JOIN planning ON event.id = planning.idEvent
+            INNER JOIN usereventwaitlist ON planning.id = usereventwaitlist.idPlanning
+            WHERE usereventwaitlist.idUser = ? AND planning.startDate >= CURDATE()";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $events['waitlistedEvents'] = [];
+    while ($row = $result->fetch_assoc()) {
+        $events['waitlistedEvents'][] = $row;
+    }
+    $stmt->close();
+
+    // Created events
+    $sql = "SELECT event.id, event.name, MIN(planning.startDate) as startDate, MAX(planning.endDate) as endDate FROM event
+            INNER JOIN planning ON event.id = planning.idEvent
+            INNER JOIN usereventrole AS role ON role.idUser = ? AND role.idEvent = event.id
+            WHERE role.function = 'Host'
+            GROUP BY event.id, event.name";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $events['createdEvents'] = [];
+    while ($row = $result->fetch_assoc()) {
+        $events['createdEvents'][] = $row;
+    }
+    $stmt->close();
+
+    return $events;
+}
+
+function cancelReservation($conn, $reservationId)
+{
+    $sql = "DELETE FROM usereventreservation WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $reservationId);
+    $stmt->execute();
+    $stmt->close();
+}
+
+function leaveWaitlist($conn, $waitlistId)
+{
+    $sql = "DELETE FROM usereventwaitlist WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $waitlistId);
+    $stmt->execute();
+    $stmt->close();
+}
+
+function deleteEvent($conn, $eventId, $userId)
+{
+    $sql = "DELETE FROM event WHERE id = ? AND id IN (SELECT idEvent FROM usereventrole WHERE idUser = ? AND function = 'Host')";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $eventId, $userId);
+    $stmt->execute();
+    $stmt->close();
+}
+
 ?>
