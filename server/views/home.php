@@ -24,7 +24,7 @@ include_once '../components/header.php'; ?>
         <h2 class="section-title">Browse all the activities</h2>
         <div class="category-list">
             <?php foreach ($categories as $category): ?>
-                <a href="specific.php?categoryId=<?= htmlspecialchars($category['id']) ?>" class="category-link">
+                <a href="specific-category.php?categoryId=<?= htmlspecialchars($category['id']) ?>" class="category-link">
                     <div class="category">
                         <img class="category-image" src="<?= htmlspecialchars($category['photo']) ?>" alt="">
                         <div class="category-title"><?= htmlspecialchars($category['name']) ?></div>
