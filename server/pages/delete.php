@@ -4,5 +4,5 @@ require_once '../db_connection.php';
 require_once '../controllers/AdminController.php';
 
 $adminController = new AdminController($conn);
-$adminController->approveEvent();
+$adminController->delete();
 ?>
