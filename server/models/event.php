@@ -97,7 +97,8 @@ function getSearchResults($conn, $search, $category, $startDate, $endDate): arra
     return $events;
 }
 
-function getEventData($conn, $eventId): array {
+function getEventData($conn, $eventId): array
+{
     $sql = "SELECT name, description, coverPhoto FROM event WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $eventId);
@@ -106,7 +107,8 @@ function getEventData($conn, $eventId): array {
     return $result->fetch_assoc() ?: ["name" => "Event Not Found", "description" => "", "coverPhoto" => ""];
 }
 
-function getPlanningDetails($conn, $eventId): array {
+function getPlanningDetails($conn, $eventId): array
+{
     $sql = "SELECT p.id AS planningId, l.address, p.startDate, p.capacity, p.price 
             FROM planning p 
             INNER JOIN location l ON p.idLocation = l.id 
@@ -122,7 +124,8 @@ function getPlanningDetails($conn, $eventId): array {
     return $details;
 }
 
-function handleSubscription($conn, $postData, $userId, $joinWaitlist = false): array {
+function handleSubscription($conn, $postData, $userId, $joinWaitlist = false): array
+{
     $planningId = intval($postData['event-selector'] ?? 0);
     $ticketQuantity = intval($postData['ticket-quantity'] ?? 1);
     $errorMessage = '';
@@ -171,6 +174,34 @@ function handleSubscription($conn, $postData, $userId, $joinWaitlist = false): a
         // Mostrar botón de lista de espera
         return ["Error: Capacity is not available.", false, true];
     }
+}
+
+function getPendingEvents($conn)
+{
+    $query = "SELECT id, name, description, coverPhoto FROM event WHERE isApproved = 0";
+    return fetchEvents($conn, $query);
+}
+
+function getApprovedEvents($conn)
+{
+    $query = "SELECT id, name, description FROM event WHERE isApproved = 1";
+    return fetchEvents($conn, $query);
+}
+
+function fetchEvents($conn, $query)
+{
+    $events = [];
+    try {
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $events[] = $row;
+        }
+    } catch (mysqli_sql_exception $e) {
+        die("Error fetching events: " . $e->getMessage());
+    }
+    return $events;
 }
 
 

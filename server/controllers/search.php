@@ -19,7 +19,7 @@ if (empty($search)) {
 
 
 
-$events = getEvents($conn);
+$events = getSearchResults($conn, $search, $category, $startDate, $endDate);
 $categories = getCategories($conn);
 
 $title = "Search";

@@ -1,5 +1,6 @@
 <?php
-function getDiscussions($conn) {
+function getDiscussions($conn)
+{
     $sql = "SELECT forumdiscussion.id, forumdiscussion.title, CONCAT(user.firstName, ' ', user.lastName) AS 'User'
             FROM forumdiscussion 
             INNER JOIN user ON forumdiscussion.idUser = user.id";
@@ -14,12 +15,30 @@ function getDiscussions($conn) {
     return $discussions;
 }
 
-function addDiscussion($conn, $title, $question, $userId) {
+function addDiscussion($conn, $title, $question, $userId)
+{
     $sql = "INSERT INTO forumdiscussion (title, question, idUser) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssi", $title, $question, $userId);
     $success = $stmt->execute();
     $stmt->close();
     return $success;
+}
+
+function getAllForums($conn)
+{
+    $query = "SELECT id, title, question, idUser FROM forumdiscussion";
+    $forums = [];
+    try {
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $forums[] = $row;
+        }
+    } catch (mysqli_sql_exception $e) {
+        die("Error fetching forums: " . $e->getMessage());
+    }
+    return $forums;
 }
 ?>
