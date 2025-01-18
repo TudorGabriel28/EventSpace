@@ -22,6 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         $event_id = insertEvent($conn, $event_name, $description, $target_file);
         insertEventCategory($conn, $event_id, $category);
+        
+        // Assign user as the creator of the event
+        insertUserEventRole($conn, $user_id, $event_id, 'Host');
 
         $addresses = $_POST['location_address'];
         $cities = $_POST['location_city'];

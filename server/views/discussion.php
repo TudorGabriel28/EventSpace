@@ -6,7 +6,7 @@
         <section class="discussion">
             <h2><?php echo htmlspecialchars($discussion['title']); ?></h2>
             <div class="discussion-user">
-                <img src="<?php echo htmlspecialchars($discussion['profilePicture']); ?>" alt="Profile Picture" class="profile-pic">
+                <img src="<?php echo htmlspecialchars('../assets/users/' . $discussion['profilePicture']); ?>" alt="Profile Picture" class="profile-pic">
                 <p><strong><?php echo htmlspecialchars($discussion['User']); ?></strong></p>
             </div>
             <p><?php echo htmlspecialchars($discussion['question']); ?></p>
@@ -17,7 +17,7 @@
             <?php foreach ($comments as $comment): ?>
                 <div class="comment">
                     <div class="comment-user">
-                        <img src="<?php echo htmlspecialchars($comment['profilePicture']); ?>" alt="Profile Picture" class="profile-pic">
+                        <img src="<?php echo htmlspecialchars('../assets/users/' . $comment['profilePicture']); ?>" alt="Profile Picture" class="profile-pic">
                         <p><strong><?php echo htmlspecialchars($comment['User']); ?>:</strong></p>
                     </div>    
                     <p><?php echo htmlspecialchars($comment['content']); ?></p>

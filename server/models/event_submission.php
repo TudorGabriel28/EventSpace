@@ -28,4 +28,13 @@ function insertPlanning($conn, $startDate, $endDate, $capacity, $price, $event_i
     $stmt->bind_param("ssiiii", $startDate, $endDate, $capacity, $price, $event_id, $location_id);
     $stmt->execute();
 }
+
+function insertUserEventRole($conn, $user_id, $event_id): void {
+    $sql = "INSERT INTO usereventrole (function, idUser, idEvent, idPlanning) VALUES ('Host', ?, ?, NULL)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $user_id, $event_id);
+    if (!$stmt->execute()) {
+        die("User event role insertion failed: " . $stmt->error);
+    }
+}
 ?>
